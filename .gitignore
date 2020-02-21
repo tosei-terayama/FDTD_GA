@@ -1,0 +1,5 @@
+*.o
+main
+*.dat
+*.gpt
+dat_file/
