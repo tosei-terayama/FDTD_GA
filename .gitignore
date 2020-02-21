@@ -2,8 +2,11 @@
 main
 *.dat
 *.gpt
-dat_file/
+dat_file/*.dat
+dat_file/*.gpt
+dat_file/*.gif
 *.gif
 *.emf
 *.exe
 .vscode/
+IRI-2016_for_cpp/*.txt
