@@ -3,3 +3,7 @@ main
 *.dat
 *.gpt
 dat_file/
+*.gif
+*.emf
+*.exe
+.vscode/
