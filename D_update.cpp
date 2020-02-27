@@ -12,13 +12,13 @@ void D_update(double**** D_r, double**** D_theta, double**** D_phi,
   double sin_th1, sin_th2, sin_th3;
   
   //D update (outside PML)//
-  for(int i = 0; i <= Nr - 1; i++){
+  for(int i = 0; i < Nr; i++){
     ri_2 = dist(i + 0.5);
-    for(int j = L + 1; j <= Ntheta - L - 1; j++){
+    for(int j = L + 1; j < Ntheta - L; j++){
       sin_th1 = std::sin(th(j));
       sin_th2 = std::sin(th(j + 0.5));
       sin_th3 = std::sin(th(j - 0.5));
-      for(int k = L + 1; k <= Nphi - L - 1; k++){
+      for(int k = L + 1; k < Nphi - L; k++){
         val_1 = Dt/ri_2/sin_th1/delta_theta;
         val_2 = Dt/ri_2/sin_th1/delta_phi;
 
@@ -28,13 +28,13 @@ void D_update(double**** D_r, double**** D_theta, double**** D_phi,
     }
   }
   
-  for(int i = 1; i <= Nr - 1; i++){
+  for(int i = 1; i < Nr - 1; i++){
     ri_1 = dist(i);
     ri_2 = dist(i + 0.5);
     ri_3 = dist(i - 0.5);
-    for(int j = L; j <= Ntheta - L - 1; j++){
+    for(int j = L; j < Ntheta - L; j++){
       sin_th2 = std::sin(th(j + 0.5));
-      for(int k = L + 1; k <= Nphi - L - 1; k++){
+      for(int k = L + 1; k < Nphi - L; k++){
         val_1 = Dt/ri_1/sin_th2/delta_phi;
         val_2 = Dt/ri_1/delta_r;
 
@@ -44,12 +44,12 @@ void D_update(double**** D_r, double**** D_theta, double**** D_phi,
     }
   }
   
-  for(int i = 1; i <= Nr - 1; i++){
+  for(int i = 1; i < Nr - 1; i++){
     ri_1 = dist(i);
     ri_2 = dist(i + 0.5);
     ri_3 = dist(i - 0.5);
-    for(int j = L + 1; j <= Ntheta - L - 1; j++){
-      for(int k = L; k <= Nphi - L - 1; k++){
+    for(int j = L + 1; j < Ntheta - L; j++){
+      for(int k = L; k < Nphi - L; k++){
         val_1 = Dt/ri_1/delta_r;
         val_2 = Dt/ri_1/delta_theta;
 
