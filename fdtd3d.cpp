@@ -13,7 +13,7 @@
 //The number of R, Theta, Phi element//
 const int Nr{100};
 const int Ntheta{100};
-const int Nphi{1000};
+const int Nphi{600};
 
 constexpr double R_r{100.0e3};
 
@@ -66,7 +66,7 @@ const double Azim{61.0*M_PI/180.0};
 int main(int argc, char** argv)
 {
   int flag(0);
-  int time_step = 2000;
+  int time_step = 1200;
   double t;
   double J;
   double time_1, time_2, total_time;
@@ -283,7 +283,7 @@ int main(int argc, char** argv)
 
   //fourie//
   for(int k = 0; k < Nphi; k++){
-    E_famp[k] += Er[NEW][0][Ntheta/2][k]*std::exp(-zj*omega*0.0)*Dt;
+    E_famp[k] += Er[NEW][1][Ntheta/2][k]*std::exp(-zj*omega*0.0)*Dt;
   }
 
   ofs_2 << 0 << " " << Er[NEW][i_r][j_r][k_r] << std::endl;
@@ -330,8 +330,9 @@ int main(int argc, char** argv)
 
     Etheta[OLD][i_s][j_s][k_s] = Etheta[OLD][i_s][j_s][k_s] + J;
     
-    std::cout << "Etheta[" << i_s << "][" << j_s << "][" << k_s << "] = " << Etheta[NEW][i_s][j_s][k_s] << std::endl;
-    std::cout << "Etheta[" << Nr - ion_L << "][" << j_0 << "][" << k_0 << "] = " << Etheta[NEW][Nr - ion_L][j_0][k_0] << std::endl;
+    // std::cout << "Etheta[" << i_s << "][" << j_s << "][" << k_s << "] = " << Etheta[NEW][i_s][j_s][k_s] << std::endl;
+    //std::cout << "Etheta[" << Nr - ion_L << "][" << j_0 << "][" << k_0 << "] = " << Etheta[NEW][Nr - ion_L][j_0][k_0] << std::endl;
+    std::cout << "E[1][" << Ntheta/2 << "][" << 30 << "] = " << Etheta[NEW][1][Ntheta/2][30] << std::endl;
 
     /////   D, E update   /////
     //outside PML//
@@ -369,14 +370,14 @@ int main(int argc, char** argv)
     sigma_theta_h, sigma_phi_h);
 
     //surface Ground//
-    surface_H(Er[NEW][0], Etheta[NEW][1], Ephi[NEW][1], Htheta[0], Hphi[0],
+    surface_H_update(Er[NEW][0], Etheta[NEW][1], Ephi[NEW][1], Htheta[0], Hphi[0],
                     Z_real, Z_imag);
 
     //data transport (PE n) idx2 >> (PE n-1) idx1//
     /*if(rank < size - 1){
       MPI::COMM_WORLD.Send(Hr[NEW][idx2], Ntheta*Nphi, MPI::DOUBLE, rank + 1, 0);
       MPI::COMM_WORLD.Send(Htheta[NEW][idx2], (Ntheta + 1)*Nphi, MPI::DOUBLE, rank + 1, 1);
-      MPI::COMM_WORLD.Send(Hphi[NEW][idx2], Ntheta*(Nphi + 1), MPI::DOUBLE, rank + 1, 2);
+1      MPI::COMM_WORLD.Send(Hphi[NEW][idx2], Ntheta*(Nphi + 1), MPI::DOUBLE, rank + 1, 2);
     }
     if(rank != 0){
       MPI::COMM_WORLD.Recv(Hr[NEW][idx1], Ntheta*Nphi, MPI::DOUBLE, rank - 1, 0);
@@ -402,8 +403,8 @@ int main(int argc, char** argv)
     ofs_2 << t << " " << Er[NEW][i_r][j_r][k_r] << std::endl;
     ofs_3 << t << " " << Er[NEW][i_s][j_s][k_s] << std::endl;
 
-    for(int k = k_s; k < k_r + 1; k++){
-      E_famp[k] += Er[NEW][0][Ntheta/2][k]*std::exp(-zj*omega*t)*Dt;
+    for(int k = 0; k < Nphi; k++){
+      E_famp[k] += Er[NEW][1][Ntheta/2][k]*std::exp(-zj*omega*t)*Dt;
     }
     
     std::cout << n << " / " << time_step << std::endl << std::endl;

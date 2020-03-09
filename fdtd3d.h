@@ -119,7 +119,7 @@ void geo_mag(double* Geomagnetic_in_geographic, double* Geomagnetic_in_spherical
 
 std::complex <double> surface_impe(std::complex <double> comp);
 
-void surface_H(double **newEr, double **newEth, double **newEph, 
+void surface_H_update(double **newEr, double **newEth, double **newEph, 
                       double **Hth_r0, double **Hphi_r0, double impedance_real, double impedance_image);
 
 //inline function//
