@@ -387,7 +387,7 @@ int main(int argc, char** argv)
   
   std::cout << "elapsed_time = " << total_time*1.0e-3 << " [sec]"<< std::endl;
 
-  for(int k = 0; k < Nphi; k++){
+  for(int k = k_s; k < k_r; k++){
     ofs_4 << R0*k*delta_phi/1000.0 << " " << std::abs(E_famp[k]) << std::endl;
   }
 
