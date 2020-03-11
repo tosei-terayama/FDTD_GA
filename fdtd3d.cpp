@@ -289,17 +289,6 @@ int main(int argc, char** argv)
   ofs_2 << 0 << " " << Er[NEW][i_r][j_r][k_r] << std::endl;
   ofs_3 << 0 << " " << Er[NEW][i_s][j_s][k_s] << std::endl;
 
-  //start up mpi//
-  /*MPI::Init(argc, argv);
-  int rank = MPI::COMM_WORLD.Get_rank();
-  int size = MPI::COMM_WORLD.Get_size();
-
-  //The num of process//
-  if(rank == 0) std::cout << size << "process." << std::endl;
-
-  int band = Nr/size;
-  int mod = Nr%size;*/
-
   std::cout << "R : " << dist(Nr) << " θ : " << R0*delta_theta*Ntheta << " φ : " << R0*delta_phi*Nphi << std::endl;
   std::cout << "time_step : " << time_step << " Dt : " << Dt << std::endl;
   std::cout << "_______________________________________" << std::endl;
@@ -348,18 +337,6 @@ int main(int argc, char** argv)
              sigma_cartesian, sigma_cartesian_r, Cmat_r, Fmat_r,
              Cmat_th, Fmat_th, Cmat_phi, Fmat_phi);
 
-    //data transport (PE n) idx2 >> (PE n - 1) idx1//
-    /*if(rank != 0){
-      MPI::COMM_WORLD.Send(Er[NEW][idx1], (Ntheta + 1)*(Nphi + 1), MPI::DOUBLE, rank - 1, 0);
-      MPI::COMM_WORLD.Send(Etheta[NEW][idx1], Ntheta*(Nphi + 1), MPI::DOUBLE, rank - 1, 1);
-      MPI::COMM_WORLD.Send(Ephi[NEW][idx1], (Ntheta + 1)*Nphi, MPI::DOUBLE, rank - 1, 2);
-    }
-    if(rank < size - 1){
-      MPI::COMM_WORLD.Recv(Er[NEW][idx2], (Ntheta + 1)*(Nphi + 1), MPI::DOUBLE, rank + 1, 0);
-      MPI::COMM_WORLD.Recv(Etheta[NEW][idx2], Ntheta*(Nphi + 1), MPI::DOUBLE, rank + 1, 1);
-      MPI::COMM_WORLD.Recv(Ephi[NEW][idx2], (Ntheta + 1)*Nphi, MPI::DOUBLE, rank + 1, 2);
-    }*/
-
     /////   H update   /////
     //outside PML//
     H_update(Er[NEW], Etheta[NEW], Ephi[NEW], Hr, Htheta, Hphi);
@@ -372,18 +349,6 @@ int main(int argc, char** argv)
     //surface Ground//
     surface_H_update(Er[NEW][0], Etheta[NEW][1], Ephi[NEW][1], Htheta[0], Hphi[0],
                     Z_real, Z_imag);
-
-    //data transport (PE n) idx2 >> (PE n-1) idx1//
-    /*if(rank < size - 1){
-      MPI::COMM_WORLD.Send(Hr[NEW][idx2], Ntheta*Nphi, MPI::DOUBLE, rank + 1, 0);
-      MPI::COMM_WORLD.Send(Htheta[NEW][idx2], (Ntheta + 1)*Nphi, MPI::DOUBLE, rank + 1, 1);
-1      MPI::COMM_WORLD.Send(Hphi[NEW][idx2], Ntheta*(Nphi + 1), MPI::DOUBLE, rank + 1, 2);
-    }
-    if(rank != 0){
-      MPI::COMM_WORLD.Recv(Hr[NEW][idx1], Ntheta*Nphi, MPI::DOUBLE, rank - 1, 0);
-      MPI::COMM_WORLD.Recv(Htheta[NEW][idx1], (Ntheta + 1)*Nphi, MPI::DOUBLE, rank - 1, 1);
-      MPI::COMM_WORLD.Recv(Hphi[NEW][idx1], Ntheta*(Nphi + 1), MPI::DOUBLE, rank - 1, 2)
-    }*/
     
     std::string fn = "./dat_file/E" + std::to_string(n) + ".dat";
     ofs_1.open(fn);
