@@ -13,7 +13,7 @@
 //The number of R, Theta, Phi element//
 const int Nr{100};
 const int Ntheta{100};
-const int Nphi{600};
+const int Nphi{1000};
 
 constexpr double R_r{100.0e3};
 
