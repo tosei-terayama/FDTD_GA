@@ -13,7 +13,7 @@
 //The number of R, Theta, Phi element//
 const int Nr{100};
 const int Ntheta{100};
-const int Nphi{1000};
+const int Nphi{600};
 
 constexpr double R_r{100.0e3};
 
@@ -170,17 +170,6 @@ int main(int argc, char** argv)
 
   geo_mag(geo_B, sph_B);
 
-  /*std::ofstream ofs_geo("geo_distribute.dat");
-
-  for(int j = 0; j < Ntheta; j += 25){
-    for(int k = 0; k < Nphi; k += 25){
-      ofs_geo << j << " " << k << " " << sph_B[1] << " " << sph_B[2] << std::endl;
-    }
-  }
-
-  std::cout << "Test output geomag distribution" << std::endl;
-  exit(0);*/
-
   B_th = std::acos(-sph_B[1]/B_abs);
   B_phi = std::atan2(sph_B[2], sph_B[0]);
 
@@ -228,6 +217,7 @@ int main(int argc, char** argv)
   ny_allocate(ny, ny_h, Re, Re_h);
 
   make_rot_mat(R2_1, invR1_2, B_th, B_phi);
+  
   sig_real_calc(Nh, ny, Nh_h, ny_h, sigma_real, sigma_real_r);
 
   sig_car_calc(sigma_cartesian, sigma_real, R2_1, invR1_2);
@@ -274,7 +264,7 @@ int main(int argc, char** argv)
     double Phi = R0*k*delta_phi/1000.0;
     for(int i = 0; i < Nr; i++){
       double R = i*delta_r/1000.0;
-      ofs_1 << Phi << " " << R << " " << Er[NEW][i][j_s][k] << std::endl;
+      ofs_1 << Phi << " " << R << " " << Etheta[NEW][i][j_s][k] << std::endl;
     }
     ofs_1 << std::endl;
   }
@@ -283,11 +273,11 @@ int main(int argc, char** argv)
 
   //fourie//
   for(int k = 0; k < Nphi; k++){
-    E_famp[k] += Er[NEW][1][Ntheta/2][k]*std::exp(-zj*omega*0.0)*Dt;
+    E_famp[k] += Etheta[NEW][1][Ntheta/2][k]*std::exp(-zj*omega*0.0)*Dt;
   }
 
-  ofs_2 << 0 << " " << Er[NEW][i_r][j_r][k_r] << std::endl;
-  ofs_3 << 0 << " " << Er[NEW][i_s][j_s][k_s] << std::endl;
+  ofs_2 << 0 << " " << Etheta[NEW][i_r][j_r][k_r] << std::endl;
+  ofs_3 << 0 << " " << Etheta[NEW][i_s][j_s][k_s] << std::endl;
 
   std::cout << "R : " << dist(Nr) << " θ : " << R0*delta_theta*Ntheta << " φ : " << R0*delta_phi*Nphi << std::endl;
   std::cout << "time_step : " << time_step << " Dt : " << Dt << std::endl;
@@ -309,8 +299,6 @@ int main(int argc, char** argv)
     //Forced current//
     J = -((t - t0)/sigma_t/sigma_t/delta_r/(dist(i_s + 0.5)*delta_theta)/(dist(i_s + 0.5)*delta_phi))
       *std::exp(-(t - t0)*(t - t0)/2.0/sigma_t/sigma_t);
-    //J = -((t - t0)/sigma_t/sigma_t/delta_r/(delta_theta)/(delta_phi))
-    //  *std::exp(-(t - t0)*(t - t0)/2.0/sigma_t/sigma_t);
     //if(t < t0) J = std::exp(-(t - t0)*(t - t0)/2.0/sigma_t/sigma_t)*std::sin(2.0*M_PI*freq*t);
     //else J = std::sin(2.0*M_PI*freq*t);
     std::cout << " J = " << J << std::endl;
@@ -358,18 +346,18 @@ int main(int argc, char** argv)
       double Phi = R0*k*delta_phi/1000.0;
       for(int i = 0; i < Nr; i++){
         double R = i*delta_r/1000.0;
-        ofs_1 << Phi << " " << R << " " << Er[NEW][i][j_s][k] << std::endl;
+        ofs_1 << Phi << " " << R << " " << Etheta[NEW][i][j_s][k] << std::endl;
       }
       ofs_1 << std::endl;
     }
     
     ofs_1.close();
 
-    ofs_2 << t << " " << Er[NEW][i_r][j_r][k_r] << std::endl;
-    ofs_3 << t << " " << Er[NEW][i_s][j_s][k_s] << std::endl;
+    ofs_2 << t << " " << Etheta[NEW][i_r][j_r][k_r] << std::endl;
+    ofs_3 << t << " " << Etheta[NEW][i_s][j_s][k_s] << std::endl;
 
     for(int k = 0; k < Nphi; k++){
-      E_famp[k] += Er[NEW][1][Ntheta/2][k]*std::exp(-zj*omega*t)*Dt;
+      E_famp[k] += Etheta[NEW][1][Ntheta/2][k]*std::exp(-zj*omega*t)*Dt;
     }
     
     std::cout << n << " / " << time_step << std::endl << std::endl;
@@ -428,3 +416,6 @@ int main(int argc, char** argv)
   return 0;
   
 }
+
+
+

@@ -37,23 +37,4 @@ void surface_H_update(double **newEr, double **newEth, double **newEphi,
         }
     }
 
-    /*for(int j  = 0; j < Ntheta + 1; j++){
-        sin_th1 = std::sin(th(j));
-        val_1 = Dt/MU0/ri_2/sin_th1/delta_phi;
-        for(int k = 0; k < Nphi; k++){
-            Htheta[j][k] = ((1.0 - val_2*ri_1*coeff_2)*Htheta[j][k] - val_1*(newEr[j][k + 1] - newEr[j][k])
-                + ri_3*val_2*newEphi[j][k])/(1.0 + val_2*ri_1*coeff_1);
-        }
-    }
-
-    val_3 = Dt/MU0/ri_2/delta_r;
-    val_4 = Dt/MU0/ri_2/delta_theta;
-
-    for(int j = L; j < Ntheta - L; j++){
-        for(int k = L + 1; k < Nphi - L; k++){
-            Hphi[j][k] = ((1.0 - ri_1*val_3*coeff_2)*Hphi[j][k] + val_4*(newEr[j + 1][k] - newEr[j][k])
-                - ri_3*val_3*newEth[j][k])/(1.0 + val_3*ri_1*coeff_1);
-        }
-    }*/
 }
-

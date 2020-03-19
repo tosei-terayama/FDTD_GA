@@ -7,7 +7,7 @@
 
 std::complex <double> surface_impe(std::complex <double> zj)
 {
-  double conduct = SIGMA_SEA;
+  double conduct = SIGMA_PEC;
 
     std::complex <double> z = Z0*std::pow(EPSR - zj*conduct/EPS0/omega, -0.5);
 
