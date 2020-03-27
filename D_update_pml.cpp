@@ -46,7 +46,7 @@ void D_update_pml(double*** newD_r, double*** newD_theta, double*** newD_phi,
   
   //Update Dr using Dr_theta1, Dr_theta2, Dr_phi//
   for(int area = 0; area < 4; area++){
-    for(int i = 0; i <= Nr - 1; i++){
+    for(int i = 0; i < Nr; i++){
       ri_2 = dist(i + 0.5);
       for(int j = idx_r[area].j1; j <= idx_r[area].j2; j++){
         int j_area = j - idx_r[area].j1;
@@ -71,7 +71,7 @@ void D_update_pml(double*** newD_r, double*** newD_theta, double*** newD_phi,
   
   //Update Dtheta using Dtheta_phi, Dtheta_r//
   for(int area = 0; area < 4; area++){
-    for(int i = 1; i <= Nr - 1; i++){
+    for(int i = 1; i < Nr; i++){
       ri_1 = dist(i - 0.5);
       ri_2 = dist(i);
       ri_3 = dist(i + 0.5);
@@ -94,7 +94,7 @@ void D_update_pml(double*** newD_r, double*** newD_theta, double*** newD_phi,
   
   //Update Dphi using Dphi_r, Dphi_theta//
   for(int area = 0; area < 4; area++){
-    for(int i = 1; i <= Nr - 1; i++){
+    for(int i = 1; i < Nr; i++){
       ri_1 = dist(i - 0.5);
       ri_2 = dist(i);
       ri_3 = dist(i + 0.5);

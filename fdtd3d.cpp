@@ -258,7 +258,7 @@ int main(int argc, char** argv)
   E_famp = new std::complex<double> [Nphi + 1];
   for(int i = 0; i <= Nphi; i++) E_famp[i] = (0.0, 0.0);
 
-  t = Dt*0;
+  t = Dt*0.0;
 
   for(int k = L; k < Nphi - L; k++){
     double Phi = R0*k*delta_phi/1000.0;
@@ -329,14 +329,14 @@ int main(int argc, char** argv)
     //outside PML//
     H_update(Er[NEW], Etheta[NEW], Ephi[NEW], Hr, Htheta, Hphi);
     
+    //surface Ground//
+    surface_H_update(Er[NEW][0], Etheta[NEW][1], Ephi[NEW][1], Htheta[0], Hphi[0],
+                    Z_real, Z_imag);
+    
     //inside PML//
     H_update_pml(Er[NEW], Etheta[NEW], Ephi[NEW], Hr, Htheta, Hphi, 
     Hr_theta1, Hr_theta2, Hr_phi, Htheta_phi, Htheta_r, Hphi_r, Hphi_theta, 
     sigma_theta_h, sigma_phi_h);
-
-    //surface Ground//
-    surface_H_update(Er[NEW][0], Etheta[NEW][1], Ephi[NEW][1], Htheta[0], Hphi[0],
-                    Z_real, Z_imag);
     
     std::string fn = "./dat_file/E" + std::to_string(n) + ".dat";
     ofs_1.open(fn);

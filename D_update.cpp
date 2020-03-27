@@ -28,7 +28,7 @@ void D_update(double**** D_r, double**** D_theta, double**** D_phi,
     }
   }
   
-  for(int i = 1; i < Nr - 1; i++){
+  for(int i = 1; i < Nr; i++){
     ri_1 = dist(i);
     ri_2 = dist(i + 0.5);
     ri_3 = dist(i - 0.5);
@@ -44,7 +44,7 @@ void D_update(double**** D_r, double**** D_theta, double**** D_phi,
     }
   }
   
-  for(int i = 1; i < Nr - 1; i++){
+  for(int i = 1; i < Nr; i++){
     ri_1 = dist(i);
     ri_2 = dist(i + 0.5);
     ri_3 = dist(i - 0.5);
