@@ -113,47 +113,14 @@ int main(int argc, char** argv)
   Hphi_r = new double***[4];
   Hphi_theta = new double***[4];
 
-  //PML region (Theta direction)//
-  for(int i = 0; i <= 1; i++){
-    //D components in PML(Theta direction)// 
-    Dr_theta1[i] = memory_allocate3d(Nr, L, Nphi - 1, 0.0);
-    Dr_theta2[i] = memory_allocate3d(Nr, L, Nphi - 1, 0.0);
-    Dr_phi[i] = memory_allocate3d(Nr, L, Nphi - 1, 0.0);
-    Dtheta_phi[i] = memory_allocate3d(Nr, L, Nphi - 1, 0.0);
-    Dtheta_r[i] = memory_allocate3d(Nr, L, Nphi - 1, 0.0);
-    Dphi_r[i] = memory_allocate3d(Nr, L, Nphi, 0.0);
-    Dphi_theta[i] = memory_allocate3d(Nr, L, Nphi, 0.0);
-
-    //H compornents in PML(Theta direction)//
-    Hr_theta1[i] = memory_allocate3d(Nr + 1, L, Nphi, 0.0);
-    Hr_theta2[i] = memory_allocate3d(Nr + 1, L, Nphi, 0.0);
-    Hr_phi[i] = memory_allocate3d(Nr + 1, L, Nphi, 0.0);
-    Htheta_phi[i] = memory_allocate3d(Nr, L + 1, Nphi, 0.0);
-    Htheta_r[i] = memory_allocate3d(Nr, L + 1, Nphi, 0.0);
-    Hphi_r[i] = memory_allocate3d(Nr, L, Nphi + 1, 0.0);
-    Hphi_theta[i] = memory_allocate3d(Nr, L, Nphi + 1, 0.0);
-  }
-
-  //PML region (Phi direction)//
-  for(int i = 2; i <= 3; i++){
-    //D components in PML(Phi direction)//
-    Dr_theta1[i] = memory_allocate3d(Nr, Ntheta - 2*L - 1, L, 0.0);
-    Dr_theta2[i] = memory_allocate3d(Nr, Ntheta - 2*L - 1, L, 0.0);
-    Dr_phi[i] = memory_allocate3d(Nr, Ntheta - 2*L - 1, L, 0.0);
-    Dtheta_phi[i] = memory_allocate3d(Nr, Ntheta - 2*L, Nphi - 1, 0.0);
-    Dtheta_r[i] = memory_allocate3d(Nr, Ntheta - 2*L, Nphi - 1, 0.0);
-    Dphi_r[i] = memory_allocate3d(Nr, Ntheta - 2*L - 1, L, 0.0);
-    Dphi_theta[i] = memory_allocate3d(Nr, Ntheta - 2*L - 1, L, 0.0);
-
-    //H components in PML(Phi direction)//
-    Hr_theta1[i] = memory_allocate3d(Nr + 1, Ntheta - 2*L, L, 0.0);
-    Hr_theta2[i] = memory_allocate3d(Nr + 1, Ntheta - 2*L, L, 0.0);
-    Hr_phi[i] = memory_allocate3d(Nr + 1, Ntheta - 2*L, L, 0.0);
-    Htheta_phi[i] = memory_allocate3d(Nr, Ntheta - 2*L - 1, L, 0.0);
-    Htheta_r[i] = memory_allocate3d(Nr, Ntheta - 2*L - 1, L, 0.0);
-    Hphi_r[i] = memory_allocate3d(Nr, Ntheta - 2*L, L + 1, 0.0);
-    Hphi_theta[i] = memory_allocate3d(Nr, Ntheta - 2*L, L + 1, 0.0);
-  }
+  PML_field_initialize(
+    Dr_theta1, Dr_theta2, Dr_phi,
+    Dtheta_phi, Dtheta_r,
+    Dphi_r, Dphi_theta,
+    Hr_theta1, Hr_theta2, Hr_phi,
+    Htheta_phi, Htheta_r,
+    Hphi_r, Hphi_theta
+  )
   
   double *sigma_theta, *sigma_phi, *sigma_theta_h, *sigma_phi_h;
   sigma_theta = new double[Ntheta + 1];

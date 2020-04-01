@@ -61,6 +61,11 @@ double*** memory_allocate3d(int, int, int, double);
 double**** memory_allocate4d(int, int, int, int, double);
 std::complex <double>*** memory_allocate3cd(int, int, int, std::complex<double>);
 
+void PML_field_initialize(double**** Dr_theta1, double**** Dr_theta2, double**** Dr_phi,
+                          double**** Dtheta_phi, double**** Dtheta_r, double**** Dphi_r, double**** Dphi_theta,
+                          double**** Hr_theta1, double**** Hr_theta2, double**** Hr_phi,
+                          double**** Htheta_phi, double**** Htheta_r, double**** Hphi_r, double**** Hphi_theta);
+
 void sigma_calc(double* sigma_theta, double* sigma_phi, 
                 double* sigma_theta_h, double* sigma_phi_h);
 
