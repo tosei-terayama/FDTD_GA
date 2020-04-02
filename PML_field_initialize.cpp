@@ -7,8 +7,8 @@ void PML_field_initialize(
     double ****Dphi_r, double ****Dphi_theta,
     double ****Hr_theta1, double ****Hr_theta2, double ****Hr_phi,
     double ****Htheta_phi, double ****Htheta_r,
-    double ****Hphi_r, double ****Hphi_theta){
-
+    double ****Hphi_r, double ****Hphi_theta)
+{
     for(int i = 0; i <= 1; i++){
         //D components in PML(Theta direction)// 
         Dr_theta1[i] = memory_allocate3d(Nr, L, Nphi - 1, 0.0);

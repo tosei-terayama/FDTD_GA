@@ -1,6 +1,7 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include <complex>
+#include "pml.h"
 
 //Physical quantity//
 #define C0 (3.0e8)
@@ -48,23 +49,11 @@ extern const double Dec;
 extern const double Inc;
 extern const double Azim;
 
-class pml{
- public:
-  int j1, j2, k1, k2;
-  void set_point_1(int, int);
-  void set_point_2(int, int);
-};
-
 //function in main//
 double** memory_allocate2d(int, int, double);
 double*** memory_allocate3d(int, int, int, double);
 double**** memory_allocate4d(int, int, int, int, double);
 std::complex <double>*** memory_allocate3cd(int, int, int, std::complex<double>);
-
-void PML_field_initialize(double**** Dr_theta1, double**** Dr_theta2, double**** Dr_phi,
-                          double**** Dtheta_phi, double**** Dtheta_r, double**** Dphi_r, double**** Dphi_theta,
-                          double**** Hr_theta1, double**** Hr_theta2, double**** Hr_phi,
-                          double**** Htheta_phi, double**** Htheta_r, double**** Hphi_r, double**** Hphi_theta);
 
 void sigma_calc(double* sigma_theta, double* sigma_phi, 
                 double* sigma_theta_h, double* sigma_phi_h);
@@ -78,7 +67,7 @@ void D_update_pml(double*** Dr_at_nDt, double*** Dtheta_at_nDt, double*** Dphi_a
 		              double**** Dr_theta1_n_minus_oneDt, double**** Dr_theta2_n_minus_halfDt, double**** Dr_phi_n_minus_oneDt,
 		              double**** Dtheta_phi_at_n_minus_oneDt, double**** Dtheta_r_at_n_minus_oneDt,
 		              double**** Dphi_r_at_n_minus_oneDt, double**** Dphi_theta_n_minus_oneDt,
-                  double* sigma_theta, double* sigma_phi);
+                  double* sigma_theta, double* sigma_phi, pml* index_of_Dr, pml* index_of_Dth, pml* index_of_Dphi);
 
 void E_update(double**** Er, double**** Etheta, double**** Ephi, double**** Dr, double**** Dtheta, double**** Dphi,
               int num_of_new, int num_of_old, double*** Sigma_cartesian, double*** Sigma_cartesian_r,
@@ -98,7 +87,7 @@ void H_update_pml(double*** Er_at_nDt, double*** Etheta_at_nDt, double*** Ephi_a
 		              double**** Hr_theta1_at_n_minus_halfDt, double**** Hr_theta2_at_n_minus_halfDt, double**** Hr_phi_at_n_minus_halfDt,
 		              double**** Htheta_phi_at_n_minus_halfDt, double**** Htheta_r_at_n_minus_halfDt,
 		              double**** Hphi_r_at_n_minus_halfDt, double**** Hphi_theta_at_n_minus_halfDt,
-		              double* Sigma_theta_half, double* Sigma_phi_half);
+		              double* Sigma_theta_half, double* Sigma_phi_half, pml* index_of_Hr, pml* index_of_Hth, pml* index_of_Hphi);
 
 void Ne_allocate(double* Electron_density, double* Electron_Density_half, 
                   double* Electron_Temperature, double* Electron_Temperature_half);
@@ -126,6 +115,14 @@ std::complex <double> surface_impe(std::complex <double> comp);
 
 void surface_H_update(double **newEr, double **newEth, double **newEph, 
                       double **Hth_r0, double **Hphi_r0, double impedance_real, double impedance_image);
+
+void PML_field_initialize(double**** Dr_theta1, double**** Dr_theta2, double**** Dr_phi,
+                          double**** Dtheta_phi, double**** Dtheta_r, double**** Dphi_r, double**** Dphi_theta,
+                          double**** Hr_theta1, double**** Hr_theta2, double**** Hr_phi,
+                          double**** Htheta_phi, double**** Htheta_r, double**** Hphi_r, double**** Hphi_theta);
+
+void PML_idx_initialize(pml*, pml*, pml*, pml*, pml*, pml*);
+
 
 //inline function//
 inline double dist(double i){return R0 + i*delta_r;};
