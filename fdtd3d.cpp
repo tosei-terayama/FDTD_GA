@@ -6,11 +6,10 @@
 #include <string>
 #include <chrono>
 #include <Eigen/Core>
-
 #include "fdtd3d.h"
+#include "pml.h"
 //#include <mpi.h>
 
-//The number of R, Theta, Phi element//
 const int Nr{100};
 const int Ntheta{100};
 const int Nphi{600};
@@ -120,7 +119,19 @@ int main(int argc, char** argv)
     Hr_theta1, Hr_theta2, Hr_phi,
     Htheta_phi, Htheta_r,
     Hphi_r, Hphi_theta
-  )
+  );
+
+  pml* idx_Dr = new pml[4];
+  pml* idx_Dth = new pml[4];
+  pml* idx_Dphi = new pml[4];
+  pml* idx_Hr = new pml[4];
+  pml* idx_Hth = new pml[4];
+  pml* idx_Hphi = new pml[4];
+
+  PML_idx_initialize(
+    idx_Dr, idx_Dth, idx_Dphi,
+    idx_Hr, idx_Hth, idx_Hphi
+  );
   
   double *sigma_theta, *sigma_phi, *sigma_theta_h, *sigma_phi_h;
   sigma_theta = new double[Ntheta + 1];
@@ -179,19 +190,27 @@ int main(int argc, char** argv)
 
   double b_th(0.0), b_phi(0.0);
 
-  Ne_allocate(Nh, Nh_h, Re, Re_h);
+  Ne_allocate(
+    Nh, Nh_h, Re, Re_h);
 
-  ny_allocate(ny, ny_h, Re, Re_h);
+  ny_allocate(
+    ny, ny_h, Re, Re_h);
 
-  make_rot_mat(R2_1, invR1_2, B_th, B_phi);
+  make_rot_mat(
+    R2_1, invR1_2, B_th, B_phi);
   
-  sig_real_calc(Nh, ny, Nh_h, ny_h, sigma_real, sigma_real_r);
+  sig_real_calc(
+    Nh, ny, Nh_h, ny_h, sigma_real, sigma_real_r);
 
-  sig_car_calc(sigma_cartesian, sigma_real, R2_1, invR1_2);
-  sig_car_calc(sigma_cartesian_r, sigma_real_r, R2_1, invR1_2);
+  sig_car_calc(
+    sigma_cartesian, sigma_real, R2_1, invR1_2);
+  
+  sig_car_calc(
+    sigma_cartesian_r, sigma_real_r, R2_1, invR1_2);
 
-  coordinate_trans(Cmat_r, Fmat_r, Cmat_th, Fmat_th, Cmat_phi, Fmat_phi,
-                  sigma_cartesian, sigma_cartesian_r);
+  coordinate_trans(
+    Cmat_r, Fmat_r, Cmat_th, Fmat_th, Cmat_phi, Fmat_phi,
+    sigma_cartesian, sigma_cartesian_r);
 
   //calculate surface impedance//
   std::complex <double> Z(0.0, 0.0);
@@ -280,30 +299,36 @@ int main(int argc, char** argv)
 
     /////   D, E update   /////
     //outside PML//
-    D_update(Dr, Dtheta, Dphi, Hr, Htheta, Hphi, NEW, OLD);
+    D_update(
+      Dr, Dtheta, Dphi, Hr, Htheta, Hphi, NEW, OLD);
     
     //inside PML//
-    D_update_pml(Dr[NEW], Dtheta[NEW], Dphi[NEW], Hr, Htheta, Hphi, 
-    Dr_theta1, Dr_theta2, Dr_phi, Dtheta_phi, Dtheta_r, Dphi_r, Dphi_theta, 
-    sigma_theta, sigma_phi);
+    D_update_pml(
+      Dr[NEW], Dtheta[NEW], Dphi[NEW], Hr, Htheta, Hphi, 
+      Dr_theta1, Dr_theta2, Dr_phi, Dtheta_phi, Dtheta_r, Dphi_r, Dphi_theta, 
+      sigma_theta, sigma_phi, idx_Dr, idx_Dth, idx_Dphi);
     
     //update E using D//
-    E_update( Er, Etheta, Ephi, Dr, Dtheta, Dphi, NEW, OLD,
-             sigma_cartesian, sigma_cartesian_r, Cmat_r, Fmat_r,
-             Cmat_th, Fmat_th, Cmat_phi, Fmat_phi);
+    E_update( 
+      Er, Etheta, Ephi, Dr, Dtheta, Dphi, NEW, OLD,
+      sigma_cartesian, sigma_cartesian_r, Cmat_r, Fmat_r,
+      Cmat_th, Fmat_th, Cmat_phi, Fmat_phi);
 
     /////   H update   /////
     //outside PML//
-    H_update(Er[NEW], Etheta[NEW], Ephi[NEW], Hr, Htheta, Hphi);
+    H_update(
+      Er[NEW], Etheta[NEW], Ephi[NEW], Hr, Htheta, Hphi);
     
     //surface Ground//
-    surface_H_update(Er[NEW][0], Etheta[NEW][1], Ephi[NEW][1], Htheta[0], Hphi[0],
-                    Z_real, Z_imag);
+    surface_H_update(
+      Er[NEW][0], Etheta[NEW][1], Ephi[NEW][1], 
+      Htheta[0], Hphi[0], Z_real, Z_imag);
     
     //inside PML//
-    H_update_pml(Er[NEW], Etheta[NEW], Ephi[NEW], Hr, Htheta, Hphi, 
-    Hr_theta1, Hr_theta2, Hr_phi, Htheta_phi, Htheta_r, Hphi_r, Hphi_theta, 
-    sigma_theta_h, sigma_phi_h);
+    H_update_pml(
+      Er[NEW], Etheta[NEW], Ephi[NEW], Hr, Htheta, Hphi, 
+      Hr_theta1, Hr_theta2, Hr_phi, Htheta_phi, Htheta_r, Hphi_r, Hphi_theta, 
+      sigma_theta_h, sigma_phi_h, idx_Hr, idx_Hth, idx_Hphi);
     
     std::string fn = "./dat_file/E" + std::to_string(n) + ".dat";
     ofs_1.open(fn);
