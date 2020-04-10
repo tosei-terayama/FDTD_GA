@@ -6,12 +6,10 @@
 #include <string>
 #include <chrono>
 #include <Eigen/Core>
-
-#include "pml.h"
 #include "fdtd3d.h"
+#include "pml.h"
 //#include <mpi.h>
 
-//The number of R, Theta, Phi element//
 const int Nr{100};
 const int Ntheta{100};
 const int Nphi{600};
@@ -165,46 +163,10 @@ int main(int argc, char** argv)
   double *Re = new double[ion_L];
   double *Re_h = new double[ion_L];
 
-  //Rotation matrix//
-  double **R2_1 = memory_allocate2d(3, 3, 0.0);
-  double **invR1_2 = memory_allocate2d(3, 3, 0.0);
+  double ***Cmat = memory_allocate3d(ion_L+1, 3, 3, 0.0);
+  double ***Fmat = memory_allocate3d(ion_L+1, 3, 3, 0.0);
 
-  //Corrdinate_transform_matrix//
-  double ****Cmat_r = memory_allocate4d(ion_L, Ntheta, Nphi, 9, 0.0);
-  double ****Fmat_r = memory_allocate4d(ion_L, Ntheta, Nphi, 9, 0.0);
-  double ****Cmat_th = memory_allocate4d(ion_L, Ntheta, Nphi, 9, 0.0);
-  double ****Fmat_th = memory_allocate4d(ion_L, Ntheta, Nphi, 9, 0.0);
-  double ****Cmat_phi = memory_allocate4d(ion_L, Ntheta, Nphi, 9, 0.0);
-  double ****Fmat_phi = memory_allocate4d(ion_L, Ntheta, Nphi, 9, 0.0);
-
-  //sigma_matrix(complex_number, real_part)//
-  double ***sigma_real
-    = memory_allocate3d(ion_L, 3, 3, 0.0);
-
-  double ***sigma_real_r
-    = memory_allocate3d(ion_L, 3, 3, 0.0);
-
-  double ***sigma_cartesian
-    = memory_allocate3d(ion_L, 3, 3, 0.0);
-
-  double ***sigma_cartesian_r
-    = memory_allocate3d(ion_L, 3, 3, 0.0);
-
-  double b_th(0.0), b_phi(0.0);
-
-  Ne_allocate(Nh, Nh_h, Re, Re_h);
-
-  ny_allocate(ny, ny_h, Re, Re_h);
-
-  make_rot_mat(R2_1, invR1_2, B_th, B_phi);
-  
-  sig_real_calc(Nh, ny, Nh_h, ny_h, sigma_real, sigma_real_r);
-
-  sig_car_calc(sigma_cartesian, sigma_real, R2_1, invR1_2);
-  sig_car_calc(sigma_cartesian_r, sigma_real_r, R2_1, invR1_2);
-
-  coordinate_trans(Cmat_r, Fmat_r, Cmat_th, Fmat_th, Cmat_phi, Fmat_phi,
-                  sigma_cartesian, sigma_cartesian_r);
+  set_matrix(zj, Cmat, Fmat, Nh, ny);
 
   //calculate surface impedance//
   std::complex <double> Z(0.0, 0.0);
@@ -279,8 +241,7 @@ int main(int argc, char** argv)
     //Forced current//
     J = -((t - t0)/sigma_t/sigma_t/delta_r/(dist(i_s + 0.5)*delta_theta)/(dist(i_s + 0.5)*delta_phi))
       *std::exp(-(t - t0)*(t - t0)/2.0/sigma_t/sigma_t);
-    //if(t < t0) J = std::exp(-(t - t0)*(t - t0)/2.0/sigma_t/sigma_t)*std::sin(2.0*M_PI*freq*t);
-    //else J = std::sin(2.0*M_PI*freq*t);
+
     std::cout << " J = " << J << std::endl;
 
     ofs_j << t << " " << J << std::endl;
@@ -294,9 +255,7 @@ int main(int argc, char** argv)
     /////   D, E update   /////
     //outside PML//
     D_update(
-      Dr, Dtheta, Dphi, 
-      Hr, Htheta, Hphi, 
-      NEW, OLD);
+      Dr, Dtheta, Dphi, Hr, Htheta, Hphi, NEW, OLD);
     
     //inside PML//
     D_update_pml(
@@ -305,22 +264,19 @@ int main(int argc, char** argv)
       sigma_theta, sigma_phi, idx_Dr, idx_Dth, idx_Dphi);
     
     //update E using D//
-    E_update(
+    E_update( 
       Er, Etheta, Ephi, Dr, Dtheta, Dphi, NEW, OLD,
-      sigma_cartesian, sigma_cartesian_r, Cmat_r, Fmat_r,
-      Cmat_th, Fmat_th, Cmat_phi, Fmat_phi);
+      Cmat, Fmat);
 
     /////   H update   /////
     //outside PML//
     H_update(
-      Er[NEW], Etheta[NEW], Ephi[NEW], 
-      Hr, Htheta, Hphi);
+      Er[NEW], Etheta[NEW], Ephi[NEW], Hr, Htheta, Hphi);
     
     //surface Ground//
     surface_H_update(
       Er[NEW][0], Etheta[NEW][1], Ephi[NEW][1], 
-      Htheta[0], Hphi[0],
-      Z_real, Z_imag);
+      Htheta[0], Hphi[0], Z_real, Z_imag);
     
     //inside PML//
     H_update_pml(

@@ -13,7 +13,7 @@ void pml::set_point_2(int py, int pz){
   p_k2 = pz;
 }
 
-void pml::set_point(int vy1, int vy2, int vz1, int vz2){
-  set_point_1(vy1, vz1);
-  set_point_2(vy2, vz2);
+void pml::set_point(int v_y1, int v_y2, int v_z1, int v_z2){
+  set_point_1(v_y1, v_z1);
+  set_point_2(v_y2, v_z2);
 }

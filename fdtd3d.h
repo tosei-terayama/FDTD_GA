@@ -70,9 +70,7 @@ void D_update_pml(double*** Dr_at_nDt, double*** Dtheta_at_nDt, double*** Dphi_a
                   double* sigma_theta, double* sigma_phi, pml* index_of_Dr, pml* index_of_Dth, pml* index_of_Dphi);
 
 void E_update(double**** Er, double**** Etheta, double**** Ephi, double**** Dr, double**** Dtheta, double**** Dphi,
-              int num_of_new, int num_of_old, double*** Sigma_cartesian, double*** Sigma_cartesian_r,
-              double**** Cmatrix_in_r_comp, double**** Fmatrix_in_r_comp, double**** Cmatrix_in_th_comp, double**** Fmatrix_in_th_comp,
-              double**** Cmatrix_in_phi_comp, double**** Fmatrix_in_phi_comp);
+              int num_of_new, int num_of_old, double*** Cmatrix, double*** Fmatrix);
 
 double E_update_iono(double** Sigma_cartesian, double Value_of_Er, double Value_of_Etheta, double Value_of_Ephi,
                      double Value_of_NewDr, double Value_of_NewDtheta, double Value_of_NewDphi,
@@ -92,22 +90,8 @@ void H_update_pml(double*** Er_at_nDt, double*** Etheta_at_nDt, double*** Ephi_a
 void Ne_allocate(double* Electron_density, double* Electron_Density_half, 
                   double* Electron_Temperature, double* Electron_Temperature_half);
 
-/*void Ne_generate(double* Electron_density, double* Electron_density_half,
-                  double* Electron_Temperature, double* Electron_Temperature_half);*/
-
 void ny_allocate(double* Colision_frequency, double* Colision_frequency_half,
                   double* Electron_Temerature, double* Electron_Temperature_half);
-
-void sig_real_calc(double* Electron_density, double* Colision_Frequency, 
-                    double* Electron_density_half, double* Colision_Frequency_half,
-                    double*** Sigma_realpart, double*** Sigma_realpart_r);
-
-void make_rot_mat(double** MultipledR2_R1, double** InverseR1_2, double B_theta, double B_phi);
- 
-void sig_car_calc(double*** Sigma_cartesian, double*** Sigma_real, double** R1, double** R2);
-
-void coordinate_trans(double**** Cmatrix_in_rcomp, double**** Fmatrix_in_r_comp, double**** Cmatrix_in_thcomp, double**** Fmatrix_in_thcomp,
-                      double**** Cmatrix_in_phicomp, double**** Fmatrix_in_phicomp, double*** Sigma_cartesian, double*** Sigma_cartesian_r_comp);
 
 void geo_mag(double* Geomagnetic_in_geographic, double* Geomagnetic_in_spherical);
 
@@ -123,6 +107,9 @@ void PML_field_initialize(double**** Dr_theta1, double**** Dr_theta2, double****
 
 void PML_idx_initialize(pml*, pml*, pml*, pml*, pml*, pml*);
 
+void set_matrix(
+    std::complex <double> zj, double*** C_matrix, double*** F_matrix,
+    double* Iono_density, double* Collision_frequency);
 
 //inline function//
 inline double dist(double i){return R0 + i*delta_r;};
