@@ -5,7 +5,7 @@ OBJS = fdtd3d.o memory_allocate2d.o memory_allocate3d.o memory_allocate3cd.o mem
 	surface_H_update.o PML_field_initialize.o PML_idx_initialize.o set_matrix.o
 
 HEADERS = fdtd3d.h pml.h nrlmsise-00.h
-OPTS = -I/Users/include/Eigen -std=c++1z -O3
+OPTS = -I/opt/include/eigen3 -std=c++1z -O3
 LIBS = -L. -lnrlmsise
 
 all: main libnrlmsise.a

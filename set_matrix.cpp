@@ -15,8 +15,8 @@ void set_matrix(
     for(int ir = Nr - ion_L; ir < Nr; ir++){
         int i = ir - (Nr - ion_L);
         double Alt = ir*delta_r;
-        double omg_p = E_Q*std::sqrt(Ny[i]/E_M/EPS0);
-        std::complex <double> omg = omega - zj * Nh[i];
+        double omg_p = E_Q*std::sqrt(Nh[i]/E_M/EPS0);
+        std::complex <double> omg = omega - zj * Ny[i];
         std::complex <double> diag_comp = omega/(omg_c*omg_c - omg*omg);
         std::complex <double> offd_comp = zj * omg_c / (omg_c*omg_c - omg*omg);
         std::complex <double> coef = zj * EPS0 * omg_p*omg_p;
