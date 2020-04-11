@@ -3,9 +3,10 @@
 #include <cmath>
 #include "fdtd3d.h"
 
-void D_update(double**** D_r, double**** D_theta, double**** D_phi, 
-              double*** H_r, double*** H_theta, double*** H_phi, 
-              int NEW, int OLD)
+void D_update(
+    double**** D_r, double**** D_theta, double**** D_phi, 
+    double*** H_r, double*** H_theta, double*** H_phi, 
+    int NEW, int OLD)
 {
   double val_1, val_2;
   double ri_1, ri_2, ri_3;
