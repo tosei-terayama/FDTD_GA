@@ -1,10 +1,8 @@
 *.o
 main
-*.dat
 *.gpt
 *.gif
 *.emf
 *.exe
 .vscode/
 IRI-2016_for_cpp/*.txt
-dat_file/
