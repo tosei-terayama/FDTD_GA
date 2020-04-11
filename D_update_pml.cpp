@@ -86,5 +86,3 @@ void D_update_pml(double*** newD_r, double*** newD_theta, double*** newD_phi,
   }
 
 }
-
-
