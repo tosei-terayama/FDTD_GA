@@ -70,7 +70,7 @@ void E_update(
               Cmat[m][Ir][Ir] * E_r[Old][i][j][k] + 
               Cmat[m][Ir][Ith] * interpol_Eth + 
               Cmat[m][Ir][Iph] * interpol_Eph + 
-              Fmat[m][Ir][Ir] + (newD_r[i][j][k] - oldD_r[i][j][k]) + 
+              Fmat[m][Ir][Ir] * (newD_r[i][j][k] - oldD_r[i][j][k]) + 
               Fmat[m][Ir][Ith] * (interpol_nDth - interpol_oDth) + 
               Fmat[m][Ir][Iph] * (interpol_nDph - interpol_oDph);
            
