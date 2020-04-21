@@ -6,6 +6,7 @@
 #include <string>
 #include <chrono>
 #include <Eigen/Core>
+
 #include "fdtd3d.h"
 #include "pml.h"
 //#include <mpi.h>
@@ -62,8 +63,9 @@ const double Dec{-7.0*M_PI/180.0};
 const double Inc{49.0*M_PI/180.0};
 const double Azim{61.0*M_PI/180.0};
 
-int main(int argc, char** argv)
+double fdtd3d(void)
 {
+  double score;
   int flag(0);
   int time_step = 1200;
   double t;
@@ -358,9 +360,8 @@ int main(int argc, char** argv)
   delete [] Htheta_phi;
   delete [] Hphi_r;
   delete [] Hphi_theta;
-  
-  return 0;
-  
+
+  return score;
 }
 
 
