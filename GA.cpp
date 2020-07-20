@@ -46,17 +46,37 @@ void Cross_over(int Head_idx, int *Ind_idx, bool* Parent_chrom, bool* Child_chro
     std::random_device seed;
     std::mt19937 engine( seed() );
 
-    for(int i = 0; i < Nbit_total; i++){
+    for(int j = 0; j < Nbit_total; j++){
         if( engine()/rnd_max > 0.5){
-            /*
-                cross over
-            */
+            /* Cross over */
+            Child_chrom[Head_idx * Nbit_total + j]
+                = Parent_chrom[Ind_idx[1] * Nbit_total + j];
+            Child_chrom[(Head_idx+1) * Nbit_total + j]
+                = Parent_chrom[Ind_idx[0] * Nbit_total + j];
         }
+
         else {
-            /*
-                copy
-            */
+            Child_chrom[Head_idx * Nbit_total + j]
+             = Parent_chrom[Ind_idx[0] * Nbit_total + j];
+            Child_chrom[(Head_idx+1) * Nbit_total + j]
+             = Parent_chrom[Ind_idx[1] * Nbit_total + j];
         }
 
     }
+}
+
+void Mutation(int Num_Elete, int Num_Ind, double Mutation_rate, bool* Child_chrom){
+    std::random_device seed;
+    std::mt19937 engne( seed() );
+
+    for(int i = Num_Elete; i < Num_Ind; i++){
+        for(int j = 0; j < Nbit_total; j++){
+            /* Bit flip */
+            if( engine()/rnd_max < Mutation_rate){
+                Child_chrom[i * Nbit_total + j]
+                = !Child_chrom[i * Nbit_total + j];
+            }
+        }
+    }
+
 }

@@ -1,12 +1,14 @@
 #Makefile
-OBJS = main.o fdtd3d.o memory_allocate2d.o memory_allocate3d.o memory_allocate3cd.o \
-    memory_allocate4d.o sigma_calc.o D_update.o D_update_pml.o E_update.o H_update.o \
-	H_update_pml.o pml_class.o Ne_allocate.o ny_allocate.o geomagnetic.o surface_impe_calc.o \
+OBJS = fdtd3d.o memory_allocate2d.o memory_allocate2cd.o memory_allocate3d.o \
+	memory_allocate3cd.o memory_allocate4d.o memory_allocate5d.o \
+	sigma_calc.o D_update.o D_update_pml.o E_update.o H_update.o H_update_pml.o \
+	pml_class.o Ne_allocate.o ny_allocate.o geomagnetic.o surface_impe_calc.o \
 	surface_H_update.o PML_field_initialize.o PML_idx_initialize.o set_matrix.o \
-	GA.o
+	set_perturbation.o geocoordinate_class.o perturbation_class.o date_class.o \
+	output_profile.o output_model.o GA.o GA_agent.o /
 
-
-HEADERS = fdtd3d.h pml.h GA_agent.h nrlmsise-00.h
+HEADERS = fdtd3d.h pml.h geocoordinate.h perturbation.h date.h \
+	nrlmsise-00.h
 OPTS = -I/opt/include/eigen3 -std=c++1z -O3
 LIBS = -L. -lnrlmsise
 

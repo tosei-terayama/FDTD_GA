@@ -17,7 +17,7 @@ void H_update_pml(double*** E_r, double*** E_theta, double*** E_phi,
   
   //Update Hr using Hr_theta1, Hr_theta2, Hr_phi//
   for(int area = 0; area < 4; area++){
-    for(int i = 0; i < Nr + 1; i++){
+    for(int i = 1; i < Nr + 1; i++){
       ri_1 = dist(i);
       for(int j = idx_Hr[area].j1(); j <= idx_Hr[area].j2(); j++){
         int j_area = j - idx_Hr[area].j1();
@@ -42,7 +42,7 @@ void H_update_pml(double*** E_r, double*** E_theta, double*** E_phi,
 
   //Update Htheta using Htheta_phi, Htheta_r//
   for(int area = 0; area < 4; area++){
-    for(int i = 1; i < Nr; i++){
+    for(int i = 0; i < Nr; i++){
       ri_1 = dist(i);
       ri_2 = dist(i + 0.5);
       ri_3 = dist(i + 1.0);
@@ -66,7 +66,7 @@ void H_update_pml(double*** E_r, double*** E_theta, double*** E_phi,
   
   //Update Hphi using Hphi_r, Hphi_theta//
   for(int area = 0; area < 4; area++){
-    for(int i = 1; i < Nr; i++){
+    for(int i = 0; i < Nr; i++){
       ri_1 = dist(i);
       ri_2 = dist(i + 0.5);
       ri_3 = dist(i + 1.0);

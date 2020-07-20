@@ -1,5 +1,4 @@
 #include "fdtd3d.h"
-#include "pml.h"
 
 void PML_idx_initialize(
     pml* idx_Dr, pml* idx_Dth, pml* idx_Dphi,

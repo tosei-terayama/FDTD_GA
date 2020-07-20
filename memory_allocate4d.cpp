@@ -8,6 +8,7 @@ double**** memory_allocate4d(int m, int n, int o, int p, double ini)
 
   double ****array;
   array = new double***[m];
+  
   for(int i = 0; i < m; i++){
     array[i] = new double**[n];
     for(int j = 0; j < n; j++){

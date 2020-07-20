@@ -5,12 +5,13 @@
 #include <mpi.h>
 
 #include "GA_agent.h"
+#include "fdtd3d.h"
 
 constexpr int Num_Individual { 56 };  // Number of individuals
 constexpr int Num_Generation { 30 };  // Number of generations to repeat
 constexpr int Num_Elete { 2 };  //  Number of elete
 constexpr double rnd_max { std::pow(2, 32) };  //   Max of mersenne twister (32 bit)
-constexpr double Mutation { 0.03 };  // Mutation rate
+constexpr double Mutation_rate { 0.03 };  // Mutation incidence
 
 int main(int argc, char** argv){
 
@@ -112,6 +113,27 @@ int main(int argc, char** argv){
 
                 /* Uniform cross over */
                 Cross_over(i, ind_idx, chromosome[PARENT], chromosome[CHILD]);
+            }
+
+            /* 3% Mutation */
+            Mutation(Num_Elete, Num_Individual, Mutation_rate, chromosome[CHILD]);
+        }
+
+        /* Assign Chromosome to each agent */
+        if( rank == 0 ){
+            for(int i = 1; i < size; i++){
+                MPI::COMM_WORLD.Send(chromosome[CHILD], 
+                    Num_Individual*Nbit_total, MPI::BOOL, i, 1);
+            }
+        }   else{
+            MPI::COMM_WORLD.Recv(chromosome[CHILD],
+                Num_Individual*Nbit_total, MPI::BOOL, 0, 1);
+        }
+
+        for(int i = start_idx[rank]; i < end_idx[rank]; i++){
+            for(int j = 0; j < Nbit_total; j++){
+                Individual[CHILD][i].chrom[j]
+                    = chromosome[CHILD][i*Nbit_total + j];
             }
         }
 

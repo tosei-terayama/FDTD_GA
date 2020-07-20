@@ -11,7 +11,7 @@ void H_update(double*** E_r, double*** E_theta, double*** E_phi,
   double sin_th1, sin_th2, sin_th3;
   
   //update H outside PML area//
-  for(int i = 0; i < Nr + 1; i++){
+  for(int i = 1; i < Nr + 1; i++){
     ri_1 = dist(i);
     for(int j = L; j < Ntheta - L; j++){
       sin_th1 = std::sin(th(j));

@@ -27,34 +27,22 @@ void Ne_allocate(double *Nh, double *Nh_h, double *Re, double *Re_h)
         ifs.getline(buf, bufsize);
     }
 
-    for(int i = 0; i < ion_L; i++){
+    for(int i = 0; i < ion_L + 1; i++){
 
         ifs >> height >> Nh[i];
-
         Nh[i] = Nh[i]*1.0e6;
-
         for(int m = 0; m < 3; m++) ifs >> trash[m];
-
         ifs >> Te;
-
         Re[i] = Te/300.0;
-
         for(int m = 0; m < 9; m++) ifs >> trash[m];
-
         if(Nh[i] < 0.0) Nh[i] = 0.0;
-
         ifs >> height >> Nh_h[i];
-
         Nh_h[i] = Nh_h[i]*1.e6;
 
         for(int m = 0; m < 3; m++) ifs >> trash[m];
-
         ifs >> Te_h;
-        
         Re_h[i] = Te_h/300.0;
-
         for(int m = 0; m < 9; m++) ifs >> trash[m];
-
         if(Nh_h[i] < 0.0) Nh_h[i] = 0.0;
 
     }

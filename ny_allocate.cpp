@@ -39,7 +39,7 @@ void ny_allocate(double *ny, double *ny_h, double *Re, double *Re_h){
     Input.ap = 4.0;
     Input.ap_a = &Xp;
 
-    for(int i = 0; i < ion_L; i++){
+    for(int i = 0; i < ion_L + 1; i++){
 
         Input.alt = Nr - ion_L + i;
 

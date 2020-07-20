@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cmath>
 #include <complex>
+#include "fdtd3d.h"
 
 std::complex<double>*** memory_allocate3cd(int m, int n, int o, std::complex<double> ini)
 {
