@@ -5,7 +5,7 @@ OBJS = fdtd3d.o memory_allocate2d.o memory_allocate2cd.o memory_allocate3d.o \
 	pml_class.o Ne_allocate.o ny_allocate.o geomagnetic.o surface_impe_calc.o \
 	surface_H_update.o PML_field_initialize.o PML_idx_initialize.o set_matrix.o \
 	set_perturbation.o geocoordinate_class.o perturbation_class.o date_class.o \
-	output_profile.o output_model.o GA.o GA_agent.o /
+	output_profile.o output_model.o obs_initial.o
 
 HEADERS = fdtd3d.h pml.h geocoordinate.h perturbation.h date.h \
 	nrlmsise-00.h

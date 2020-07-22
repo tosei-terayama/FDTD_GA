@@ -38,6 +38,14 @@ extern const double delta_phi;
 extern const double Dt;
 extern const double inv_Dt;
 
+// Source point , Recieve point //
+extern const int i_s;
+extern const int j_s;
+extern const int k_s;
+extern const int i_r;
+extern const int j_r;
+extern const int k_r; 
+
 //PML information//
 extern const int L;
 extern const double M;
@@ -132,6 +140,8 @@ void set_matrix(
     double*** Iono_density, double* Collision_frequency);
 
 void set_perturbation(perturbation P_infomation, double*** Disturbance_ion, double* Nh);
+
+void obs_ini(geocoordinate*, geocoordinate**, int Num_of_observation_point);
 
 //inline function//
 inline double dist(double i){return R0 + i*delta_r;};

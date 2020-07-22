@@ -4,21 +4,22 @@
 class geocoordinate{
 private:
     double Lati, Longi, Alti;
-    int I, J, K;
-    int Position_r, Position_th, Position_phi;
+    int Geo_I, Geo_J, Geo_K;
+    int Obs_I, Obs_J, Obs_K;
 
 public:
     void geo_ijk(double, double, double);
+    void set_obs(int, int, int);
 
     double lati(void){ return Lati; }
     double longi(void){ return Longi; }
     double alti(void){ return Alti; }
-    int i(void){ return I; }
-    int j(void){ return J; }
-    int k(void){ return K; }
-    int obs_r(void){ return Position_r; }
-    int obs_th(void){ return Position_th; }
-    int obs_phi(void){ return Position_phi; }
+    int geo_i(void){ return Geo_I; }
+    int geo_j(void){ return Geo_J; }
+    int geo_k(void){ return Geo_K; }
+    int i(void){ return Obs_I; }
+    int j(void){ return Obs_J; }
+    int k(void){ return Obs_K; }
 
 };
 

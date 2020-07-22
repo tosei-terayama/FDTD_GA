@@ -65,7 +65,7 @@ const double Dec{-7.0*M_PI/180.0};
 const double Inc{49.0*M_PI/180.0};
 const double Azim{61.0*M_PI/180.0};
 
-int main(int argc, char** argv)
+int main( void )
 {
   int flag(0);
   int time_step = 2000;

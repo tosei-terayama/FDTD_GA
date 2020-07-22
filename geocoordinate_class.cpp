@@ -10,5 +10,11 @@ void geocoordinate::geo_ijk(double lati, double longi, double alti){
 
     //I = ;
     //J = ;
-    K = alti/1.0e3;
+    Geo_K = alti/1.0e3;
+}
+
+void geocoordinate::set_obs(int i, int j, int k){
+    Obs_I = i;
+    Obs_J = j;
+    Obs_K = k;
 }

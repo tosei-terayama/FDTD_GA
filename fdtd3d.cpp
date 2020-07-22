@@ -208,8 +208,6 @@ int main(int argc, char** argv)
   ofs_serve.open("./dat_file/serve.dat");
   std::ofstream ofs_j;
   ofs_j.open("./dat_file/J_value.dat");
-  std::ofstream ofs_geomag;
-  ofs_geomag.open("./profile/geomag.dat");
   std::ofstream ofs_Nphi;
   ofs_Nphi.open("./dat_file/obs_Nphi.dat");
   std::ofstream ofs_NphidB;
@@ -218,25 +216,9 @@ int main(int argc, char** argv)
   ofs_servedNphi.open("./dat_file/obs_3dNphi.dat");
   std::ofstream ofs_servedNphidB;
   ofs_servedNphidB.open("./dat_file/obs_3dNphidB.dat");
-  std::ofstream ofs_right;
-  ofs_right.open("./dat_file/obs_right.dat");
-  std::ofstream ofs_rightdB;
-  ofs_rightdB.open("./dat_file/obs_rightdB.dat");
-  std::ofstream ofs_left;
-  ofs_left.open("./dat_file/obs_left.dat");
-  std::ofstream ofs_leftdB;
-  ofs_leftdB.open("./dat_file/obs_leftdB.dat");
 
   // output analyze model //
   output_model();
-
-  // geomag profile //
-  /*for(int k = k_s; k <= Nphi; k+=4){
-    for(int j = L; j <= Ntheta - L; j+=4){
-      ofs_geomag << k - k_s << " " << j - L << " " << B_phi << " " << B_th << std::endl;
-    }
-    ofs_geomag << std::endl;
-  }*/
 
   output_profile(P_info, Nh, noise_Nh);
 
@@ -262,33 +244,29 @@ int main(int argc, char** argv)
   std::cout << "_______________________________________" << std::endl;
 
   ////主経路電波強度観測/////
-  int Num_obs = 1000;
+  int Num_obs = (Nphi - L) - k_s;
   double *Magnitude = new double[Num_obs + 1];
 
   //fourie//
-  std::complex <double> *E_famp;
-  std::complex <double> *E_famp_r;
-  std::complex <double> *E_famp_l;
-  std::complex <double> **E_famp_3d;
+  std::complex <double>* E_famp = new std::complex <double> [Num_obs + 1];
+  std::complex <double>** E_famp3d;
+  E_famp3d = memory_allocate2cd(Ntheta + 1, Nphi + 1, (0.0, 0.0));
 
-  E_famp = new std::complex<double> [Num_obs + 1];
-  for(int i = 0; i <= Num_obs; i++) E_famp[i] = (0.0, 0.0);
-  E_famp_r = new std::complex<double> [Num_obs + 1];
-  for(int i = 0; i <= Num_obs; i++) E_famp_r[i] = (0.0, 0.0);
-  E_famp_l = new std::complex<double> [Num_obs + 1];
-  for(int i = 0; i <= Num_obs; i++) E_famp_l[i] = (0.0, 0.0);
-
-  E_famp_3d = memory_allocate2cd(Ntheta + 1, Nphi + 1, (0.0, 0.0));
-
-  for(int k = 0; k < Nphi; k++){
-    E_famp[k] += Er[NEW][0][50][k]*std::exp(-zj*omega*t)*Dt;
-    E_famp_r[k] += Er[NEW][0][70][k]*std::exp(-zj*omega*t)*Dt;
-    E_famp_l[k] += Er[NEW][0][30][k]*std::exp(-zj*omega*t)*Dt;
+  geocoordinate *obs_p = new geocoordinate[Num_obs + 1];
+  geocoordinate **obs_p3d = new geocoordinate*[Ntheta + 1];
+  for(int j = 0; j <= Ntheta; j++){
+    obs_p3d[j] = new geocoordinate[Num_obs + 1];
   }
 
-  for(int j = 0; j < Ntheta; j++){
-    for(int k = k_s; k < Nphi; k++){
-      E_famp_3d[j][k] += Er[NEW][0][j][k]*std::exp(-zj*omega*t)*Dt;
+  obs_ini(obs_p, obs_p3d, Num_obs);  // Initialize observation point //
+
+  for(int k = 0; k < Num_obs; k++){
+    E_famp[k] += Er[0][obs_p[k].i()][obs_p[k].j()][obs_p[k].k()]*std::exp(-zj*omega*t)*Dt;
+  }
+
+  for(int j = L; j <= Ntheta - L; j++){
+    for(int k = 0; k < Num_obs; k++){
+      E_famp3d[j][k] += Er[0][obs_p3d[j][k].i()][obs_p3d[j][k].j()][obs_p3d[j][k].k()]*std::exp(-zj*omega*t)*Dt;
     }
   }
   
@@ -367,21 +345,15 @@ int main(int argc, char** argv)
     ofs_receive << t << " " << Etheta[NEW][i_r][j_r][k_r] << std::endl;
     ofs_serve << t << " " << Etheta[NEW][i_s][j_s][k_s] << std::endl;
 
-    for(int k = 0; k <= Num_obs; k++){
-      E_famp[k] += Er[NEW][0][50][k]*std::exp(-zj*omega*t)*Dt;
-      E_famp_r[k] += Er[NEW][0][70][k]*std::exp(-zj*omega*t)*Dt;
-      E_famp_l[k] += Er[NEW][0][30][k]*std::exp(-zj*omega*t)*Dt;
+    for(int k = 0; k < Num_obs; k++){
+      E_famp[k] += Er[NEW][obs_p[k].i()][obs_p[k].j()][obs_p[k].k()]*std::exp(-zj*omega*t)*Dt;
     }
 
-    for(int j = 0; j < Ntheta; j++){
-      for(int k = 0; k < Nphi; k++){
-        E_famp_3d[j][k] += Er[NEW][0][j][k]*std::exp(-zj*omega*t)*Dt;
+    for(int j = L; j <= Ntheta - L; j++){
+      for(int k = 0; k < Num_obs; k++){
+        E_famp3d[j][k] += Er[NEW][obs_p3d[j][k].i()][obs_p3d[j][k].j()][obs_p3d[j][k].k()]*std::exp(-zj*omega*t)*Dt;
       }
     }
-
-    /*for(int k = 0; k < Nphi; k++){
-      E_famp[k] += Er[NEW][0][50][k]*std::exp(-zj*omega*t)*Dt;
-    }*/
     
     std::cout << n << " / " << time_step << std::endl << std::endl;
     
@@ -396,29 +368,16 @@ int main(int argc, char** argv)
   
   std::cout << "elapsed_time = " << total_time*1.0e-3 << " [sec]"<< std::endl;
 
-  /*for(int n = 0; n <= Num_obs; n++){
-    double N = n * Nphi/Num_obs;
-
-    //Magnitude[n] = std::abs(Er[NEW][0][50][(int)N]);
-    ofs_right << N << " " << std::abs(Er[NEW][0][70][(int)N]) << std::endl;;
-    ofs_left << N << " " << std::abs(Er[NEW][0][30][(int)N]) << std::endl;;
-    ofs_Nphi << N << " " << Magnitude[n] << std::endl;
-    std::cout << N << std::endl;
-  }*/
-
-  for(int k = k_s; k <= Num_obs - L; k++){
-    ofs_Nphi << k - k_s << " " << std::log10(std::abs(E_famp[k])) << std::endl;
-    ofs_left << k - k_s << " " << std::log10(std::abs(E_famp_l[k])) << std::endl;
-    ofs_right << k - k_s << " " << std::log10(std::abs(E_famp_r[k])) << std::endl;
-    ofs_NphidB << k - k_s << " " << 20.0*std::log10(std::abs(E_famp[k]/E_famp[k_s])) << std::endl;
-    ofs_leftdB << k - k_s << " " << 20.0*std::log10(std::abs(E_famp_l[k]/E_famp_l[k_s])) << std::endl;
-    ofs_rightdB << k - k_s << " " << 20.0*std::log10(std::abs(E_famp_r[k]/E_famp_r[k_s])) << std::endl;
+  for(int k = 0; k < Num_obs; k++){
+    Magnitude[k] = 20.0*std::log10(std::abs(E_famp[k]/E_famp[0]));
+    ofs_Nphi << k << " " << std::log10(std::abs(E_famp[k])) << std::endl;
+    ofs_NphidB << k << " " << Magnitude[k] << std::endl;
   }
 
-  for(int k = k_s; k <= Nphi - L; k++){
+  for(int k = 0; k < Num_obs; k++){
     for(int j = L; j <= Ntheta - L; j++){
-      ofs_servedNphi << k - k_s << " " << j - L << " " << std::abs(E_famp_3d[j][k]) << std::endl;
-      ofs_servedNphidB << k - k_s << " " << j - L << " " << 20.0*std::log10(std::abs(E_famp_3d[j][k]/E_famp_3d[j_s][k_s])) << std::endl;
+      ofs_servedNphi << k << " " << j - L << " " << std::abs(E_famp3d[j][k]) << std::endl;
+      ofs_servedNphidB << k << " " << j - L << " " << 20.0*std::log10(std::abs(E_famp3d[j][k]/E_famp3d[j_s][0])) << std::endl;
     }
     ofs_servedNphi << std::endl;
     ofs_servedNphidB << std::endl;
@@ -432,10 +391,6 @@ int main(int argc, char** argv)
   ofs_NphidB.close();
   ofs_servedNphi.close();
   ofs_servedNphidB.close();
-  ofs_right.close();
-  ofs_rightdB.close();
-  ofs_left.close();
-  ofs_leftdB.close();
 
   delete [] Er;
   delete [] Etheta;
@@ -459,10 +414,9 @@ int main(int argc, char** argv)
   delete [] Htheta_phi;
   delete [] Hphi_r;
   delete [] Hphi_theta;
+  delete [] Magnitude;
   delete [] E_famp;
-  delete [] E_famp_3d;
-  delete [] E_famp_l;
-  delete [] E_famp_r;
+  delete [] E_famp3d;
   
   return 0;
   
