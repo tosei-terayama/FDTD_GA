@@ -18,8 +18,6 @@ void set_perturbation(perturbation P_info, double*** dis_Nh, double* Nh){
     int th0 = (int)p_th0;
     int phi0 = (int)p_phi0;
 
-    int r_index(0), th_index(0), phi_index(0);
-
     Eigen::Vector3d ion_r0;
     Eigen::Vector3d unit_r0;
     Eigen::Vector3d ion_r;

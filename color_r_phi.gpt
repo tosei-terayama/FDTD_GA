@@ -1,0 +1,27 @@
+set xlabel "Phi [km]" font "Times New Roman,12"
+set ylabel "R [km]" font "Times New Roman,12"
+
+set xtics 50
+set ytics 25
+
+set xlabel rotate parallel
+set ylabel rotate parallel
+
+#set xlabel offset 0, 1.5
+#set ylabel offset 0,-0.5
+
+set palette rgbformulae 33,13,10
+
+set pm3d
+set pm3d map
+set ticslevel 0
+#set size ratio-1
+set cbrange [-5.0e-9:5.0e-9]
+set palette defined (-5.0e-9 "blue", 0 "white", 5.0e-9 "red")
+
+set size 0.9, 0.9
+
+do for[i=0:350]{
+splot sprintf("E%d.dat", i) title sprintf("Er%d.dat", i) at screen 0.5,0.8 with pm3d
+pause 0.015
+}

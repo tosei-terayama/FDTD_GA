@@ -1,9 +1,9 @@
 E*.dat
 *.o
 main
-*.gpt
 *.gif
 *.emf
 *.exe
+*.gif
 .vscode/
 IRI-2016_for_cpp/*.txt

@@ -65,13 +65,12 @@ const double Dec{-7.0*M_PI/180.0};
 const double Inc{49.0*M_PI/180.0};
 const double Azim{61.0*M_PI/180.0};
 
-int main(int argc, char** argv)
+int main(void)
 {
-  int flag(0);
   int time_step = 2000;
   double t;
   double J;
-  double time_1, time_2, total_time;
+  double total_time;
   int NEW;
   int OLD;
   std::complex <double> zj(0.0, 1.0);
@@ -156,24 +155,28 @@ int main(int argc, char** argv)
 
   std::cout << "B_theta = " << B_th << "\tB_phi = " << B_phi << std::endl;
 
+  // Geo class //
+  geocoordinate lla_info;
+  lla_info.set_point(32.0, 135.0, 60.0);
+
+  // Date class (UT)//
+  date ymd;
+  ymd.set_ymd(2016, 3 ,1);
+  ymd.set_h(9.0);
+
   //Ne, nyu//
   double *Nh = new double[ion_L+1];
   double *ny = new double[ion_L+1];
-
-  double *Nh_h = new double[ion_L+1];
-  double *ny_h = new double[ion_L+1];
-
   double *Re = new double[ion_L+1];
-  double *Re_h = new double[ion_L+1];
 
-  //double ***Cmat = memory_allocate3d(ion_L+1, 3, 3, 0.0);
-  //double ***Fmat = memory_allocate3d(ion_L+1, 3, 3, 0.0);
+  iri_profile(ymd, lla_info, Nh, Re);
+
+  //Ne_allocate(Nh, Nh_h, Re, Re_h);
+  ny_allocate(ymd, lla_info, ny, Re);
+
   double *****Cmat = memory_allocate5d(ion_L+1, Ntheta, Nphi, 3, 3, 0.0);
   double *****Fmat = memory_allocate5d(ion_L+1, Ntheta, Nphi, 3, 3, 0.0);
-
-  Ne_allocate(Nh, Nh_h, Re, Re_h);
-  ny_allocate(ny, ny_h, Re, Re_h);
-
+  
   double*** noise_Nh = memory_allocate3d(ion_L, Ntheta, Nphi, 0.0);
   
   perturbation P_info;
@@ -228,14 +231,14 @@ int main(int argc, char** argv)
     double Phi = R0*ph(k)/1000.0;
     for(int i = 0; i < Nr; i++){
       double R = i*delta_r/1000.0;
-      ofs_1 << Phi << " " << R << " " << Etheta[NEW][i][j_s][k] << std::endl;
+      ofs_1 << Phi << " " << R << " " << Etheta[0][i][j_s][k] << std::endl;
     }
     ofs_1 << std::endl;
   }
 
   ofs_1.close();
-  ofs_receive << 0 << " " << Etheta[NEW][i_r][j_r][k_r] << std::endl;
-  ofs_serve << 0 << " " << Etheta[NEW][i_s][j_s][k_s] << std::endl;
+  ofs_receive << 0 << " " << Etheta[0][i_r][j_r][k_r] << std::endl;
+  ofs_serve << 0 << " " << Etheta[0][i_s][j_s][k_s] << std::endl;
 
   std::cout << "R : " << dist(Nr) << " θ : " << R0*delta_theta*Ntheta << " φ : " << R0*ph(Nphi) << std::endl;
   std::cout << "time_step : " << time_step << " Dt : " << Dt << std::endl << std::endl;
@@ -249,8 +252,7 @@ int main(int argc, char** argv)
 
   //fourie//
   std::complex <double>* E_famp = new std::complex <double> [Num_obs + 1];
-  std::complex <double>** E_famp3d;
-  E_famp3d = memory_allocate2cd(Ntheta + 1, Nphi + 1, (0.0, 0.0));
+  std::complex <double>** E_famp3d = memory_allocate2cd(Ntheta + 1, Nphi + 1, std::complex <double> (0.0, 0.0));
 
   geocoordinate *obs_p = new geocoordinate[Num_obs + 1];
   geocoordinate **obs_p3d = new geocoordinate*[Ntheta + 1];

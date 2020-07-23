@@ -5,7 +5,9 @@
 #include <cmath>
 #include "fdtd3d.h"
 
-double fdtd3d(void);
+double fdtd_calc(perturbation, date, geocoordinate, 
+                int Number_of_observation, geocoordinate* Position_of_observation,
+                double* Magnitude);
 
 void sort_Individual(int Num_Individual, double* score, bool* chromosome);
 

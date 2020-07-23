@@ -11,7 +11,6 @@ void E_update(
   double ***newD_r = D_r[New], ***oldD_r = D_r[Old];
   double ***newD_th = D_theta[New], ***oldD_th = D_theta[Old];
   double ***newD_ph = D_phi[New], ***oldD_ph = D_phi[Old];
-  double theta(0.0), phi(0.0);
   double maxE(0.0);
   double interpol_Er(0.0), interpol_Eth(0.0), interpol_Eph(0.0);
   double interpol_nDr(0.0), interpol_nDth(0.0), interpol_nDph(0.0),
@@ -42,7 +41,6 @@ void E_update(
     int m = i - (Nr - ion_L);
     for(int j = 1; j < Ntheta; j++){
       for(int k = 1; k < Nphi; k++){
-          phi = k*delta_phi;
           
           interpol_Eth = (
             E_theta[Old][i  ][j][k] + E_theta[Old][i  ][j-1][k] + 
@@ -71,10 +69,6 @@ void E_update(
               Fmat[m][j][k][Ir][Ir] * (newD_r[i][j][k] - oldD_r[i][j][k]) + 
               Fmat[m][j][k][Ir][Ith] * (interpol_nDth - interpol_oDth) + 
               Fmat[m][j][k][Ir][Iph] * (interpol_nDph - interpol_oDph);
-           
-         /*E_r[NEW][i][j][k] = E_update_iono(sigma_car_r[i - Nr + ion_L], E_r[OLD][i][j][k], interpol_Eth, interpol_Eph,
-         D_r[NEW][i][j][k], interpol_nDth, interpol_nDph, D_r[OLD][i][j][k], interpol_oDth, interpol_oDph,
-         iono_flag, Cmat_r[i - Nr + ion_L][j][k], Fmat_r[i - Nr + ion_L][j][k]);*/
 
           if(maxE < std::abs(E_r[New][i][j][k])){
           flag = 1;
@@ -109,9 +103,7 @@ void E_update(
   for(int i = Nr - ion_L; i < Nr; i++){
     int m = i - (Nr - ion_L);
     for(int j = 0; j < Ntheta; j++){
-      //theta = th(j + 0.5);
       for(int k = 1; k < Nphi; k++){
-          //phi = k*delta_phi;
 
           interpol_Er = (
             E_r[Old][i][j  ][k] + E_r[Old][i-1][j  ][k] + 
@@ -132,10 +124,6 @@ void E_update(
           interpol_Eth = (
             oldD_ph[i][j  ][k] + oldD_ph[i][j  ][k-1] + 
             oldD_ph[i][j+1][k] + oldD_ph[i][j+1][k-1])/4.0;
-
-          /*E_theta[NEW][i][j][k] = E_update_iono(sigma_car[i - Nr + ion_L], interpol_Er, E_theta[OLD][i][j][k], interpol_Eph,
-          interpol_nDr, D_theta[NEW][i][j][k], interpol_nDph, interpol_oDr, D_theta[OLD][i][j][k], interpol_oDph,
-          iono_flag, Cmat_th[i - Nr + ion_L][j][k], Fmat_th[i - Nr + ion_L][j][k]);*/
 
           E_theta[New][i][j][k] = 
               Cmat[m][j][k][Ith][Ir] * interpol_Er +
@@ -178,9 +166,7 @@ void E_update(
   for(int i = Nr - ion_L; i < Nr; i++){
     int m = i - (Nr - ion_L);
     for(int j = 1; j < Ntheta; j++){
-      //theta = th(j);
       for(int k = 0; k < Nphi; k++){
-          //phi = (k + 0.5)*delta_phi;
 
           interpol_Er = (
             E_r[Old][i][j][k  ] + E_r[Old][i-1][j][k  ] + 
@@ -201,10 +187,6 @@ void E_update(
           interpol_oDth = (
             oldD_th[i][j][k  ] + oldD_th[i][j-1][k  ] + 
             oldD_th[i][j][k+1] + oldD_th[i][j-1][k+1])/4.0;
-
-          /*E_phi[NEW][i][j][k] = E_update_iono(sigma_car[i - Nr + ion_L], interpol_Er, interpol_Eth, E_phi[OLD][i][j][k],
-          interpol_nDr, interpol_nDth, D_phi[NEW][i][j][k], interpol_oDr, interpol_oDth, D_phi[OLD][i][j][k],
-          iono_flag, Cmat_phi[i - Nr + ion_L][j][k], Fmat_phi[i - Nr + ion_L][j][k]);*/
 
           E_phi[New][i][j][k] =
                 Cmat[m][j][k][Iph][Ir] * interpol_Er + 

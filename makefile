@@ -1,19 +1,21 @@
 #Makefile
-OBJS = fdtd3d.o memory_allocate2d.o memory_allocate2cd.o memory_allocate3d.o \
+OBJS = fdtd_calc.o memory_allocate2d.o memory_allocate2cd.o memory_allocate3d.o \
 	memory_allocate3cd.o memory_allocate4d.o memory_allocate5d.o \
 	sigma_calc.o D_update.o D_update_pml.o E_update.o H_update.o H_update_pml.o \
-	pml_class.o Ne_allocate.o ny_allocate.o geomagnetic.o surface_impe_calc.o \
+	pml_class.o ny_allocate.o geomagnetic.o surface_impe_calc.o \
 	surface_H_update.o PML_field_initialize.o PML_idx_initialize.o set_matrix.o \
 	set_perturbation.o geocoordinate_class.o perturbation_class.o date_class.o \
-	output_profile.o output_model.o obs_initial.o
+	output_profile.o output_model.o obs_initial.o iri_profile.o \
+	cira.o igrf.o iridreg.o iriflip.o irifun.o irisub.o iritec.o iritest.o \
+	GA.o GA_agent.o
 
 HEADERS = fdtd3d.h pml.h geocoordinate.h perturbation.h date.h \
 	nrlmsise-00.h
-OPTS = -I/opt/include/eigen3 -std=c++1z -O3
+
+OPTS = -I/Users/include/Eigen -std=c++1z -lgfortran -O3 -Wall
 LIBS = -L. -lnrlmsise
 
 all: main libnrlmsise.a
-
 .PHONY: all clean
 
 main: $(OBJS) libnrlmsise.a
@@ -24,6 +26,9 @@ main: $(OBJS) libnrlmsise.a
 
 %.o: %.c
 	g++ -c $< $(OPTS)
+
+%.o: %.for
+	gfortran -c $< -Wall -O3
 
 LIBOBJS = nrlmsise-00.o nrlmsise-00_data.o
 libnrlmsise.a: $(LIBOBJS)

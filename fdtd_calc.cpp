@@ -11,6 +11,7 @@
 #include "geocoordinate.h"
 #include "perturbation.h"
 #include "date.h"
+#include "GA_agent.h"
 //#include <mpi.h>
 
 const int Nr{100};
@@ -38,7 +39,7 @@ const int k_0 = Nphi/2;
 //Source_point//
 const int i_s{1};
 const int j_s{50};
-const int k_s{50};
+const int k_s{100};
 
 //Receive_point//
 const int i_r{1};
@@ -65,13 +66,12 @@ const double Dec{-7.0*M_PI/180.0};
 const double Inc{49.0*M_PI/180.0};
 const double Azim{61.0*M_PI/180.0};
 
-int main( void )
+int main(P_info, ymd, lla_info, Num_obs, obs_p, Magnitude)
 {
-  int flag(0);
   int time_step = 2000;
   double t;
   double J;
-  double time_1, time_2, total_time;
+  double total_time;
   int NEW;
   int OLD;
   std::complex <double> zj(0.0, 1.0);
@@ -156,47 +156,43 @@ int main( void )
 
   std::cout << "B_theta = " << B_th << "\tB_phi = " << B_phi << std::endl;
 
+  // Geo class //
+  geocoordinate lla_info;
+  lla_info.set_point(32.0, 135.0, 60.0);
+
+  // Date class (UT)//
+  date ymd;
+  ymd.set_ymd(2016, 3 ,1);
+  ymd.set_h(9.0);
+
   //Ne, nyu//
   double *Nh = new double[ion_L+1];
   double *ny = new double[ion_L+1];
-
-  double *Nh_h = new double[ion_L+1];
-  double *ny_h = new double[ion_L+1];
-
   double *Re = new double[ion_L+1];
-  double *Re_h = new double[ion_L+1];
 
-  //double ***Cmat = memory_allocate3d(ion_L+1, 3, 3, 0.0);
-  //double ***Fmat = memory_allocate3d(ion_L+1, 3, 3, 0.0);
+  iri_profile(ymd, lla_info, Nh, Re);
+
+  //Ne_allocate(Nh, Nh_h, Re, Re_h);
+  ny_allocate(ymd, lla_info, ny, Re);
+
   double *****Cmat = memory_allocate5d(ion_L+1, Ntheta, Nphi, 3, 3, 0.0);
   double *****Fmat = memory_allocate5d(ion_L+1, Ntheta, Nphi, 3, 3, 0.0);
-
-  Ne_allocate(Nh, Nh_h, Re, Re_h);
-  ny_allocate(ny, ny_h, Re, Re_h);
-
-  double*** dis_ion = memory_allocate3d(ion_L+1, Ntheta, Nphi, 0.0);
-  double*** dis_Nh = memory_allocate3d(ion_L+1, Ntheta, Nphi, 0.0);
-
-  //// Sigma * 2 /////
-  int range_r = 5;
-  int range_th = 15;
-  int range_ph = 15;
-  /*int range_r = 0;
-  int range_th = 0;
-  int range_ph = 0;*/
+  
+  double*** noise_Nh = memory_allocate3d(ion_L, Ntheta, Nphi, 0.0);
   
   perturbation P_info;
-  double p_r0, p_th0, p_phi0;
-  double Alpha;
-  double Sigma_r, Sigma_h;
 
-  P_info.set_center(76.0, Ntheta/2, Nphi/2);
+  P_info.set_center(74.0, Ntheta/2, Nphi/2);
   P_info.set_alpha(10.0);
-  P_info.set_sigma(2.0e3, 60.0e3);  
+  P_info.set_sigma(2.0e3, 60.0e3);
+  //P_info.set_range(0, 0, 0);
+  P_info.set_range(5, 15, 15);
+  //P_info.set_range(5, 20, 20);
+  //P_info.set_range(5, 25, 25);
 
-  set_perturbation(P_info, range_r, range_th, range_ph, dis_Nh, Nh);
+  set_perturbation(P_info, noise_Nh, Nh);
 
-  set_matrix(zj, Cmat, Fmat, dis_Nh, ny);
+  set_matrix(zj, Cmat, Fmat, noise_Nh, ny);
 
   //calculate surface impedance//
   std::complex <double> Z(0.0, 0.0);
@@ -210,57 +206,25 @@ int main( void )
 
   std::ofstream ofs_1;
   ofs_1.open("./dat_file/E0.dat");
-  std::ofstream ofs_2;
-  ofs_2.open("./dat_file/receive.dat");
-  std::ofstream ofs_3;
-  ofs_3.open("./dat_file/serve.dat");
-  std::ofstream ofs_4;
-  ofs_4.open("./dat_file/fourie.dat");
-  std::ofstream ofs_5;
-  ofs_5.open("./dat_file/gain_graph.dat");
+  std::ofstream ofs_receive;
+  ofs_receive.open("./dat_file/receive.dat");
+  std::ofstream ofs_serve;
+  ofs_serve.open("./dat_file/serve.dat");
   std::ofstream ofs_j;
   ofs_j.open("./dat_file/J_value.dat");
-  std::ofstream ofs_Nh;
-  ofs_Nh.open("./profile/Nh.dat");
-  std::ofstream ofs_disNh;
-  ofs_disNh.open("./profile/disNh.dat");
   std::ofstream ofs_Nphi;
   ofs_Nphi.open("./dat_file/obs_Nphi.dat");
+  std::ofstream ofs_NphidB;
+  ofs_NphidB.open("./dat_file/obs_NphidB.dat");
+  std::ofstream ofs_servedNphi;
+  ofs_servedNphi.open("./dat_file/obs_3dNphi.dat");
+  std::ofstream ofs_servedNphidB;
+  ofs_servedNphidB.open("./dat_file/obs_3dNphidB.dat");
 
-  //original dens profile//
-  for(int i = 0; i < ion_L; i++){
-    ofs_Nh << Nh[i] << " " << i + (int)Alt_lower_ionosphere/1.0e3 << std::endl;
-  }
-  ofs_Nh.close();
+  // output analyze model //
+  output_model();
 
-  /*for(int i = 0; i < ion_L; i++){
-    for(int k = 0; k < Nphi; k++){
-      ofs_disNh << k << " " << i + (int)Alt_lower_ionosphere/1.0e3 << " " << dis_Nh[i][(int)P_info.th0()][k] << std::endl;
-    }
-    ofs_disNh << std::endl;
-  }*/
-
-  /*for(int i = 0; i < ion_L; i++){
-    for(int j = 0; j < Ntheta; j++){
-      ofs_disNh << j << " " << i + (int)Alt_lower_ionosphere/1.0e3 << " " << dis_Nh[i][j][(int)P_info.phi0()] << std::endl; 
-    }
-    ofs_disNh << std::endl;
-  }*/
-
-  /*for(int k = 0; k < Nphi; k++){
-    for(int j = 0; j < Ntheta; j++){
-      ofs_disNh << k << " " << j << " " << dis_Nh[(int)(P_info.r0() - Alt_lower_ionosphere/1.0e3)][j][k] << std::endl;
-    }
-    ofs_disNh << std::endl;
-  }*/
-
-  /*for(int i = 0; i < ion_L; i++){
-    ofs_disNh << dis_Nh[i][(int)dis_th0][(int)dis_phi0] << " " << i + (int)Alt_lower_ionosphere/1.0e3 << std::endl;
-  }*/
-
-  std::complex <double> *E_famp;
-  E_famp = new std::complex<double> [Nphi + 1];
-  for(int i = 0; i <= Nphi; i++) E_famp[i] = (0.0, 0.0);
+  output_profile(P_info, Nh, noise_Nh);
 
   t = Dt*0.0;
 
@@ -268,30 +232,46 @@ int main( void )
     double Phi = R0*ph(k)/1000.0;
     for(int i = 0; i < Nr; i++){
       double R = i*delta_r/1000.0;
-      ofs_1 << Phi << " " << R << " " << Etheta[NEW][i][j_s][k] << std::endl;
+      ofs_1 << Phi << " " << R << " " << Etheta[0][i][j_s][k] << std::endl;
     }
     ofs_1 << std::endl;
   }
 
   ofs_1.close();
-
-  //fourie//
-  for(int k = 0; k < Nphi; k++){
-    E_famp[k] += Etheta[NEW][1][Ntheta/2][k]*std::exp(-zj*omega*0.0)*Dt;
-  }
-
-  ofs_2 << 0 << " " << Etheta[NEW][i_r][j_r][k_r] << std::endl;
-  ofs_3 << 0 << " " << Etheta[NEW][i_s][j_s][k_s] << std::endl;
+  ofs_receive << 0 << " " << Etheta[0][i_r][j_r][k_r] << std::endl;
+  ofs_serve << 0 << " " << Etheta[0][i_s][j_s][k_s] << std::endl;
 
   std::cout << "R : " << dist(Nr) << " θ : " << R0*delta_theta*Ntheta << " φ : " << R0*ph(Nphi) << std::endl;
   std::cout << "time_step : " << time_step << " Dt : " << Dt << std::endl << std::endl;
-  std::cout << "range(r) : " << range_r << " range(th) : " << range_th << " range(phi) : " << range_ph << std::endl;
+  std::cout << "range(r) : " << P_info.range_r() << " range(th) : " << P_info.range_th() << " range(phi) : " << P_info.range_phi() << std::endl;
   std::cout << "Perturbation r0 : " << P_info.r0() << " th0 : " << P_info.th0() << " phi0 : " << P_info.phi0() << std::endl;
   std::cout << "_______________________________________" << std::endl;
 
   ////主経路電波強度観測/////
-  int obs_N = 100;
-  double *magnitude = new double[obs_N + 1];
+  int Num_obs = (Nphi - L) - k_s;
+  double *Magnitude = new double[Num_obs + 1];
+
+  //fourie//
+  std::complex <double>* E_famp = new std::complex <double> [Num_obs + 1];
+  std::complex <double>** E_famp3d = memory_allocate2cd(Ntheta + 1, Nphi + 1, std::complex <double> (0.0, 0.0));
+
+  geocoordinate *obs_p = new geocoordinate[Num_obs + 1];
+  geocoordinate **obs_p3d = new geocoordinate*[Ntheta + 1];
+  for(int j = 0; j <= Ntheta; j++){
+    obs_p3d[j] = new geocoordinate[Num_obs + 1];
+  }
+
+  obs_ini(obs_p, obs_p3d, Num_obs);  // Initialize observation point //
+
+  for(int k = 0; k < Num_obs; k++){
+    E_famp[k] += Er[0][obs_p[k].i()][obs_p[k].j()][obs_p[k].k()]*std::exp(-zj*omega*t)*Dt;
+  }
+
+  for(int j = L; j <= Ntheta - L; j++){
+    for(int k = 0; k < Num_obs; k++){
+      E_famp3d[j][k] += Er[0][obs_p3d[j][k].i()][obs_p3d[j][k].j()][obs_p3d[j][k].k()]*std::exp(-zj*omega*t)*Dt;
+    }
+  }
   
   ////////計測開始////////
   std::chrono::system_clock::time_point start
@@ -349,7 +329,7 @@ int main( void )
       Er[NEW], Etheta[NEW], Ephi[NEW], Hr, Htheta, Hphi, 
       Hr_theta1, Hr_theta2, Hr_phi, Htheta_phi, Htheta_r, Hphi_r, Hphi_theta, 
       sigma_theta_h, sigma_phi_h, idx_Hr, idx_Hth, idx_Hphi);
-    
+
     std::string fn = "./dat_file/E" + std::to_string(n) + ".dat";
     ofs_1.open(fn);
     std::ofstream ofs_1(fn.c_str());
@@ -365,11 +345,17 @@ int main( void )
     
     ofs_1.close();
 
-    ofs_2 << t << " " << Etheta[NEW][i_r][j_r][k_r] << std::endl;
-    ofs_3 << t << " " << Etheta[NEW][i_s][j_s][k_s] << std::endl;
+    ofs_receive << t << " " << Etheta[NEW][i_r][j_r][k_r] << std::endl;
+    ofs_serve << t << " " << Etheta[NEW][i_s][j_s][k_s] << std::endl;
 
-    for(int k = 0; k < Nphi; k++){
-      E_famp[k] += Etheta[NEW][1][Ntheta/2][k]*std::exp(-zj*omega*t)*Dt;
+    for(int k = 0; k < Num_obs; k++){
+      E_famp[k] += Er[NEW][obs_p[k].i()][obs_p[k].j()][obs_p[k].k()]*std::exp(-zj*omega*t)*Dt;
+    }
+
+    for(int j = L; j <= Ntheta - L; j++){
+      for(int k = 0; k < Num_obs; k++){
+        E_famp3d[j][k] += Er[NEW][obs_p3d[j][k].i()][obs_p3d[j][k].j()][obs_p3d[j][k].k()]*std::exp(-zj*omega*t)*Dt;
+      }
     }
     
     std::cout << n << " / " << time_step << std::endl << std::endl;
@@ -385,25 +371,29 @@ int main( void )
   
   std::cout << "elapsed_time = " << total_time*1.0e-3 << " [sec]"<< std::endl;
 
-  for(int n = 0; n < obs_N + 1; n++){
-    magnitude[n] = std::abs(Er[NEW][0][50][n]);
-    ofs_Nphi << n * Nphi/obs_N << " " << std::abs(Er[NEW][0][50][n]) << std::endl;
+  for(int k = 0; k < Num_obs; k++){
+    Magnitude[k] = 20.0*std::log10(std::abs(E_famp[k]/E_famp[0]));
+    ofs_Nphi << k << " " << std::log10(std::abs(E_famp[k])) << std::endl;
+    ofs_NphidB << k << " " << Magnitude[k] << std::endl;
   }
 
-  for(int k = k_s; k < k_r; k++){
-    ofs_4 << R0*ph(k)/1000.0 << " " << std::abs(E_famp[k]) << std::endl;
-  }
-
-  for(int k = k_s; k < k_r; k++){
-    ofs_5 << k << " " << 20.0*std::log10(std::abs(E_famp[k]/E_famp[k_s])) << std::endl;
+  for(int k = 0; k < Num_obs; k++){
+    for(int j = L; j <= Ntheta - L; j++){
+      ofs_servedNphi << k << " " << j - L << " " << std::abs(E_famp3d[j][k]) << std::endl;
+      ofs_servedNphidB << k << " " << j - L << " " << 20.0*std::log10(std::abs(E_famp3d[j][k]/E_famp3d[j_s][0])) << std::endl;
+    }
+    ofs_servedNphi << std::endl;
+    ofs_servedNphidB << std::endl;
   }
 
   ofs_1.close();
-  ofs_2.close();
-  ofs_3.close();
-  ofs_4.close();
-  ofs_5.close();
+  ofs_receive.close();
+  ofs_serve.close();
   ofs_j.close();
+  ofs_Nphi.close();
+  ofs_NphidB.close();
+  ofs_servedNphi.close();
+  ofs_servedNphidB.close();
 
   delete [] Er;
   delete [] Etheta;
@@ -427,6 +417,9 @@ int main( void )
   delete [] Htheta_phi;
   delete [] Hphi_r;
   delete [] Hphi_theta;
+  delete [] Magnitude;
+  delete [] E_famp;
+  delete [] E_famp3d;
   
   return 0;
   

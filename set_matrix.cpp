@@ -14,7 +14,7 @@ void set_matrix(
 
     for(int ir = Nr - ion_L; ir < Nr; ir++){
         int i = ir - (Nr - ion_L);
-        double Alt = ir*delta_r;
+        //double Alt = ir*delta_r;
 
         for(int j = 0; j < Ntheta; j++){
             for(int k = 0; k < Nphi; k++){
