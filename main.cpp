@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cmath>
 #include <random>
+#include <fstream>
 #include <mpi.h>
 
 #include "GA_agent.h"
@@ -55,6 +56,29 @@ int main(int argc, char** argv){
         start_idx[myrank] = myrank * assigned_num;
         end_idx[myrank] = (myrank + 1) * assigned_num;
     }
+
+    /* Initialize parameter ( date/perturbation/geocoordinate ) */
+    // 仮置き //
+    date ymd;
+    ymd.set_ymd(2016, 3, 1);
+    ymd.set_h(9.0);
+
+    geocoordinate lla_info;
+    lla_info.set_poit(32.0, 135.0, 60.0);
+
+    perturbation P_info;
+    P_info.set_center(74.0, Ntheta/2, Nphi/2);
+    P_info.set_alpha(10.0);
+    P_info.set_sigma(2.0e3, 60.0e3);
+    P_info.set_range(5, 15, 15);
+
+    // Observation points on propagation path //
+    int Num_obs = (Nphi - L) - k_s;
+    geocoordinate* obs_p = new geocoordinate[Num_obs + 1];
+
+    // amplitude //
+    double *Magnitude = new double[Num_obs + 1];
+    double *target_Magnitude = new double[Num_obs + 1];
 
     /* GA programming */
     for(int gen = 0; gen < Num_Generation; gen++){

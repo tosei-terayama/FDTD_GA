@@ -66,7 +66,8 @@ const double Dec{-7.0*M_PI/180.0};
 const double Inc{49.0*M_PI/180.0};
 const double Azim{61.0*M_PI/180.0};
 
-int main(P_info, ymd, lla_info, Num_obs, obs_p, Magnitude)
+int fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
+            int Num_obs, geocoordinate* obs_p, double* Magnitude)
 {
   int time_step = 2000;
   double t;
@@ -156,17 +157,9 @@ int main(P_info, ymd, lla_info, Num_obs, obs_p, Magnitude)
 
   std::cout << "B_theta = " << B_th << "\tB_phi = " << B_phi << std::endl;
 
-  // Geo class //
-  geocoordinate lla_info;
-  lla_info.set_point(32.0, 135.0, 60.0);
-
-  // Date class (UT)//
-  date ymd;
-  ymd.set_ymd(2016, 3 ,1);
-  ymd.set_h(9.0);
-
   //Ne, nyu//
   double *Nh = new double[ion_L+1];
+  double*** noise_Nh = memory_allocate3d(ion_L, Ntheta, Nphi, 0.0);
   double *ny = new double[ion_L+1];
   double *Re = new double[ion_L+1];
 
@@ -177,18 +170,6 @@ int main(P_info, ymd, lla_info, Num_obs, obs_p, Magnitude)
 
   double *****Cmat = memory_allocate5d(ion_L+1, Ntheta, Nphi, 3, 3, 0.0);
   double *****Fmat = memory_allocate5d(ion_L+1, Ntheta, Nphi, 3, 3, 0.0);
-  
-  double*** noise_Nh = memory_allocate3d(ion_L, Ntheta, Nphi, 0.0);
-  
-  perturbation P_info;
-
-  P_info.set_center(74.0, Ntheta/2, Nphi/2);
-  P_info.set_alpha(10.0);
-  P_info.set_sigma(2.0e3, 60.0e3);
-  //P_info.set_range(0, 0, 0);
-  P_info.set_range(5, 15, 15);
-  //P_info.set_range(5, 20, 20);
-  //P_info.set_range(5, 25, 25);
 
   set_perturbation(P_info, noise_Nh, Nh);
 
@@ -247,10 +228,6 @@ int main(P_info, ymd, lla_info, Num_obs, obs_p, Magnitude)
   std::cout << "Perturbation r0 : " << P_info.r0() << " th0 : " << P_info.th0() << " phi0 : " << P_info.phi0() << std::endl;
   std::cout << "_______________________________________" << std::endl;
 
-  ////主経路電波強度観測/////
-  int Num_obs = (Nphi - L) - k_s;
-  double *Magnitude = new double[Num_obs + 1];
-
   //fourie//
   std::complex <double>* E_famp = new std::complex <double> [Num_obs + 1];
   std::complex <double>** E_famp3d = memory_allocate2cd(Ntheta + 1, Nphi + 1, std::complex <double> (0.0, 0.0));
@@ -260,8 +237,6 @@ int main(P_info, ymd, lla_info, Num_obs, obs_p, Magnitude)
   for(int j = 0; j <= Ntheta; j++){
     obs_p3d[j] = new geocoordinate[Num_obs + 1];
   }
-
-  obs_ini(obs_p, obs_p3d, Num_obs);  // Initialize observation point //
 
   for(int k = 0; k < Num_obs; k++){
     E_famp[k] += Er[0][obs_p[k].i()][obs_p[k].j()][obs_p[k].k()]*std::exp(-zj*omega*t)*Dt;
