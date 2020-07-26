@@ -28,7 +28,7 @@ constexpr int Num_patameter { 7 };
 
 /* パラメタのビット数 (location, density, disturbance) */
 //適当 後でちゃんと決める//
-constexpr int Nbit_altitude { 20 };
+/*constexpr int Nbit_altitude { 20 };
 constexpr int Nbit_latitude { Ntheta };
 constexpr int Nbit_longitude { Nphi };
 constexpr int Nbit_sig_r { 2 };
@@ -39,11 +39,11 @@ constexpr int Nbit_total {
     Nbit_altitude + Nbit_latitude + Nbit_longitude +
     Nbit_sig_r + Nbit_sig_th + Nbit_sig_ph + 
     Nbit_disturbance
-};
+};*/
 
-/* 適正なのかは分からず */
-constexpr double param1_min { Alt_lower_ionosphere };
-constexpr double param1_max { (double)Nphi };
+// range of enhance //
+constexpr double param1_min { 0.0 };
+constexpr double param1_max { 10.0 };
 
 constexpr double param2_min { 0.0 };
 constexpr double param2_max { (double)Ntheta };
