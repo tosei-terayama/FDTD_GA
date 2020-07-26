@@ -42,10 +42,10 @@ extern const double inv_Dt;
 // Source point , Recieve point //
 extern const int i_s;
 extern const int j_s;
-extern const int k_s;
+extern const int k_s;       // phi = 100 //
 extern const int i_r;
 extern const int j_r;
-extern const int k_r; 
+extern const int k_r;       // phi = 950 //
 
 //PML information//
 extern const int L;
