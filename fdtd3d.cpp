@@ -182,7 +182,7 @@ int main(void)
 
   // Set Perturbation Information //
   P_info.set_center(74, Ntheta/2, Nphi/2);
-  P_info.set_alpha(0.0);
+  P_info.set_alpha(10.0);
   P_info.set_sigma(2.0e3, 60.0e3);
 
   set_perturbation(P_info, noise_Nh, Nh);
