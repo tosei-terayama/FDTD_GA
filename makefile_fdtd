@@ -11,7 +11,8 @@ HEADERS = fdtd3d.h pml.h geocoordinate.h perturbation.h date.h \
 	nrlmsise-00.h
 
 #OPTS = -I/Users/include/Eigen -std=c++1z -lgfortran -O3 -Wall
-OPTS = -I/Users/include/Eigen -std=c++1z -O3 -Wall
+#OPTS = -I/Users/include/Eigen -std=c++1z -O3 -Wall
+OPTS = -I/opt/include/eigen3 -std=c++1z -O3 -Wall
 LIBS = -L. -lnrlmsise
 
 all: main libnrlmsise.a
