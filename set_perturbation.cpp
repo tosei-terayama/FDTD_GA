@@ -5,69 +5,41 @@
 
 #include "fdtd3d.h"
 
-void set_perturbation(perturbation P_info, double*** dis_Nh, double* Nh){
-    
-    double p_r0 = P_info.r0();
-    double p_th0 = P_info.th0();
-    double p_phi0 = P_info.phi0();
-    double Alpha = P_info.alpha();
-    double Sigma_r = P_info.sig_r();
-    double Sigma_h = P_info.sig_h();
+void set_perturbation(perturbation P_info, double*** noise_Nh, double* Nh){
 
-    int r0 = (int)p_r0 - (int)Alt_lower_ionosphere/1.0e3;
-    int th0 = (int)p_th0;
-    int phi0 = (int)p_phi0;
+    Eigen::Vector3d R_c;
+    Eigen::Vector3d R;
+    Eigen::Vector3d R_d;
 
-    Eigen::Vector3d ion_r0;
-    Eigen::Vector3d unit_r0;
-    Eigen::Vector3d ion_r;
-    Eigen::Vector3d unit_r;
+    double z_0{ dist(P_info.r0()) };
+    double R_theta{ 0.0 };
+    int lower_r = (int)Alt_lower_ionosphere/1.0e3;
 
-    ion_r0(0) = dist(p_r0)*std::sin(th(p_th0))*std::cos(ph(p_phi0));
-    ion_r0(1) = dist(p_r0)*std::sin(th(p_th0))*std::sin(ph(p_phi0));
-    ion_r0(2) = dist(p_r0)*std::cos(th(p_th0));
+    R_c(0) = z_0*std::sin(th(P_info.th0()))*std::cos(ph(P_info.phi0()));
+    R_c(1) = z_0*std::sin(th(P_info.th0()))*std::sin(ph(P_info.phi0()));
+    R_c(2) = z_0*std::cos(th(P_info.th0()));
 
-    unit_r0 = ion_r0/ion_r0.norm();
-    double ion_index(0.0);
-    double horiz_l(0.0);
-    double unit_th(0.0);
+    for(int i = 0; i <= ion_L; i++){
+        double z{ dist(i + lower_r) };
 
-    int i, j, k;
-    for(i = r0 - P_info.range_r(); i <= r0 + P_info.range_r(); i++){
-        for(j = th0 - P_info.range_th(); j <= th0 + P_info.range_th(); j++){
-            for(k = phi0 - P_info.range_phi(); k <= phi0 + P_info.range_phi(); k++){
+        for(int j = 0; j <= Ntheta; j++){
+            for(int k = 0; k <= Nphi; k++){
+                R(0) = z*std::sin(th(j))*std::cos(ph(k));
+                R(1) = z*std::sin(th(j))*std::sin(ph(k));
+                R(2) = z*std::cos(th(j));
 
-                ion_index = (double)i + Alt_lower_ionosphere/1.0e3;
-                ion_r(0) = dist(ion_index)*std::sin(th(double(j)))*std::cos(ph(double(k)));
-                ion_r(1) = dist(ion_index)*std::sin(th(double(j)))*std::sin(ph(double(k)));
-                ion_r(2) = dist(ion_index)*std::cos(th(double(j)));
+                R_d = (R/R.norm()) * R_c.norm();
+                R_theta = std::acos( (R_c.dot(R_d))/(R_c.norm()*R_d.norm()) );
 
-                unit_r = ion_r/ion_r.norm();
+                // 情報落ち対策 //
+                if( std::abs(((R_c.dot(R_d)/(R_c.norm()*R_d.norm())))) > 1.0 ) R_theta = std::acos(1.0);
 
-                unit_th = std::acos(unit_r0.dot(unit_r));
+                double d_h{ z_0*R_theta };
 
-                //情報落ち対策//
-                if(std::abs(unit_r0.dot(unit_r)) > 1) unit_th = std::acos(1.0);
+                double enhance = P_info.alpha()*std::exp(- (std::pow(d_h, 2.0)/2.0/std::pow(P_info.sig_h(), 2.0)))
+                                            *std::exp(- (std::pow(z - z_0, 2.0)/2.0/std::pow(P_info.sig_r(), 2.0)));
 
-                horiz_l = ion_r0(0)*unit_th;
-                dis_Nh[i][j][k] = Alpha * std::exp(-std::pow(dist(p_r0) - dist(ion_index), 2.0)/2.0/std::pow(Sigma_r,2.0))
-                                * std::exp(-std::pow(horiz_l, 2.0)/2.0/std::pow(Sigma_h, 2.0));
-            }
-        }
-        std::cout << i << " " << dis_Nh[i][(int)p_th0][(int)p_phi0] << std::endl;
-    }
-    std::cout << "check dist" << std::endl;
-
-    for(int i = 0; i < ion_L; i++){
-        for(int j = 0; j < Ntheta; j++){
-            for(int k = 0; k < Nphi; k++){
-
-                if( ((i < r0 + P_info.range_r())&&(i > r0 - P_info.range_r())) &&
-                ((j < th0 + P_info.range_th())&&(j > th0 - P_info.range_th())) &&
-                ((k < phi0 + P_info.range_phi())&&(k > phi0 - P_info.range_phi())) ){
-                    dis_Nh[i][j][k] = Nh[i]*dis_Nh[i][j][k];
-                }
-                else dis_Nh[i][j][k] = Nh[i];
+                noise_Nh[i][j][k] = Nh[i] + Nh[i] * enhance;
             }
         }
     }

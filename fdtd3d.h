@@ -116,8 +116,7 @@ void H_update_pml(
 	double**** Hphi_r_at_n_minus_halfDt, double**** Hphi_theta_at_n_minus_halfDt,
 	double* Sigma_theta_half, double* Sigma_phi_half, pml* index_of_Hr, pml* index_of_Hth, pml* index_of_Hphi);
 
-/*void Ne_allocate(double* Electron_density, double* Electron_Density_half, 
-                  double* Electron_Temperature, double* Electron_Temperature_half);*/
+void Ne_allocate(double *Electron_Density, double* Electron_Temperature);
 
 void ny_allocate(date, geocoordinate, double* Colision_frequency, double* Electron_Temprature);
 

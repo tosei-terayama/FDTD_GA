@@ -20,6 +20,9 @@ int main(int argc, char** argv){
     /*
      FDTDでスコア生成 
     */
+
+   std::ofstream ofs;
+   ofs.open("./result/magnitude.dat");
     
     MPI::Init(argc, argv);
     const int rank = MPI::COMM_WORLD.Get_rank();
@@ -164,6 +167,8 @@ int main(int argc, char** argv){
     }
 
     MPI::Finalize();
+
+    ofs.close();
 
     return 0;
 }

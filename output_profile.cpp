@@ -12,11 +12,11 @@ void output_profile(perturbation P_info, double* Nh, double*** noise_Nh){
     ofs_noiseNh.open("./profile/Nh_noise.dat");
 
     std::ofstream ofs_noiseNh_r_th;
-    ofs_noiseNh_r_th.open("./profile/noiseNh_r_th.dat");
+    ofs_noiseNh_r_th.open("./profile/Nh_r_th.dat");
     std::ofstream ofs_noiseNh_th_phi;
-    ofs_noiseNh_th_phi.open("./profile/noiseNh_th_phi.dat");
+    ofs_noiseNh_th_phi.open("./profile/Nh_th_phi.dat");
     std::ofstream ofs_noiseNh_phi_r;
-    ofs_noiseNh_phi_r.open("./profile/noiseNh_phi_r.dat");
+    ofs_noiseNh_phi_r.open("./profile/Nh_phi_r.dat");
 
     int p_r0 = (int)P_info.r0();
     int p_th0 = (int)P_info.th0();

@@ -169,28 +169,23 @@ int main(void)
   double *ny = new double[ion_L+1];
   double *Re = new double[ion_L+1];
 
-  iri_profile(ymd, lla_info, Nh, Re);
-
-  //Ne_allocate(Nh, Nh_h, Re, Re_h);
+  //iri_profile(ymd, lla_info, Nh, Re);
+  Ne_allocate(Nh, Re);
   ny_allocate(ymd, lla_info, ny, Re);
 
-  double *****Cmat = memory_allocate5d(ion_L+1, Ntheta, Nphi, 3, 3, 0.0);
-  double *****Fmat = memory_allocate5d(ion_L+1, Ntheta, Nphi, 3, 3, 0.0);
+  double *****Cmat = memory_allocate5d(ion_L+1, Ntheta + 1, Nphi + 1, 3, 3, 0.0);
+  double *****Fmat = memory_allocate5d(ion_L+1, Ntheta + 1, Nphi + 1, 3, 3, 0.0);
   
-  double*** noise_Nh = memory_allocate3d(ion_L, Ntheta, Nphi, 0.0);
+  double*** noise_Nh = memory_allocate3d(ion_L + 1, Ntheta + 1, Nphi + 1, 0.0);
   
   perturbation P_info;
 
-  P_info.set_center(74.0, Ntheta/2, Nphi/2);
+  // Set Perturbation Information //
+  P_info.set_center(74, Ntheta/2, Nphi/2);
   P_info.set_alpha(10.0);
   P_info.set_sigma(2.0e3, 60.0e3);
-  //P_info.set_range(0, 0, 0);
-  P_info.set_range(5, 15, 15);
-  //P_info.set_range(5, 20, 20);
-  //P_info.set_range(5, 25, 25);
 
   set_perturbation(P_info, noise_Nh, Nh);
-
   set_matrix(zj, Cmat, Fmat, noise_Nh, ny);
 
   //calculate surface impedance//
@@ -222,8 +217,10 @@ int main(void)
 
   // output analyze model //
   output_model();
-
   output_profile(P_info, Nh, noise_Nh);
+
+  std::cout << "OK" << std::endl;
+  std::exit(0);
 
   t = Dt*0.0;
 
@@ -242,7 +239,6 @@ int main(void)
 
   std::cout << "R : " << dist(Nr) << " θ : " << R0*delta_theta*Ntheta << " φ : " << R0*ph(Nphi) << std::endl;
   std::cout << "time_step : " << time_step << " Dt : " << Dt << std::endl << std::endl;
-  std::cout << "range(r) : " << P_info.range_r() << " range(th) : " << P_info.range_th() << " range(phi) : " << P_info.range_phi() << std::endl;
   std::cout << "Perturbation r0 : " << P_info.r0() << " th0 : " << P_info.th0() << " phi0 : " << P_info.phi0() << std::endl;
   std::cout << "_______________________________________" << std::endl;
 
