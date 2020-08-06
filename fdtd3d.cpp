@@ -219,9 +219,6 @@ int main(void)
   output_model();
   output_profile(P_info, Nh, noise_Nh);
 
-  std::cout << "OK" << std::endl;
-  std::exit(0);
-
   t = Dt*0.0;
 
   for(int k = 0; k < Nphi; k++){
