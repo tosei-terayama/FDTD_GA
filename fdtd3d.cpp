@@ -237,6 +237,7 @@ int main(void)
   std::cout << "R : " << dist(Nr) << " θ : " << R0*delta_theta*Ntheta << " φ : " << R0*ph(Nphi) << std::endl;
   std::cout << "time_step : " << time_step << " Dt : " << Dt << std::endl << std::endl;
   std::cout << "Perturbation r0 : " << P_info.r0() << " th0 : " << P_info.th0() << " phi0 : " << P_info.phi0() << std::endl;
+  std::cout << "enhance : " << P_info.alpha() << std::endl;
   std::cout << "_______________________________________" << std::endl;
 
   ////主経路電波強度観測/////
