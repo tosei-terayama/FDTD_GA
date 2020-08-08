@@ -163,7 +163,8 @@ int fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
   double *ny = new double[ion_L+1];
   double *Re = new double[ion_L+1];
 
-  iri_profile(ymd, lla_info, Nh, Re);
+  //iri_profile(ymd, lla_info, Nh, Re);
+  Ne_allocate(Nh, ny);
   ny_allocate(ymd, lla_info, ny, Re);
 
   double *****Cmat = memory_allocate5d(ion_L+1, Ntheta, Nphi, 3, 3, 0.0);

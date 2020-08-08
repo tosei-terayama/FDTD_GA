@@ -16,11 +16,6 @@ constexpr double Mutation_rate { 0.03 };  // Mutation incidence
 
 int main(int argc, char** argv){
 
-    /* Target score */
-    /*
-     FDTDでスコア生成 
-    */
-
    std::ofstream ofs;
    ofs.open("./result/magnitude.dat");
     
@@ -70,10 +65,9 @@ int main(int argc, char** argv){
     lla_info.set_poit(32.0, 135.0, 60.0);
 
     perturbation P_info;
-    P_info.set_center(74.0, Ntheta/2, Nphi/2);
+    P_info.set_center(74, Ntheta/2, Nphi/2);
     P_info.set_alpha(10.0);
     P_info.set_sigma(2.0e3, 60.0e3);
-    P_info.set_range(5, 15, 15);
 
     // Observation points on propagation path //
     int Num_obs = (Nphi - L) - k_s;
