@@ -33,12 +33,11 @@ constexpr int Nbit_alt{ 3 };
 constexpr int Nbit_th{ 7 };
 constexpr int Nbit_phi{ 10 };
 constexpr int Nbit_sigr{ 3 };
-constexpr int Nbit_sigth{ 6 };
-constexpr int Nbit_sigphi{ 6 };
+constexpr int Nbit_sigh{ 6 };
 
 constexpr int Nbit_total
 { Nbit_enhance + Nbit_alt + Nbit_th
-+ Nbit_th + Nbit_sigr + Nbit_sigth + Nbit_sigphi };
++ Nbit_th + Nbit_sigr +  Nbit_sigh };
 
 // range of enhance //
 constexpr double param1_min { 0.0 };
@@ -53,14 +52,11 @@ constexpr double param3_max { 100.0 };
 constexpr double param4_min { k_s };
 constexpr double param4_max { k_r };
 
-constexpr double param5_min { 1.0 };
-constexpr double param5_max { 2.0 };
+constexpr double param5_min { 1.0e3 };
+constexpr double param5_max { 2.0e3 };
 
-constexpr double param6_min { 50.0 };
-constexpr double param6_max { 100.0 };
-
-constexpr double param7_min { 50.0 };
-constexpr double param7_max { 100.0 };
+constexpr double param6_min { 50.0e3 };
+constexpr double param6_max { 100.0e3 };
 
 constexpr double param1_step
 { (param1_max - param1_min)/(std::pow(2.0, Nbit_enhance) - 1) };
@@ -73,23 +69,22 @@ constexpr double param4_step
 constexpr double param5_step
 { (param5_max - param5_min)/(std::pow(2.0, Nbit_sigr) - 1) };
 constexpr double param6_step
-{ (param6_max - param6_min)/(std::pow(2.0, Nbit_sigth) - 1) };
-constexpr double param7_step
-{ (param7_max - param7_min)/(std::pow(2.0, Nbit_sigphi) - 1) };
+{ (param6_max - param6_min)/(std::pow(2.0, Nbit_sigh) - 1) };
 
 constexpr double GA_min[Num_parameter]
 = { param1_min, param2_min, param3_min, param4_min,
-    param5_min, param6_min, param7_min };
+    param5_min, param6_min };
 
 constexpr double GA_max[Num_parameter]
 = { param1_max, param2_max, param3_max, param4_max,
-    param5_max, param6_max, param7_max };
+    param5_max, param6_max };
 
 class GA_agent{
 public:
     bool chrom[Nbit_total];
+    double param[Num_parameter];
     double score;
-    void calc_fdtd_score(void);
+    //void calc_fdtd_score(void);
 };
 
 #endif

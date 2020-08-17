@@ -1,6 +1,7 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include "GA_agent.h"
+#include "perturbation.h"
 
 /* Binaly num -> Decimal num */
 int b2i(bool* b, int length){

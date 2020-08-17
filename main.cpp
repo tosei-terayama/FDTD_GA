@@ -34,11 +34,13 @@ int main(int argc, char** argv){
     double* score = new double[Num_Individual];
 
     /* Initialize chromosomes */
+    // ここでP_infoの初期値(ランダム)を設定する？ //
     for(int i = 0; i < Num_Individual; i++){
         for(int j = 0; j < Nbit_total; j++){
             if( engine()/rnd_max < 0.5 ) {
                 Individual[0][i].chrom[j] = true;
             }
+
             else {
                 Individual[0][i].chrom[j] = false;
             }
@@ -55,8 +57,21 @@ int main(int argc, char** argv){
         end_idx[myrank] = (myrank + 1) * assigned_num;
     }
 
+    bool bit1[Nbit_enhance];
+    bool bit2[Nbit_alt];
+    bool bit3[Nbit_th];
+    bool bit4[Nbit_phi];
+    bool bit5[Nbit_sigr];
+    bool bit6[Nbit_sigh];
+
+    // boolean -> parameter //
+    perturbation P_info[Num_Individual];
+
+    for(int i = 0; i < Num_Individual; i++){
+        
+    }
+
     /* Initialize parameter ( date/perturbation/geocoordinate ) */
-    // 仮置き //
     date ymd;
     ymd.set_ymd(2016, 3, 1);
     ymd.set_h(9.0);
@@ -64,29 +79,22 @@ int main(int argc, char** argv){
     geocoordinate lla_info;
     lla_info.set_poit(32.0, 135.0, 60.0);
 
-    perturbation P_info;
-    P_info.set_center(74, Ntheta/2, Nphi/2);
-    P_info.set_alpha(10.0);
-    P_info.set_sigma(2.0e3, 60.0e3);
-
     // Observation points on propagation path //
-    int Num_obs = (Nphi - L) - k_s;
+    int Num_obs = (Nphi - 2*L) - k_s;
     geocoordinate* obs_p = new geocoordinate[Num_obs + 1];
 
     // amplitude //
     double *Magnitude = new double[Num_obs + 1];
     double *target_Magnitude = new double[Num_obs + 1];
 
-    /* GA programming */
+    /* GA programming(本体) */
     for(int gen = 0; gen < Num_Generation; gen++){
         const int PARENT { gen % 2 };
         const int CHILD { (gen + 1) % 2 };
 
         /* Calculate FDTD & Score (PE n)*/
         for(int i = start_idx[rank]; i < end_idx[rank]; i++){
-            /*
-                FDTD simulate
-            */
+            fdtd_calc();
            score[i] = Individual[PARENT][i].score;
         }
 
