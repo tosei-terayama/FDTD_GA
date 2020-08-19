@@ -66,10 +66,9 @@ int main(int argc, char** argv){
 
     // boolean -> parameter //
     perturbation P_info[Num_Individual];
+    int count{ 0 };
 
-    for(int i = 0; i < Num_Individual; i++){
-        
-    }
+    set_parameter(P_info, chromosome);
 
     /* Initialize parameter ( date/perturbation/geocoordinate ) */
     date ymd;
@@ -92,10 +91,10 @@ int main(int argc, char** argv){
         const int PARENT { gen % 2 };
         const int CHILD { (gen + 1) % 2 };
 
-        /* Calculate FDTD & Score (PE n)*/
+        /* Calculate FDTD & Score (PE n) */
         for(int i = start_idx[rank]; i < end_idx[rank]; i++){
-            fdtd_calc();
-           score[i] = Individual[PARENT][i].score;
+            fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude);
+            score[i] = Individual[PARENT][i].score;
         }
 
         /* Merging scores */
@@ -169,7 +168,6 @@ int main(int argc, char** argv){
     }
 
     MPI::Finalize();
-
     ofs.close();
 
     return 0;

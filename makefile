@@ -7,7 +7,7 @@ OBJS = main.o fdtd_calc.o memory_allocate2d.o memory_allocate2cd.o memory_alloca
 	set_perturbation.o geocoordinate_class.o perturbation_class.o date_class.o \
 	output_profile.o output_model.o obs_initial.o iri_profile.o \
 	cira.o igrf.o iridreg.o iriflip.o irifun.o irisub.o iritec.o iritest.o \
-	GA.o GA_agent.o
+	GA.o GA_agent.o set_parameter.o
 
 HEADERS = fdtd3d.h pml.h geocoordinate.h perturbation.h date.h \
 	nrlmsise-00.h

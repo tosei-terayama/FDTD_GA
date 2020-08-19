@@ -5,24 +5,7 @@
 #include <cmath>
 #include "fdtd3d.h"
 
-double fdtd_calc(perturbation, date, geocoordinate, 
-                int Number_of_observation, geocoordinate* Position_of_observation,
-                double* Magnitude);
-
-void sort_Individual(int Num_Individual, double* score, bool* chromosome);
-
-double* make_roulette(int Num_Individual, double* score);
-
-void Cross_over(int Head_Index, int* Index_of_Individual, 
-                bool* Child_Chromosome, bool* Parent_Chromosome);
-
-void Mutation(int Num_of_Elete, int Num_of_Individual,
-                double Incidence_of_Mutation, bool* Child_Chromosome);
-
-int b2i(bool* Binary_Array, int Length_of_Array);
-
-double b2d(bool* Binary_Array, int Length_of_Array,
-            double Minimum_of_Parameter, double Parameter_Step);
+extern constexpr int Num_Individual;
 
 /* The num of parameters */
 constexpr int Num_parameter { 7 };
@@ -78,6 +61,27 @@ constexpr double GA_min[Num_parameter]
 constexpr double GA_max[Num_parameter]
 = { param1_max, param2_max, param3_max, param4_max,
     param5_max, param6_max };
+
+double fdtd_calc(perturbation, date, geocoordinate, 
+                int Number_of_observation, geocoordinate* Position_of_observation,
+                double* Magnitude);
+
+void sort_Individual(int Num_Individual, double* score, bool* chromosome);
+
+double* make_roulette(int Num_Individual, double* score);
+
+void Cross_over(int Head_Index, int* Index_of_Individual, 
+                bool* Child_Chromosome, bool* Parent_Chromosome);
+
+void Mutation(int Num_of_Elete, int Num_of_Individual,
+                double Incidence_of_Mutation, bool* Child_Chromosome);
+
+int b2i(bool* Binary_Array, int Length_of_Array);
+
+double b2d(bool* Binary_Array, int Length_of_Array,
+            double Minimum_of_Parameter, double Parameter_Step);
+
+void set_parameter(perturbation* Perturbation_info, bool* chromosome);
 
 class GA_agent{
 public:

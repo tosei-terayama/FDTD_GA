@@ -10,9 +10,14 @@ private:
     double Sigma_h;
 
 public:
+    void set_alpha(double);
+    void set_alt(double);
+    void set_th(double);
+    void set_phi(double);
+    void set_sigr(double);
+    void set_sigh(double);
     void set_geo(double, double, double);
     void set_center(int, int, int);
-    void set_alpha(double);
     void set_sigma(double, double);
 
     double lati(void){ return Lati; }

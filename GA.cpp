@@ -61,8 +61,8 @@ void Cross_over(int Head_idx, int *Ind_idx, bool* Parent_chrom, bool* Child_chro
             Child_chrom[(Head_idx+1) * Nbit_total + j]
              = Parent_chrom[Ind_idx[1] * Nbit_total + j];
         }
-
     }
+    
 }
 
 void Mutation(int Num_Elete, int Num_Ind, double Mutation_rate, bool* Child_chrom){
