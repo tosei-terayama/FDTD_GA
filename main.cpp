@@ -67,13 +67,6 @@ int main(int argc, char** argv){
         end_idx[myrank] = (myrank + 1) * assigned_num;
     }
 
-    bool bit1[Nbit_enhance];
-    bool bit2[Nbit_alt];
-    bool bit3[Nbit_th];
-    bool bit4[Nbit_phi];
-    bool bit5[Nbit_sigr];
-    bool bit6[Nbit_sigh];
-
     // boolean -> parameter //
     perturbation P_info[Num_Individual];
     int count{ 0 };
@@ -104,6 +97,8 @@ int main(int argc, char** argv){
     }
     ifs.close();
 
+    int child{ 0 };
+
     std::chrono::system_clock::time_point start
         = std::chrono::system_clock::now();
 
@@ -116,6 +111,7 @@ int main(int argc, char** argv){
 
         const int PARENT { gen % 2 };
         const int CHILD { (gen + 1) % 2 };
+        child = CHILD;
 
         /* Calculate FDTD & Score (PE n) */
         for(int i = start_idx[rank]; i < end_idx[rank]; i++){
@@ -194,6 +190,19 @@ int main(int argc, char** argv){
             }
         }
 
+    }
+
+    double best_score = Individual[child][0].score;
+    int best_ind = 0;
+
+    for(int i = 0; i < Num_Individual; i++){
+        if(best_score < Individual[child][i].score){
+            best_ind = i;
+        }
+    }
+
+    for(int i = 0; i < Num_obs + 1; i++){
+        ofs << i << " " << Magnitude[best_ind][i] << std::endl;
     }
 
     MPI::Finalize();
