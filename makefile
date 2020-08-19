@@ -19,16 +19,16 @@ all: main libnrlmsise.a
 .PHONY: all clean
 
 main: $(OBJS) libnrlmsise.a
-	g++ -o $@ $(OBJS) $(OPTS) $(LIBS)
+	mpic++ -o $@ $(OBJS) $(OPTS) $(LIBS)
 
 %.o: %.cpp $(HEADERS)
-	g++ -c $< $(OPTS)
+	mpic++ -c $< $(OPTS)
 
 %.o: %.c
 	g++ -c $< $(OPTS)
 
-%.o: %.for
-	gfortran -c $< -Wall -O3
+#%.o: %.for
+#	gfortran -c $< -Wall -O3
 
 LIBOBJS = nrlmsise-00.o nrlmsise-00_data.o
 libnrlmsise.a: $(LIBOBJS)
