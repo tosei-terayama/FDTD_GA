@@ -3,10 +3,20 @@
 #include <cmath>
 #include <random>
 #include <fstream>
+#include <chrono>
 #include <mpi.h>
 
 #include "GA_agent.h"
 #include "fdtd3d.h"
+
+/*Target Information
+/////////////////////////////////////////////
+perturbation target_Pinfo;
+target_Pinfo.set_alpha(10.0);
+target_Pinfo.set_center(74, Ntheta/2, Nphi/2);
+target_Pinfo.set_sigma(2.0e3, 60.0e3);
+/////////////////////////////////////////////
+*/
 
 constexpr int Num_Individual { 56 };  // Number of individuals
 constexpr int Num_Generation { 30 };  // Number of generations to repeat
@@ -82,19 +92,38 @@ int main(int argc, char** argv){
     int Num_obs = (Nphi - 2*L) - k_s;
     geocoordinate* obs_p = new geocoordinate[Num_obs + 1];
 
-    // amplitude //
-    double *Magnitude = new double[Num_obs + 1];
-    double *target_Magnitude = new double[Num_obs + 1];
+    // Magnitude //
+    double **Magnitude = memory_allocate2d(Num_Individual, Num_obs + 1, 0.0); 
+    double *Target_Magnitude = new double[Num_obs + 1];
+
+    std::ifstream ifs;
+    ifs.open("./target.dat");
+
+    for(int i = 0; i < Num_obs; i++){
+        ifs >> Target_Magnitude[i];
+    }
+    ifs.close();
+
+    std::chrono::system_clock::time_point start
+        = std::chrono::system_clock::now();
 
     /* GA programming(本体) */
     for(int gen = 0; gen < Num_Generation; gen++){
+
+        if(rank == 0){
+            std::cout << gen << " Generation " << std::endl;
+        }
+
         const int PARENT { gen % 2 };
         const int CHILD { (gen + 1) % 2 };
 
         /* Calculate FDTD & Score (PE n) */
         for(int i = start_idx[rank]; i < end_idx[rank]; i++){
-            fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude);
+
+            fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i]);
+            Individual[PARENT][i].score = calc_score(Magnitude[i], Target_Magnitude, Num_obs + 1);
             score[i] = Individual[PARENT][i].score;
+
         }
 
         /* Merging scores */
@@ -168,6 +197,14 @@ int main(int argc, char** argv){
     }
 
     MPI::Finalize();
+
+    std::chrono::system_clock::time_point end
+        = std::chrono::system_clock::now();
+
+    double total_time = std::chrono::duration_cast <std::chrono::milliseconds>
+        (end - start).count();
+    
+    std::cout << "elapsed time : " << total_time*1.0e-3 << " [sec]" << std::endl;
     ofs.close();
 
     return 0;

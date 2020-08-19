@@ -18,12 +18,3 @@ double b2d(bool* p, int length, double min, double step){
     param = min + b2i(p, length) * step;
     return param;
 }
-
-/* FDTD method & calclate score */
-void GA_agent::score_calculation(void){
-    
-    /*Execution FDTD*/
-
-    /*Calculation score*/
-
-}

@@ -12,9 +12,9 @@ std::complex <double> surface_impe(std::complex <double> zj)
   std::complex <double> z = Z0/std::sqrt(EPSR - (zj*conduct/EPS0/omega));
   //std::complex <double> z = Z0*std::pow(EPSR - (zj*conduct/(EPS0*omega)), -0.5);
 
-  std::cout << z << std::endl;
+  /*std::cout << z << std::endl;
 
-  std::cout << "Conductivity : " << conduct << std::endl;
+  std::cout << "Conductivity : " << conduct << std::endl;*/
     
   return z;
 }

@@ -74,8 +74,13 @@ double***** memory_allocate5d(int, int, int, int, int, double);
 std::complex <double>*** memory_allocate3cd(int, int, int, std::complex<double>);
 std::complex <double>** memory_allocate2cd(int, int, std::complex<double>);
 
-void output_profile(perturbation perturbation_information, double* Nh, double*** Nh_with_noise);
+void output_profile(
+    perturbation perturbation_information, double* Nh, double*** Nh_with_noise);
 void output_model(void);
+
+void fdtd_calc(
+    perturbation* Perturbation_info, date ymd, geocoordinate lla_info,
+    int Num_obs, geocoordinate* obs_p, double* Magnitude);
 
 void sigma_calc(
     double* sigma_theta, double* sigma_phi, 

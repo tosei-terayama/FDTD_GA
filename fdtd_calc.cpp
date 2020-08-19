@@ -66,7 +66,7 @@ const double Dec{-7.0*M_PI/180.0};
 const double Inc{49.0*M_PI/180.0};
 const double Azim{61.0*M_PI/180.0};
 
-int fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
+void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
             int Num_obs, geocoordinate* obs_p, double* Magnitude)
 {
   int time_step = 2000;
@@ -155,8 +155,6 @@ int fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
   B_th = std::acos(-sph_B[1]/B_abs);
   B_phi = std::atan2(sph_B[2], sph_B[0]);
 
-  std::cout << "B_theta = " << B_th << "\tB_phi = " << B_phi << std::endl;
-
   //Ne, nyu//
   double *Nh = new double[ion_L+1];
   double*** noise_Nh = memory_allocate3d(ion_L, Ntheta, Nphi, 0.0);
@@ -217,11 +215,7 @@ int fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
     J = -((t - t0)/sigma_t/sigma_t/delta_r/(dist(i_s + 0.5)*delta_theta)/(dist(i_s + 0.5)*delta_phi))
       *std::exp(-std::pow(t - t0, 2.0)/2.0/std::pow(sigma_t, 2.0));
 
-    std::cout << " J = " << J << std::endl;
-
     Etheta[OLD][i_s][j_s][k_s] = Etheta[OLD][i_s][j_s][k_s] + J;
-    
-    std::cout << "E[1][50][20] = " << Er[NEW][1][50][20] << std::endl;
 
     /////   D, E update   /////
     //outside PML//
@@ -259,19 +253,12 @@ int fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
       E_famp[k] += Er[NEW][obs_p[k].i()][obs_p[k].j()][obs_p[k].k()]*std::exp(-zj*omega*t)*Dt;
     }
     
-    std::cout << n << " / " << time_step << std::endl << std::endl;
-    
   }
   
   std::chrono::system_clock::time_point end
     = std::chrono::system_clock::now();
   ///////計測終了///////
   
-  total_time = std::chrono::duration_cast <std::chrono::milliseconds>
-    (end - start).count();
-  
-  std::cout << "elapsed_time = " << total_time*1.0e-3 << " [sec]"<< std::endl;
-
   for(int k = 0; k < Num_obs; k++){
     Magnitude[k] = 20.0*std::log10(std::abs(E_famp[k]/E_famp[0]));
   }
