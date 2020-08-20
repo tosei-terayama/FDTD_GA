@@ -9,22 +9,25 @@ extern const double rnd_max;
 void sort_Individual(int Num, double* score, bool* chromosome){
     double score_tmp;
     bool chrom_tmp;
+
     for(int i = 0; i < Num - 1; i++){
         for(int j = i + 1; j < Num; j++){
             if(score[i] < score[j]){
-                /* swap score */
+                // swap score //
                 score_tmp = score[i];
                 score[i] = score[j];
                 score[j] = score_tmp;
 
-                /* swap chromosome */
+                // swap chromosome //
                 for(int k = 0; k < Nbit_total; k++){
                     chrom_tmp = chromosome[i * Nbit_total + k];
                     chromosome[i * Nbit_total + k] = chromosome[j * Nbit_total + k];
                     chromosome[j * Nbit_total + k] = chrom_tmp;
+                }
             }
-        }    
+        }
     }
+
 }
 
 double* make_roulette(int Num, double* score){
