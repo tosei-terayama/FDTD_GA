@@ -5,7 +5,7 @@
 #include <cmath>
 #include "fdtd3d.h"
 
-extern constexpr int Num_Individual;
+extern const int Num_Individual;
 
 /* The num of parameters */
 constexpr int Num_parameter { 7 };
