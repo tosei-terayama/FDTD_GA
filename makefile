@@ -12,7 +12,7 @@ OBJS = main.o fdtd_calc.o memory_allocate2d.o memory_allocate2cd.o memory_alloca
 HEADERS = fdtd3d.h pml.h geocoordinate.h perturbation.h date.h \
 	nrlmsise-00.h
 
-OPTS = -I/Users/include/Eigen -std=c++1z -O3 -Wall
+OPTS = -I/opt/include/eigen3 -std=c++1z -O3 -Wall
 LIBS = -L. -lnrlmsise
 
 all: main libnrlmsise.a
