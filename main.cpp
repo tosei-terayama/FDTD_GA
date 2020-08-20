@@ -69,9 +69,8 @@ int main(int argc, char** argv){
 
     // boolean -> parameter //
     perturbation P_info[Num_Individual];
-    int count{ 0 };
 
-    set_parameter(P_info, chromosome);
+    set_parameter(P_info, chromosome[0]);
 
     /* Initialize parameter ( date/perturbation/geocoordinate ) */
     date ymd;
@@ -188,6 +187,10 @@ int main(int argc, char** argv){
                 Individual[CHILD][i].chrom[j]
                     = chromosome[CHILD][i*Nbit_total + j];
             }
+        }
+        
+        if( rank == 0){
+            set_parameter(P_info, chromosome[CHILD]);
         }
 
     }
