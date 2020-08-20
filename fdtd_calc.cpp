@@ -51,7 +51,6 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
   int time_step = 2000;
   double t;
   double J;
-  double total_time;
   int NEW;
   int OLD;
   std::complex <double> zj(0.0, 1.0);
@@ -171,16 +170,6 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
     E_famp[k] += Er[0][obs_p[k].i()][obs_p[k].j()][obs_p[k].k()]*std::exp(-zj*omega*t)*Dt;
   }
 
-  for(int j = L; j <= Ntheta - L; j++){
-    for(int k = 0; k < Num_obs; k++){
-      E_famp3d[j][k] += Er[0][obs_p3d[j][k].i()][obs_p3d[j][k].j()][obs_p3d[j][k].k()]*std::exp(-zj*omega*t)*Dt;
-    }
-  }
-  
-  ////////計測開始////////
-  std::chrono::system_clock::time_point start
-    = std::chrono::system_clock::now();
-
   //FDTD_update//
   for(int n = 1; n < time_step + 1; n++){
     
@@ -234,10 +223,6 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
     
   }
   
-  std::chrono::system_clock::time_point end
-    = std::chrono::system_clock::now();
-  ///////計測終了///////
-  
   for(int k = 0; k < Num_obs; k++){
     Magnitude[k] = 20.0*std::log10(std::abs(E_famp[k]/E_famp[0]));
   }
@@ -264,10 +249,6 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
   delete [] Htheta_phi;
   delete [] Hphi_r;
   delete [] Hphi_theta;
-  delete [] Magnitude;
   delete [] E_famp;
-  delete [] E_famp3d;
-  
-  return 0;
-  
+
 }

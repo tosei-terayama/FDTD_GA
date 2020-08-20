@@ -64,7 +64,7 @@ constexpr double GA_max[Num_parameter]
 = { param1_max, param2_max, param3_max, param4_max,
     param5_max, param6_max };
 
-double fdtd_calc(perturbation, date, geocoordinate, 
+void fdtd_calc(perturbation Perturbation_info, date Date_info, geocoordinate lla_info, 
                 int Number_of_observation, geocoordinate* Position_of_observation,
                 double* Magnitude);
 
