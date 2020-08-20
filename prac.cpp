@@ -12,9 +12,11 @@ const int Nbit_total{ N_num1 + N_num2 + N_num3 + N_num4 };
 
 const double rnd_max { std::pow(2, 32) };
 
+void make_random(bool* A, int size);
+
 int main(void)
 {
-    std::random_device seed;
+    /*std::random_device seed;
     std::mt19937 engine( seed() );  //mersenne twister//
 
     bool Nbit[ Num_Individual*Nbit_total ];
@@ -75,7 +77,12 @@ int main(void)
 
     for(int i = 0; i < Num_Individual * Nbit_total; i++){
         std::cout << i << " " << Nbit[i] << std::endl;
-    }
+    }*/
+
+    int size = 12;
+    bool* senpai = new bool[size];
+
+    make_random(senpai, size);
 
     return 0;
 }

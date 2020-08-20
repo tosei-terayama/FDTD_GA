@@ -46,8 +46,9 @@ double* make_roulette(int Num, double* score){
 }
 
 void Cross_over(int Head_idx, int *Ind_idx, bool* Parent_chrom, bool* Child_chrom){
-    std::random_device seed;
-    std::mt19937 engine( seed() );
+    
+    std::random_device seed_gen;
+    std::mt19937 engine( seed_gen() );
 
     for(int j = 0; j < Nbit_total; j++){
         if( engine()/rnd_max > 0.5){
