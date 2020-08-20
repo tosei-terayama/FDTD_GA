@@ -126,12 +126,12 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
   //Geomagnetic field//
   double *geo_B = new double[3];
   double *sph_B = new double[3];
-  double B_th(0.0), B_phi(0.0);
+  //double B_th(0.0), B_phi(0.0);
 
   geo_mag(geo_B, sph_B);
 
-  B_th = std::acos(-sph_B[1]/B_abs);
-  B_phi = std::atan2(sph_B[2], sph_B[0]);
+  //B_th = std::acos(-sph_B[1]/B_abs);
+  //B_phi = std::atan2(sph_B[2], sph_B[0]);
 
   //Ne, nyu//
   double *Nh = new double[ion_L+1];
