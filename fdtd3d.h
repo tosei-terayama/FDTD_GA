@@ -26,13 +26,6 @@
 #define SIGMA_VERY_DRY_GROUND (1.0e-4)
 #define SIGMA_FRESH_WATER_ICE (1.0e-5)
 
-//The number of R, Theta, Phi element//
-extern const int Nr;
-extern const int Ntheta;
-extern const int Nphi;
-
-extern const double R_r;
-
 //Minute R, Theta, Phi, Time//
 extern const double delta_r;
 extern const double delta_theta;
@@ -41,6 +34,13 @@ extern const double Dt;
 extern const double inv_Dt;
 extern const double sigma_t;
 extern const double t0;
+
+//The number of R, Theta, Phi element//
+const int Nr{ 100 };
+const int Ntheta{ 100 };
+const int Nphi{ 1000 };
+
+extern const double R_r{ 100.0e3 };
 
 // Center Point //
 const int i_0 = Nr/2;
