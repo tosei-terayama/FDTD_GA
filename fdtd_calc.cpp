@@ -164,8 +164,7 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
 
   //fourie//
   std::complex <double>* E_famp = new std::complex <double> [Num_obs + 1];
-  std::complex <double>** E_famp3d = memory_allocate2cd(Ntheta + 1, Nphi + 1, std::complex <double> (0.0, 0.0));
-
+  
   for(int k = 0; k < Num_obs; k++){
     E_famp[k] += Er[0][obs_p[k].i()][obs_p[k].j()][obs_p[k].k()]*std::exp(-zj*omega*t)*Dt;
   }
