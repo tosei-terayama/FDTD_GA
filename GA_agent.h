@@ -6,6 +6,8 @@
 #include "fdtd3d.h"
 
 extern const int Num_Individual;
+extern const int k_s;
+extern const int k_r;
 
 /* The num of parameters */
 constexpr int Num_parameter { 7 };
