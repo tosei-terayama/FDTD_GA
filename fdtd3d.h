@@ -30,6 +30,7 @@
 extern const int Nr;
 extern const int Ntheta;
 extern const int Nphi;
+
 extern const double R_r;
 
 //Minute R, Theta, Phi, Time//
@@ -38,14 +39,23 @@ extern const double delta_theta;
 extern const double delta_phi;
 extern const double Dt;
 extern const double inv_Dt;
+extern const double sigma_t;
+extern const double t0;
 
-// Source point , Recieve point //
-extern const int i_s;
-extern const int j_s;
-extern const int k_s;       // phi = 100 //
-extern const int i_r;
-extern const int j_r;
-extern const int k_r;       // phi = 950 //
+// Center Point //
+const int i_0 = Nr/2;
+const int j_0 = Ntheta/2;
+const int k_0 = Nphi/2;
+
+// Source Point //
+const int i_s{ 1 };
+const int j_s{ 50 };
+const int k_s{ 100 };       // phi = 100 //
+
+// Receive Point //
+const int i_r{ 1 };
+const int j_r{ 50 };
+const int k_r{ Nphi - 50 };       // phi = 950 //
 
 //PML information//
 extern const int L;
