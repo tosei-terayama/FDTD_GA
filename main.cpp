@@ -79,7 +79,7 @@ int main(int argc, char** argv){
     ymd.set_h(9.0);
 
     geocoordinate lla_info;
-    lla_info.set_poit(32.0, 135.0, 60.0);
+    lla_info.set_point(32.0, 135.0, 60.0);
 
     // Observation points on propagation path //
     int Num_obs = (Nphi - 2*L) - k_s;
