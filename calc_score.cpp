@@ -4,12 +4,11 @@
 #include <fstream>
 #include "GA_agent.h"
 
-double calc_score(double *Magnitude, double* Target_Magnitude, int Num_obs + 1)
+double calc_score(double *Magnitude, double* Target_Magnitude, int size)
 {
-
     double score{ 0.0 };
 
-    for(int i = 0; i < Num_obs + 1; i++){
+    for(int i = 0; i < size; i++){
         score += std::pow(Magnitude[i] - Target_Magnitude[i], 2.0);
     }
 
