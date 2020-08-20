@@ -7,7 +7,7 @@
 int b2i(bool* b, int length){
     int d{ 0 };
     for(int i = 0; i < length; i++){
-        d += (int)p[i] * std::pow(2.0, i);
+        d += b[i] * std::pow(2.0, i);
     }
     return d;
 }
