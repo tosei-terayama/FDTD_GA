@@ -4,7 +4,7 @@
 #include <random>
 #include "GA_agent.h"
 
-const double rnd_max( std::pow(2, 32) );
+extern const double rnd_max;
 
 void sort_Individual(int Num, double* score, bool* chromosome){
     double score_tmp;
@@ -70,8 +70,9 @@ void Cross_over(int Head_idx, int *Ind_idx, bool* Parent_chrom, bool* Child_chro
 }
 
 void Mutation(int Num_Elete, int Num_Ind, double Mutation_rate, bool* Child_chrom){
+    
     std::random_device seed;
-    std::mt19937 engne( seed() );
+    std::mt19937 engine( seed() );
 
     for(int i = Num_Elete; i < Num_Ind; i++){
         for(int j = 0; j < Nbit_total; j++){
