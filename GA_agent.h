@@ -22,7 +22,7 @@ constexpr int Nbit_sigh{ 6 };
 
 constexpr int Nbit_total
 { Nbit_enhance + Nbit_alt + Nbit_th
-+ Nbit_th + Nbit_sigr +  Nbit_sigh };
++ Nbit_phi + Nbit_sigr +  Nbit_sigh };
 
 // range of enhance //
 constexpr double param1_min { 0.0 };
