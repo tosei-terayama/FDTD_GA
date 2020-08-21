@@ -15,8 +15,6 @@ void E_update(
   double interpol_Er(0.0), interpol_Eth(0.0), interpol_Eph(0.0);
   double interpol_nDr(0.0), interpol_nDth(0.0), interpol_nDph(0.0),
   interpol_oDr(0.0), interpol_oDth(0.0), interpol_oDph(0.0);
-  int flag(0);
-  int I, J, K;
   constexpr int Ir { 0 }, Ith{ 1 }, Iph{ 2 };
 
   for(int i = 0; i < Nr - ion_L; i++){
@@ -24,12 +22,8 @@ void E_update(
       for(int k = 1; k < Nphi; k++){
         E_r[New][i][j][k] = E_r[Old][i][j][k] + 
           (newD_r[i][j][k] - oldD_r[i][j][k])/EPS0;
-        
+
         if(maxE < std::abs(E_r[New][i][j][k])){
-          flag = 1;
-          I = i;
-          J = j;
-          K = k;
           maxE = std::abs(E_r[New][i][j][k]);
         }
 
@@ -71,12 +65,8 @@ void E_update(
               Fmat[m][j][k][Ir][Iph] * (interpol_nDph - interpol_oDph);
 
           if(maxE < std::abs(E_r[New][i][j][k])){
-          flag = 1;
-          I = i;
-          J = j;
-          K = k;
-          maxE = std::abs(E_r[New][i][j][k]);
-        }
+            maxE = std::abs(E_r[New][i][j][k]);
+          }
 
       }
     }
@@ -85,17 +75,12 @@ void E_update(
   for(int i = 1; i < Nr - ion_L; i++){
     for(int j = 0; j < Ntheta; j++){
       for(int k = 1; k < Nphi; k++){
-        E_theta[New][i][j][k] = E_theta[Old][i][j][k] + 
+          E_theta[New][i][j][k] = E_theta[Old][i][j][k] + 
             (newD_th[i][j][k] - oldD_th[i][j][k])/EPS0;
 
-          if(maxE < std::abs(E_theta[New][i][j][k])){
-          flag = 2;
-          I = i;
-          J = j;
-          K = k;
-          maxE = std::abs(E_theta[New][i][j][k]);
-        }
-
+          if(maxE < std:abs(E_theta[New][i][j][k])){
+            maxE = std::abs(E_theta[New][i][j][k]);
+          }
       }
     }
   }
@@ -132,14 +117,10 @@ void E_update(
               Fmat[m][j][k][Ith][Ir] * (interpol_nDr - interpol_oDr) +
               Fmat[m][j][k][Ith][Ith] * (newD_th[i][j][k] - oldD_th[i][j][k]) +
               Fmat[m][j][k][Ith][Iph] * (interpol_nDph - interpol_oDph);
-
+          
           if(maxE < std::abs(E_theta[New][i][j][k])){
-          flag = 2;
-          I = i;
-          J = j;
-          K = k;
-          maxE = std::abs(E_theta[New][i][j][k]);
-        }
+            maxE = std::abs(E_theta[New][i][j][k]);
+          }
 
       }
     } 
@@ -152,10 +133,6 @@ void E_update(
               (newD_ph[i][j][k] - oldD_ph[i][j][k])/EPS0;
 
         if(maxE < std::abs(E_phi[New][i][j][k])){
-          flag = 3;
-          I = i;
-          J = j;
-          K = k;
           maxE = std::abs(E_phi[New][i][j][k]);
         }
 
@@ -197,12 +174,8 @@ void E_update(
                 Fmat[m][j][k][Iph][Iph] * (newD_ph[i][j][k] - oldD_ph[i][j][k]);
 
           if(maxE < std::abs(E_phi[New][i][j][k])){
-          flag = 3;
-          I = i;
-          J = j;
-          K = k;
-          maxE = std::abs(E_phi[New][i][j][k]);
-        }
+            maxE = std::abs(E_phi[New][i][j][k]);
+          }
 
       }
     }
