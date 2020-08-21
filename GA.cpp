@@ -4,7 +4,7 @@
 #include <random>
 #include "GA_agent.h"
 
-extern const double rnd_max;
+const double rnd_max{ std::pow(2, 32) };
 
 void sort_Individual(int Num, double* score, bool* chromosome){
     double score_tmp;

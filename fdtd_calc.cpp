@@ -14,6 +14,12 @@
 #include "GA_agent.h"
 //#include <mpi.h>
 
+const int Nr{ 100 };
+const int Ntheta{ 100 };
+const int Nphi{ 1000 };
+
+const double R_r{ 100.0e3 };
+
 //Minute R, Theta, Phi, Time//
 const double delta_r = R_r/double(Nr);
 const double delta_theta = 1.0e3/double(R0);

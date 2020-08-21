@@ -36,11 +36,11 @@ extern const double sigma_t;
 extern const double t0;
 
 //The number of R, Theta, Phi element//
-const int Nr{ 100 };
-const int Ntheta{ 100 };
-const int Nphi{ 1000 };
+extern const int Nr;
+extern const int Ntheta;
+extern const int Nphi;
 
-extern const double R_r{ 100.0e3 };
+const const double R_r;
 
 // Center Point //
 const int i_0 = Nr/2;
