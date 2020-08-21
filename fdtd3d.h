@@ -40,7 +40,7 @@ extern const int Nr;
 extern const int Ntheta;
 extern const int Nphi;
 
-const const double R_r;
+extern const double R_r;
 
 // Center Point //
 const int i_0 = Nr/2;
