@@ -43,6 +43,10 @@ int main(int argc, char** argv){
     bool chromosome[2][Num_Individual * Nbit_total];
     double* score = new double[Num_Individual];
 
+    if(rank == 0){
+        std::cout << "OK" << std::endl;
+    }
+
     /* Initialize chromosomes */
     // ここでP_infoの初期値(ランダム)を設定する？ //
     for(int i = 0; i < Num_Individual; i++){
