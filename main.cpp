@@ -65,6 +65,7 @@ int main(int argc, char** argv){
     for(int myrank = 0; myrank < size; myrank++){
         start_idx[myrank] = myrank * assigned_num;
         end_idx[myrank] = (myrank + 1) * assigned_num;
+
     }
 
     // boolean -> parameter //
