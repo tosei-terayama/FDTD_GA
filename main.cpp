@@ -62,7 +62,7 @@ int main(int argc, char** argv){
     if(rank == 0){
         for(int i = 0; i < Num_Individual; i++){
             std::cout << "Num Individual : " << i << std::endl;
-            for(int j = 0; j < Num_total; j++){
+            for(int j = 0; j < Nbit_total; j++){
                 std::cout << i*Nbit_total + j << " " << chromosome[0][i*Nbit_total + j] << std::endl;
             }
         }
