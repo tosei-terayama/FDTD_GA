@@ -78,7 +78,7 @@ void E_update(
           E_theta[New][i][j][k] = E_theta[Old][i][j][k] + 
             (newD_th[i][j][k] - oldD_th[i][j][k])/EPS0;
 
-          if(maxE < std:abs(E_theta[New][i][j][k])){
+          if(maxE < std::abs(E_theta[New][i][j][k])){
             maxE = std::abs(E_theta[New][i][j][k]);
           }
       }
