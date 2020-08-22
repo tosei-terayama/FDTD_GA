@@ -99,17 +99,17 @@ int main(int argc, char** argv){
 
     int child{ 0 };
 
-    int* start_idx = new int[size];
+    /*int* start_idx = new int[size];
     int* end_idx = new int[size];
     for(int myrank = 0; myrank < size; myrank++){
         start_idx[myrank] = myrank * assigned_num;
         end_idx[myrank] = (myrank + 1) * assigned_num;
 
-    }
+    }*/
 
     if(rank == 0){
         for(int myrank = 0; myrank < size; myrank++){
-            std::cout << myrank << " " << start_indx[myrank] << std::endl;
+            std::cout << myrank << " " << start_idx[myrank] << std::endl;
             std::cout << myrank << " " << end_idx[myrank] << std::endl; 
 
         }
