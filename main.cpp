@@ -59,15 +59,6 @@ int main(int argc, char** argv){
         }
     }
 
-    if(rank == 0){
-        for(int i = 0; i < Num_Individual; i++){
-            std::cout << "Num Individual : " << i << std::endl;
-            for(int j = 0; j < Nbit_total; j++){
-                std::cout << i*Nbit_total + j << " " << chromosome[0][i*Nbit_total + j] << std::endl;
-            }
-        }
-    }
-
     /* Assignment individual to each processor */
     int* start_idx = new int[size];
     int* end_idx = new int[size];
@@ -108,19 +99,14 @@ int main(int argc, char** argv){
 
     int child{ 0 };
 
-    if(rank == 0) std::cout << P_info[0].alpha() << std::endl;
-    if(rank == 1) std::cout << P_info[1].alpha() << std::endl;
-    if(rank == 2) std::cout << P_info[2].alpha() << std::endl;
-    if(rank == 3) std::cout << P_info[3].alpha() << std::endl;
-    if(rank == 4) std::cout << P_info[4].alpha() << std::endl;
-    if(rank == 5) std::cout << P_info[5].alpha() << std::endl;
-    if(rank == 6) std::cout << P_info[6].alpha() << std::endl;
-    if(rank == 7) std::cout << P_info[7].alpha() << std::endl;
-
-    if(rank == 0){
-        std::cout << "OK" << std::endl;
-        std::exit(0);
-    }
+    if(rank == 0) std::cout << "0 : " << P_info[0].alpha() << std::endl;
+    if(rank == 1) std::cout << "1 : " << P_info[1].alpha() << std::endl;
+    if(rank == 2) std::cout << "2 : " << P_info[2].alpha() << std::endl;
+    if(rank == 3) std::cout << "3 : " << P_info[3].alpha() << std::endl;
+    if(rank == 4) std::cout << "4 : " << P_info[4].alpha() << std::endl;
+    if(rank == 5) std::cout << "5 : " << P_info[5].alpha() << std::endl;
+    if(rank == 6) std::cout << "6 : " << P_info[6].alpha() << std::endl;
+    if(rank == 7) std::cout << "7 : " << P_info[7].alpha() << std::endl;
 
     std::chrono::system_clock::time_point start
         = std::chrono::system_clock::now();
@@ -138,6 +124,10 @@ int main(int argc, char** argv){
 
         /* Calculate FDTD & Score (PE n) */
         // problem point //
+        if(rank == 0){
+        std::cout << "OK" << std::endl;
+        std::exit(0);
+    }
         for(int i = start_idx[rank]; i < end_idx[rank]; i++){
 
             fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i]);
