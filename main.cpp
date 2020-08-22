@@ -131,6 +131,11 @@ int main(int argc, char** argv){
 
         }
 
+        if(rank == 0){
+            std::cout << "OK" << std::endl;
+            std::exit(0);
+        }
+
         /* Merging scores */
         if( rank != 0){
             for(int myrank = 1; myrank < size; myrank++){
