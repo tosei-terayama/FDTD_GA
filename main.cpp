@@ -97,21 +97,16 @@ int main(int argc, char** argv){
     }
     ifs.close();
 
-    int child{ 0 };
-
-    /*int* start_idx = new int[size];
-    int* end_idx = new int[size];
-    for(int myrank = 0; myrank < size; myrank++){
-        start_idx[myrank] = myrank * assigned_num;
-        end_idx[myrank] = (myrank + 1) * assigned_num;
-
-    }*/
-
-    if(rank == 0){
+    if(rank = 0){
         for(int i = 0; i < Num_Individual; i++){
-            std::cout << "Ind " << i << " :  " << P_info[i].sig_h() << std::endl;
+            for(int j = 0; j < Num_obs + 1; j++){
+                std::cout << i << " " << j << Magnitude[i][j] << std::endl;
+            }
+            std::cout << std::endl;
         }
     }
+
+    int child{ 0 };
 
     std::chrono::system_clock::time_point start
         = std::chrono::system_clock::now();
@@ -127,12 +122,13 @@ int main(int argc, char** argv){
         const int CHILD { (gen + 1) % 2 };
         child = CHILD;
 
+        if(rank = 0){
+            std::cout << "Ok" << std::endl;
+            std::exit(0);
+        }
+
         /* Calculate FDTD & Score (PE n) */
-        // problem point //
-        if(rank == 0){
-        std::cout << "OK" << std::endl;
-        std::exit(0);
-    }
+        // problem section //
         for(int i = start_idx[rank]; i < end_idx[rank]; i++){
 
             fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i]);
