@@ -108,10 +108,8 @@ int main(int argc, char** argv){
     }*/
 
     if(rank == 0){
-        for(int myrank = 0; myrank < size; myrank++){
-            std::cout << "myrank : " << myrank << "  start index : " << start_idx[myrank] << std::endl;
-            std::cout << "myrank : " << myrank << "  end index : " << end_idx[myrank] << std::endl; 
-
+        for(int i = 0; i < Num_Individual; i++){
+            std::cout << P_info[i].alpha() << std::endl;
         }
     }
 
