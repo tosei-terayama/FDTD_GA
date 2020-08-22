@@ -100,7 +100,7 @@ int main(int argc, char** argv){
     if(rank == 0){
         for(int i = 0; i < Num_Individual; i++){
             for(int j = 0; j < Num_obs + 1; j++){
-                std::cout << i << " " << j << Magnitude[i][j] << std::endl;
+                std::cout << i << " " << j  << " " << Magnitude[i][j] << std::endl;
             }
             std::cout << std::endl;
         }
