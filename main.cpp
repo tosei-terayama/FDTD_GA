@@ -108,6 +108,20 @@ int main(int argc, char** argv){
 
     int child{ 0 };
 
+    if(rank == 0) std::cout << P_info[0].alpha() << std::endl;
+    if(rank == 1) std::cout << P_info[1].alpha() << std::endl;
+    if(rank == 2) std::cout << P_info[2].alpha() << std::endl;
+    if(rank == 3) std::cout << P_info[3].alpha() << std::endl;
+    if(rank == 4) std::cout << P_info[4].alpha() << std::endl;
+    if(rank == 5) std::cout << P_info[5].alpha() << std::endl;
+    if(rank == 6) std::cout << P_info[6].alpha() << std::endl;
+    if(rank == 7) std::cout << P_info[7].alpha() << std::endl;
+
+    if(rank == 0){
+        std::cout << "OK" << std::endl;
+        std::exit(0);
+    }
+
     std::chrono::system_clock::time_point start
         = std::chrono::system_clock::now();
 
@@ -122,12 +136,8 @@ int main(int argc, char** argv){
         const int CHILD { (gen + 1) % 2 };
         child = CHILD;
 
-        if(rank == 0){
-            std::cout << "OK" << std::endl;
-            std::exit(0);
-        }
-
         /* Calculate FDTD & Score (PE n) */
+        // problem point //
         for(int i = start_idx[rank]; i < end_idx[rank]; i++){
 
             fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i]);
