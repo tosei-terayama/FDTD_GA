@@ -109,7 +109,7 @@ int main(int argc, char** argv){
 
     if(rank == 0){
         for(int i = 0; i < Num_Individual; i++){
-            std::cout << P_info[i].alpha() << std::endl;
+            std::cout << i << " :  " << P_info[i].sig_h() << std::endl;
         }
     }
 
