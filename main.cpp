@@ -97,7 +97,7 @@ int main(int argc, char** argv){
     }
     ifs.close();
 
-    if(rank = 0){
+    if(rank == 0){
         for(int i = 0; i < Num_Individual; i++){
             for(int j = 0; j < Num_obs + 1; j++){
                 std::cout << i << " " << j << Magnitude[i][j] << std::endl;
@@ -122,7 +122,7 @@ int main(int argc, char** argv){
         const int CHILD { (gen + 1) % 2 };
         child = CHILD;
 
-        if(rank = 0){
+        if(rank == 0){
             std::cout << "Ok" << std::endl;
             std::exit(0);
         }
