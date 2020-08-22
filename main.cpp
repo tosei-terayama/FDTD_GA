@@ -109,8 +109,8 @@ int main(int argc, char** argv){
 
     if(rank == 0){
         for(int myrank = 0; myrank < size; myrank++){
-            std::cout << myrank << " " << start_idx[myrank] << std::endl;
-            std::cout << myrank << " " << end_idx[myrank] << std::endl; 
+            std::cout << "myrank : " << myrank << "  start index : " << start_idx[myrank] << std::endl;
+            std::cout << "myrank : " << myrank << "  end index : " << end_idx[myrank] << std::endl; 
 
         }
     }
