@@ -122,6 +122,11 @@ int main(int argc, char** argv){
         const int CHILD { (gen + 1) % 2 };
         child = CHILD;
 
+        if(rank == 0){
+            std::cout << "OK" << std::endl;
+            std::exit(0);
+        }
+
         /* Calculate FDTD & Score (PE n) */
         for(int i = start_idx[rank]; i < end_idx[rank]; i++){
 
@@ -129,11 +134,6 @@ int main(int argc, char** argv){
             Individual[PARENT][i].score = calc_score(Magnitude[i], Target_Magnitude, Num_obs + 1);
             score[i] = Individual[PARENT][i].score;
 
-        }
-
-        if(rank == 0){
-            std::cout << "OK" << std::endl;
-            std::exit(0);
         }
 
         /* Merging scores */
