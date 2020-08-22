@@ -99,14 +99,14 @@ int main(int argc, char** argv){
 
     int child{ 0 };
 
-    if(rank == 0) std::cout << "0 : " << P_info[0].sigh() << std::endl;
-    if(rank == 1) std::cout << "1 : " << P_info[1].sigh() << std::endl;
-    if(rank == 2) std::cout << "2 : " << P_info[2].sigh() << std::endl;
-    if(rank == 3) std::cout << "3 : " << P_info[3].sigh() << std::endl;
-    if(rank == 4) std::cout << "4 : " << P_info[4].sigh() << std::endl;
-    if(rank == 5) std::cout << "5 : " << P_info[5].sigh() << std::endl;
-    if(rank == 6) std::cout << "6 : " << P_info[6].sigh() << std::endl;
-    if(rank == 7) std::cout << "7 : " << P_info[7].sigh() << std::endl;
+    if(rank == 0) std::cout << "0 : " << P_info[0].sig_h() << std::endl;
+    if(rank == 1) std::cout << "1 : " << P_info[1].sig_h() << std::endl;
+    if(rank == 2) std::cout << "2 : " << P_info[2].sig_h() << std::endl;
+    if(rank == 3) std::cout << "3 : " << P_info[3].sig_h() << std::endl;
+    if(rank == 4) std::cout << "4 : " << P_info[4].sig_h() << std::endl;
+    if(rank == 5) std::cout << "5 : " << P_info[5].sig_h() << std::endl;
+    if(rank == 6) std::cout << "6 : " << P_info[6].sig_h() << std::endl;
+    if(rank == 7) std::cout << "7 : " << P_info[7].sig_h() << std::endl;
 
     std::chrono::system_clock::time_point start
         = std::chrono::system_clock::now();
