@@ -113,11 +113,6 @@ int main(int argc, char** argv){
         const int CHILD { (gen + 1) % 2 };
         child = CHILD;
 
-        if(rank == 0){
-            std::cout << "Ok" << std::endl;
-            std::exit(0);
-        }
-
         /* Calculate FDTD & Score (PE n) */
         // problem section //
         for(int i = start_idx[rank]; i < end_idx[rank]; i++){
