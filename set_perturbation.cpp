@@ -33,7 +33,7 @@ void set_perturbation(perturbation P_info, double*** noise_Nh, double* Nh){
                 R(1) = z*std::sin(th(j))*std::sin(ph(k));
                 R(2) = z*std::cos(th(j));
 
-                std:::cout << "k loop OK" << std::endl;
+                std::cout << "k loop OK" << std::endl;
 
                 R_d = (R/R.norm()) * R_c.norm();
                 R_theta = std::acos( (R_c.dot(R_d))/(R_c.norm()*R_d.norm()) );
