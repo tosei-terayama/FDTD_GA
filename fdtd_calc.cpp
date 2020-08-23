@@ -50,6 +50,7 @@ const double Azim{61.0*M_PI/180.0};
 void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
             int Num_obs, geocoordinate* obs_p, double* Magnitude)
 {
+  std::cout << "OK" << std::endl;
   int time_step = 2000;
   double t;
   double J;
@@ -116,6 +117,7 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
     idx_Dr, idx_Dth, idx_Dphi,
     idx_Hr, idx_Hth, idx_Hphi
   );
+  std::cout << "OK" << std::endl;
   
   double *sigma_theta, *sigma_phi, *sigma_theta_h, *sigma_phi_h;
   sigma_theta = new double[Ntheta + 1];
@@ -170,9 +172,6 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
   for(int k = 0; k < Num_obs; k++){
     E_famp[k] += Er[0][obs_p[k].i()][obs_p[k].j()][obs_p[k].k()]*std::exp(-zj*omega*t)*Dt;
   }
-
-  std::cout << "OK" << std::endl;
-  std::exit(0);
 
   //FDTD_update//
   for(int n = 1; n < time_step + 1; n++){
