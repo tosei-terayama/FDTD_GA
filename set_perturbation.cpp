@@ -25,7 +25,6 @@ void set_perturbation(perturbation P_info, double*** noise_Nh, double* Nh){
 
         for(int j = 0; j <= Ntheta; j++){
             for(int k = 0; k <= Nphi; k++){
-                std::cout << "k loop OK" << std::endl;
                 R(0) = z*std::sin(th(j))*std::cos(ph(k));
                 R(1) = z*std::sin(th(j))*std::sin(ph(k));
                 R(2) = z*std::cos(th(j));
@@ -45,6 +44,7 @@ void set_perturbation(perturbation P_info, double*** noise_Nh, double* Nh){
 
                 noise_Nh[i][j][k] = Nh[i] + Nh[i] * enhance;
             }
+            std::cout << "j loop OK" << std::endl;
         }
     }
 
