@@ -29,7 +29,7 @@ void ny_allocate(date date, geocoordinate lla, double *ny, double *Re){
 
     //Input.alt = Nr - ion_L;
     Input.year = date.iy();
-    Input.doy = 61;  // ここ考え中 //
+    Input.doy = 61;
     Input.sec = date.ih() * 3600;
     Input.g_lat = lla.lati();
     Input.g_long = lla.longi();

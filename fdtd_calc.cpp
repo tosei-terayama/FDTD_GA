@@ -137,7 +137,7 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
 
   //Ne, nyu//
   double *Nh = new double[ion_L+1];
-  double*** noise_Nh = memory_allocate3d(ion_L, Ntheta, Nphi, 0.0);
+  double*** noise_Nh = memory_allocate3d(ion_L + 1, Ntheta, Nphi, 0.0);
   double *ny = new double[ion_L+1];
   double *Re = new double[ion_L+1];
 
