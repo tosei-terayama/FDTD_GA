@@ -84,5 +84,12 @@ int main(void)
 
     make_random(senpai, size);
 
+    for(int i = 0; i < 10; i++){
+        if((i % 2) == 0){
+            std::cout << "\r" << "denki";
+        }
+        else std::cout << "\r" << "tsuushin";
+    }
+
     return 0;
 }
