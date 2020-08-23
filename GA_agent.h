@@ -66,7 +66,7 @@ constexpr double GA_max[Num_parameter]
 
 void fdtd_calc(perturbation Perturbation_info, date Date_info, geocoordinate lla_info, 
                 int Number_of_observation, geocoordinate* Position_of_observation,
-                double* Magnitude);
+                double* Magnitude, int myrank);
 
 void sort_Individual(int Num_Individual, double* score, bool* chromosome);
 
@@ -85,8 +85,7 @@ double b2d(bool* Binary_Array, int Length_of_Array,
 
 void set_parameter(perturbation* Perturbation_info, bool* chromosome);
 
-double calc_score(double* Magnitude, double* Target_Magnitude, 
-                    int Num_obs, int myrank);
+double calc_score(double* Magnitude, double* Target_Magnitude, int Num_obs);
 
 class GA_agent{
 public:

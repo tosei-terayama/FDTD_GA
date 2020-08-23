@@ -27,7 +27,12 @@ constexpr double Mutation_rate { 0.03 };  // Mutation incidence
 int main(int argc, char** argv){
 
    std::ofstream ofs;
+   std::ofstream ofs_score;
+   std::ofstream ofs_score2;
+
    ofs.open("./result/magnitude.dat");
+   ofs_score.open("./result/score.dat");
+   ofs_score2.open("./result/score2.dat");
     
     MPI::Init(argc, argv);
     const int rank = MPI::COMM_WORLD.Get_rank();
@@ -116,7 +121,6 @@ int main(int argc, char** argv){
         /* Calculate FDTD & Score (PE n) */
         // problem section //
         for(int i = start_idx[rank]; i < end_idx[rank]; i++){
-
             fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i], rank);
             Individual[PARENT][i].score = calc_score(Magnitude[i], Target_Magnitude, Num_obs + 1);
             score[i] = Individual[PARENT][i].score;
@@ -171,6 +175,9 @@ int main(int argc, char** argv){
 
             /* 3% Mutation */
             Mutation(Num_Elete, Num_Individual, Mutation_rate, chromosome[CHILD]);
+
+            ofs_score << gen << " " << score[0] << std::endl;
+            ofs_score2 << gen << " " << score[1] << std::endl;
         }
 
         /* Assign Chromosome to each agent */
@@ -197,17 +204,19 @@ int main(int argc, char** argv){
 
     }
 
-    double best_score = Individual[child][0].score;
-    int best_ind = 0;
+    if(rank == 0){
+        double best_score = Individual[child][0].score;
+        int best_ind = 0;
 
-    for(int i = 0; i < Num_Individual; i++){
-        if(best_score < Individual[child][i].score){
-            best_ind = i;
+        for(int i = 0; i < Num_Individual; i++){
+            if(best_score < Individual[child][i].score){
+                best_ind = i;
+            }
         }
-    }
 
-    for(int i = 0; i < Num_obs + 1; i++){
-        ofs << i << " " << Magnitude[best_ind][i] << std::endl;
+        for(int i = 0; i < Num_obs + 1; i++){
+            ofs << i << " " << Magnitude[best_ind][i] << std::endl;
+        }
     }
 
     MPI::Finalize();
