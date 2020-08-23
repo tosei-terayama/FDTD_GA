@@ -40,10 +40,9 @@ void set_perturbation(perturbation P_info, double*** noise_Nh, double* Nh){
                                             *std::exp(- (std::pow(z - z_0, 2.0)/2.0/std::pow(P_info.sig_r(), 2.0)));
 
                 noise_Nh[i][j][k] = Nh[i] + Nh[i] * enhance;
-                
+
             }
         }
     }
-    std::cout << "loop OK" << std::endl;
-
+    
 }
