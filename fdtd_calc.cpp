@@ -143,14 +143,14 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
 
   //iri_profile(ymd, lla_info, Nh, Re);
   Ne_allocate(Nh, ny);
-   std::cout << "OK" << std::endl;
   ny_allocate(ymd, lla_info, ny, Re);
-   std::cout << "OK" << std::endl;
 
   double *****Cmat = memory_allocate5d(ion_L+1, Ntheta, Nphi, 3, 3, 0.0);
   double *****Fmat = memory_allocate5d(ion_L+1, Ntheta, Nphi, 3, 3, 0.0);
 
+  std::cout << "test" << std::endl;
   set_perturbation(P_info, noise_Nh, Nh);
+  std::cout << "OK" << std::endl;
 
   set_matrix(zj, Cmat, Fmat, noise_Nh, ny);
 
