@@ -116,7 +116,6 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
     idx_Dr, idx_Dth, idx_Dphi,
     idx_Hr, idx_Hth, idx_Hphi
   );
-  std::cout << "OK" << std::endl;
   
   double *sigma_theta, *sigma_phi, *sigma_theta_h, *sigma_phi_h;
   sigma_theta = new double[Ntheta + 1];
@@ -152,6 +151,8 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
   set_perturbation(P_info, noise_Nh, Nh);
 
   set_matrix(zj, Cmat, Fmat, noise_Nh, ny);
+
+  std::cout << "OK" << std::endl;
 
   //calculate surface impedance//
   std::complex <double> Z(0.0, 0.0);
