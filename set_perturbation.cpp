@@ -20,6 +20,8 @@ void set_perturbation(perturbation P_info, double*** noise_Nh, double* Nh){
     R_c(1) = z_0*std::sin(th(P_info.th0()))*std::sin(ph(P_info.phi0()));
     R_c(2) = z_0*std::cos(th(P_info.th0()));
 
+    std::cout << "test" << std::endl;
+
     for(int i = 0; i <= ion_L; i++){
         double z{ dist(i + lower_r) };
 
