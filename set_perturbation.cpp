@@ -23,10 +23,9 @@ void set_perturbation(perturbation P_info, double*** noise_Nh, double* Nh){
     for(int i = 0; i <= ion_L; i++){
         double z{ dist(i + lower_r) };
 
-        std::cout << "i loop OK" << std::end;
-
         for(int j = 0; j <= Ntheta; j++){
             for(int k = 0; k <= Nphi; k++){
+                std::cout << "k loop OK" << std::endl;
                 R(0) = z*std::sin(th(j))*std::cos(ph(k));
                 R(1) = z*std::sin(th(j))*std::sin(ph(k));
                 R(2) = z*std::cos(th(j));
