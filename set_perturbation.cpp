@@ -44,5 +44,4 @@ void set_perturbation(perturbation P_info, double*** noise_Nh, double* Nh){
             }
         }
     }
-    
 }
