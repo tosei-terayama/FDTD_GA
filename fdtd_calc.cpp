@@ -125,6 +125,8 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
 
   sigma_calc(sigma_theta, sigma_phi, sigma_theta_h, sigma_phi_h);
 
+   std::cout << "OK" << std::endl;
+
   //Geomagnetic field//
   double *geo_B = new double[3];
   double *sph_B = new double[3];
@@ -151,8 +153,6 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
   set_perturbation(P_info, noise_Nh, Nh);
 
   set_matrix(zj, Cmat, Fmat, noise_Nh, ny);
-
-  std::cout << "OK" << std::endl;
 
   //calculate surface impedance//
   std::complex <double> Z(0.0, 0.0);
