@@ -103,10 +103,12 @@ int main(int argc, char** argv){
     ifs.close();
 
     int child{ 0 };
-    double judge{1.0e-2}
+    double judge{1.0e-2};
 
-    std::chrono::system_clock::time_point start
+    if(rank == 0) {
+        std::chrono::system_clock::time_point start
         = std::chrono::system_clock::now();
+        }
 
     /* GA programming(本体) */
     for(int gen = 0; gen < Num_Generation; gen++){
@@ -228,10 +230,12 @@ int main(int argc, char** argv){
         }
     }
 
-    MPI::Finalize();
+    if(rank == 0){
+        std::chrono::system_clock::time_point end
+            = std::chrono::system_clock::now();
+    }
 
-    std::chrono::system_clock::time_point end
-        = std::chrono::system_clock::now();
+    MPI::Finalize();
 
     double total_time = std::chrono::duration_cast <std::chrono::milliseconds>
         (end - start).count();
