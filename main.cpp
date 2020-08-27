@@ -76,11 +76,10 @@ int main(int argc, char** argv){
         end_idx[myrank] = (myrank + 1) * assigned_num;
 
     }
-    if(rank == 0){
-        for(int i = start_idx[rank]; i < end_idx[rank]; i++){
+
+    for(int i = start_idx[rank]; i < end_idx[rank]; i++){
             std::cout << i << std::endl;
-        }
-    }
+            
     if(rank == 0) std::exit(0);
 
     // boolean -> parameter //
