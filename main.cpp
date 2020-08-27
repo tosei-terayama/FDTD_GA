@@ -110,14 +110,8 @@ int main(int argc, char** argv){
     ifs.close();
 
     int child{ 0 };
-    double judge{1.0e-2};
+    //double judge{1.0e-2};
     bool flag = false;
-
-    if(rank == 0){
-        for(int i = 0; i <= Num_obs; i++){
-            std::cout << obs_p[i].i() << " " << obs_p[i].j() << " " << obs_p[i].k() << std::endl;
-        }
-    }
 
     /*if(rank == 0) {
         std::chrono::system_clock::time_point start
@@ -139,11 +133,11 @@ int main(int argc, char** argv){
         // problem section //
         for(int i = start_idx[rank]; i < end_idx[rank]; i++){
                 fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i], rank);
-                std::cout << "Mag(0) : " << Magnitude[0] << " Mag(300) : " << Magnitude[300] << std::endl;
-                score[i] = calc_score(Magnitude[i], Target_Magnitude, Num_obs);
-                Individual[PARENT][i].score = score[i];
-                std::cout << "Individual.score : " << i << " " << Individual[PARENT][i].score <<
-                 "  score : " << score[i] << std::endl;
+                std::cout << "Mag(0) : " << Magnitude[0][0] << " Mag(300) : " << Magnitude[0][300] << std::endl;
+                score[rank] = calc_score(Magnitude[i], Target_Magnitude, Num_obs);
+                Individual[PARENT][rank].score = score[rank];
+                std::cout << "Individual.score : " << rank << " " << Individual[PARENT][rank].score <<
+                 "  score : " << score[rank] << std::endl;
         }
 
         /* Merging scores */
@@ -156,14 +150,14 @@ int main(int argc, char** argv){
             }
         }
 
-        if(rank == 0){
+        /*if(rank == 0){
             for(int i = 0; i < Num_Individual; i++){
                 if(judge > score[i]){
                     std::cout << "best score : " << i << " " << score[i] << std::endl;
                     flag = true;
                 }
             }
-        }
+        }*/
 
         /* Genetic Algorithm */
         if(rank == 0){
