@@ -149,12 +149,7 @@ int main(void)
   double *Nh = new double[ion_L+1];
   double *ny = new double[ion_L+1];
   double *Re = new double[ion_L+1];
-
-  delete[] Nh;
-  delete[] ny;
-  delete[] Re;
-  std::cout << "electron density delete OK" << std::endl;
-
+  
   //iri_profile(ymd, lla_info, Nh, Re);
   Ne_allocate(Nh, Re);
   ny_allocate(ymd, lla_info, ny, Re);
