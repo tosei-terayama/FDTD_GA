@@ -18,7 +18,7 @@ target_Pinfo.set_sigma(2.0e3, 60.0e3);
 /////////////////////////////////////////////
 */
 
-constexpr int Num_Individual { 4 };  // Number of individuals
+constexpr int Num_Individual { 8 };  // Number of individuals
 constexpr int Num_Generation { 30 };  // Number of generations to repeat
 constexpr int Num_Elete { 2 };  //  Number of elete
 constexpr double rnd_max { std::pow(2, 32) };  //   Max of mersenne twister (32 bit)
@@ -93,6 +93,10 @@ int main(int argc, char** argv){
     // Observation points on propagation path //
     int Num_obs = (Nphi - 2*L) - k_s;
     geocoordinate* obs_p = new geocoordinate[Num_obs + 1];
+    for(int k = 0; k <= Num_obs; k++){
+        obs_p[k].set_obs(0, 50, k + k_s);
+        if(rank == 0) std::cout << obs_p[k].geo_i() << " " << obs_p[k].geo_j() << " " << obs_p[k].geo_k() << std::endl;
+    }
 
     // Magnitude //
     double **Magnitude = memory_allocate2d(Num_Individual, Num_obs + 1, 0.0); 
