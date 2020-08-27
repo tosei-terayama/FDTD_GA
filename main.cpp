@@ -18,7 +18,7 @@ target_Pinfo.set_sigma(2.0e3, 60.0e3);
 /////////////////////////////////////////////
 */
 
-constexpr int Num_Individual { 12 };  // Number of individuals
+constexpr int Num_Individual { 8 };  // Number of individuals
 constexpr int Num_Generation { 30 };  // Number of generations to repeat
 constexpr int Num_Elete { 2 };  //  Number of elete
 constexpr double rnd_max { std::pow(2, 32) };  //   Max of mersenne twister (32 bit)
@@ -103,6 +103,7 @@ int main(int argc, char** argv){
     ifs.close();
 
     int child{ 0 };
+    double judge{1.0e-2}
 
     std::chrono::system_clock::time_point start
         = std::chrono::system_clock::now();
@@ -194,6 +195,15 @@ int main(int argc, char** argv){
             for(int j = 0; j < Nbit_total; j++){
                 Individual[CHILD][i].chrom[j]
                     = chromosome[CHILD][i*Nbit_total + j];
+            }
+        }
+
+        if(rank == 0){
+            for(int i = 0; i < Num_Individual; i++){
+                if(judge > Individual[CHILD][i].score){
+                    std::cout << "best score : " << Individual[CHILD][i].score
+                    break;
+                }
             }
         }
         
