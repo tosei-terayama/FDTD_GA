@@ -50,7 +50,7 @@ const double Azim{61.0*M_PI/180.0};
 void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
             int Num_obs, geocoordinate* obs_p, double* Magnitude, int myrank)
 {
-  for(int i = 0: i < Num_obs; i++) Magnitude[i] = 0.0;
+  for(int i = 0; i < Num_obs; i++) Magnitude[i] = 0.0;
 
   int time_step = 2000;
   double t;
@@ -247,7 +247,7 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
   delete_3d(Hr, Nr + 1, Ntheta);
   delete_3d(Htheta, Nr, Ntheta + 1);
   delete_3d(Hphi, Nr, Ntheta);
-  delete_3d(noise_Nh, ion_L + 1, Nthetea + 1);
+  delete_3d(noise_Nh, ion_L + 1, Ntheta + 1);
 
   delete_PML(Dr_theta1, Dr_theta2, Dr_phi,
             Dtheta_phi, Dtheta_r,
