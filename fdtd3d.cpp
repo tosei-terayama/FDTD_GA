@@ -104,6 +104,16 @@ int main(void)
     Hphi_r, Hphi_theta
   );
 
+  delete_PML(Dr_theta1, Dr_theta2, Dr_phi,
+            Dtheta_phi, Dtheta_r,
+            Dphi_r, Dphi_theta,
+            Hr_theta1, Hr_theta2, Hr_phi,
+            Htheta_phi, Htheta_r,
+            Hphi_r, Hphi_theta);
+  
+  std::cout << "OK" << std::endl;
+  std::exit(0);
+
   pml* idx_Dr = new pml[4];
   pml* idx_Dth = new pml[4];
   pml* idx_Dphi = new pml[4];
