@@ -111,15 +111,6 @@ int main(void)
   pml* idx_Hth = new pml[4];
   pml* idx_Hphi = new pml[4];
 
-  delete[] idx_Dr;
-  delete[] idx_Dth;
-  delete[] idx_Dphi;
-  delete[] idx_Hr;
-  delete[] idx_Hth;
-  delete[] idx_Hphi;
-
-  std::cout << "pml delete OK" << std::endl;
-
   PML_idx_initialize(
     idx_Dr, idx_Dth, idx_Dphi,
     idx_Hr, idx_Hth, idx_Hphi
@@ -130,13 +121,6 @@ int main(void)
   sigma_phi = new double[Nphi + 1];
   sigma_theta_h = new double[Ntheta + 1];
   sigma_phi_h = new double[Nphi + 1];
-
-  delete[] sigma_theta;
-  delete[] sigma_phi;
-  delete[] sigma_theta_h;
-  delete[] sigma_phi_h;
-
-  std::cout << "sigma delete OK" << std::endl;
 
   sigma_calc(sigma_theta, sigma_phi, sigma_theta_h, sigma_phi_h);
 
@@ -149,10 +133,6 @@ int main(void)
 
   B_th = std::acos(-sph_B[1]/B_abs);
   B_phi = std::atan2(sph_B[2], sph_B[0]);
-
-  delete[] geo_B;
-  delete[] sph_B;
-  std::cout << "geo delete OK" << std::endl;
 
   std::cout << "B_theta = " << B_th << "\tB_phi = " << B_phi << std::endl;
 
