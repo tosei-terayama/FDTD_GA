@@ -11,7 +11,7 @@ void delete_PML(
     double ****Hphi_r, double ****Hphi_theta)
 {
     std::cout << "PML delete start" << std::endl;
-    
+
     for(int i = 0; i <= 1; i++){
         delete_3d(Dr_theta1[i], Nr, L);
         delete_3d(Dr_theta2[i], Nr, L);
@@ -48,6 +48,7 @@ void delete_PML(
         delete_3d(Hphi_r[i], Nr, Ntheta - 2*L);
         delete_3d(Hphi_theta[i], Nr, Ntheta - 2*L);
     }
+    std::cout << "i : 2 ~ 3" << std::endl;
 
     delete[] Dr_theta1;
     delete[] Dr_theta2;
