@@ -18,7 +18,7 @@ target_Pinfo.set_sigma(2.0e3, 60.0e3);
 /////////////////////////////////////////////
 */
 
-constexpr int Num_Individual { 8 };  // Number of individuals
+constexpr int Num_Individual { 6 };  // Number of individuals
 constexpr int Num_Generation { 30 };  // Number of generations to repeat
 constexpr int Num_Elete { 2 };  //  Number of elete
 constexpr double rnd_max { std::pow(2, 32) };  //   Max of mersenne twister (32 bit)
@@ -31,10 +31,12 @@ int main(int argc, char** argv){
     std::ofstream ofs;
     std::ofstream ofs_score;
     std::ofstream ofs_score2;
+    std::ofstream ofs_score3;
 
     ofs.open("./result/magnitude.dat");
     ofs_score.open("./result/score.dat");
     ofs_score2.open("./result/score2.dat");
+    ofs_score3.open("./result/score3.dat");
     
     MPI::Init(argc, argv);
     const int rank = MPI::COMM_WORLD.Get_rank();
@@ -106,6 +108,7 @@ int main(int argc, char** argv){
 
     int child{ 0 };
     double judge{1.0e-2};
+    bool flag = false;
 
     /*if(rank == 0) {
         std::chrono::system_clock::time_point start
@@ -139,6 +142,16 @@ int main(int argc, char** argv){
                 MPI::COMM_WORLD.Recv(score + start_idx[myrank], assigned_num,
                                     MPI::DOUBLE, myrank, 0);
             }
+        }
+
+        if(rank == 0){
+            for(int i = 0; i < Num_Individual; i++){
+                if(judge > score[i]){
+                    std::cout << "best score : " << score[i] << std::endl;
+                    flag = true;
+                }
+            }
+            if(flag == true) break;
         }
 
         /* Genetic Algorithm */
@@ -182,6 +195,7 @@ int main(int argc, char** argv){
 
             ofs_score << gen << " " << score[0] << std::endl;
             ofs_score2 << gen << " " << score[1] << std::endl;
+            ofs_score3 << gen << " " << score[2] << std::endl;
         }
 
         /* Assign Chromosome to each agent */
@@ -199,15 +213,6 @@ int main(int argc, char** argv){
             for(int j = 0; j < Nbit_total; j++){
                 Individual[CHILD][i].chrom[j]
                     = chromosome[CHILD][i*Nbit_total + j];
-            }
-        }
-
-        if(rank == 0){
-            for(int i = 0; i < Num_Individual; i++){
-                if(judge > Individual[CHILD][i].score){
-                    std::cout << "best score : " << Individual[CHILD][i].score;
-                    break;
-                }
             }
         }
         
