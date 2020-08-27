@@ -77,12 +77,6 @@ int main(int argc, char** argv){
 
     }
 
-    for(int i = start_idx[rank]; i < end_idx[rank]; i++){
-            std::cout << i << std::endl;
-    }
-
-    if(rank == 0) std::exit(0);
-
     // boolean -> parameter //
     perturbation P_info[Num_Individual];
 
@@ -140,10 +134,10 @@ int main(int argc, char** argv){
         for(int i = start_idx[rank]; i < end_idx[rank]; i++){
                 fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i], rank);
                 std::cout << "Mag(0) : " << Magnitude[0][0] << " Mag(300) : " << Magnitude[0][300] << std::endl;
-                score[rank] = calc_score(Magnitude[i], Target_Magnitude, Num_obs);
-                Individual[PARENT][rank].score = score[rank];
-                std::cout << "Individual.score : " << rank << " " << Individual[PARENT][rank].score <<
-                 "  score : " << score[rank] << std::endl;
+                score[i] = calc_score(Magnitude[i], Target_Magnitude, Num_obs);
+                Individual[PARENT][i].score = score[i];
+                std::cout << "Individual.score : " << i << " " << Individual[PARENT][i].score <<
+                 "    score : " << score[i] << std::endl;
         }
 
         /* Merging scores */
