@@ -246,11 +246,6 @@ int main(void)
       E_famp3d[j][k] += Er[0][obs_p3d[j][k].i()][obs_p3d[j][k].j()][obs_p3d[j][k].k()]*std::exp(-zj*omega*t)*Dt;
     }
   }
-
-  delete[] geo_B;
-  delete[] sph_B;
-  std::cout << "geo delete OK" << std::endl;
-  std::exit(0);
   
   ////////計測開始////////
   std::chrono::system_clock::time_point start
