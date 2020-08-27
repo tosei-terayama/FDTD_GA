@@ -106,6 +106,11 @@ int main(int argc, char** argv){
     }
     ifs.close();
 
+    if(rank == 0){
+        for(int i = 0; i < Num_obs; i++) std::cout << i << Target_Magnitude[i] << std::endl;
+    }
+    if(rank == 0) std::exit(0);
+
     int child{ 0 };
     double judge{1.0e-2};
     bool flag = false;
@@ -132,6 +137,8 @@ int main(int argc, char** argv){
                 fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i], rank);
                 Individual[PARENT][i].score = calc_score(Magnitude[i], Target_Magnitude, Num_obs + 1);
                 score[i] = Individual[PARENT][i].score;
+                std::cout << "Individual.score : " << i << Individual[PARENT][i].score <<
+                 "  score : " << score[i] << std::endl;
         }
 
         /* Merging scores */
@@ -147,11 +154,10 @@ int main(int argc, char** argv){
         if(rank == 0){
             for(int i = 0; i < Num_Individual; i++){
                 if(judge > score[i]){
-                    std::cout << "best score : " << score[i] << std::endl;
+                    std::cout << "best score : " << i << " " << score[i] << std::endl;
                     flag = true;
                 }
             }
-            if(flag == true) break;
         }
 
         /* Genetic Algorithm */
@@ -219,6 +225,8 @@ int main(int argc, char** argv){
         if( rank == 0){
             set_parameter(P_info, chromosome[CHILD]);
         }
+
+        if(flag == true) break;
 
     }
 
