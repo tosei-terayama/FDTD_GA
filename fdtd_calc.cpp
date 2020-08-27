@@ -236,8 +236,8 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
     Magnitude[k] = 20.0*std::log10(std::abs(E_famp[k]/E_famp[0]));
   }
 
-  delete_5d(Cmat, ion_L + 1, Ntheta + 1, Nphi + 1, 3);
-  delete_5d(Fmat, ion_L + 1, Ntheta + 1, Nphi + 1, 3);
+  delete_5d(Cmat, ion_L + 1, Ntheta, Nphi, 3);
+  delete_5d(Fmat, ion_L + 1, Ntheta, Nphi, 3);
   delete_4d(Er, 2, Nr, Ntheta + 1);
   delete_4d(Etheta, 2, Nr + 1, Ntheta);
   delete_4d(Ephi, 2, Nr + 1, Ntheta + 1);
