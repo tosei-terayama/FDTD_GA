@@ -171,11 +171,13 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
     E_famp[k] += Er[0][obs_p[k].i()][obs_p[k].j()][obs_p[k].k()]*std::exp(-zj*omega*t)*Dt;
   }
 
+  int n = 1;
+  
   //FDTD_update//
-  for(int n = 1; n < time_step + 1; n++){
+  for(n = 1; n < time_step + 1; n++){
     
-    if((myrank == 1) && (n % 100 == 0)){
-      std::cout << n << " / " << time_step << std::endl;
+    if(myrank == 0 && n % 100 == 0){
+      std::cout << n << " / " << time_step << "  Er(50, 50, 500)" << Er[NEW][50][50][500] << std::endl;
     }
 
     NEW = n%2;
