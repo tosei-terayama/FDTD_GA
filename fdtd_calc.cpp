@@ -175,13 +175,13 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
   
   //FDTD_update//
   for(n = 1; n < time_step + 1; n++){
- 
+
+    NEW = n%2;
+    OLD = (n + 1)%2;
+    
     if(myrank == 0 && n % 100 == 0){
       std::cout << n << " / " << time_step << "  Er(50, 50, 500)" << Er[NEW][50][50][500] << std::endl;
     }
-
-    NEW = n%2;
-    OLD = (n+1)%2;
     
     //t = (double(n) - 0.5)*Dt;
     t = n*Dt;
