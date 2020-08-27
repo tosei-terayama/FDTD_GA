@@ -26,13 +26,15 @@ constexpr double Mutation_rate { 0.03 };  // Mutation incidence
 
 int main(int argc, char** argv){
 
-   std::ofstream ofs;
-   std::ofstream ofs_score;
-   std::ofstream ofs_score2;
+    //double total_time;
+    
+    std::ofstream ofs;
+    std::ofstream ofs_score;
+    std::ofstream ofs_score2;
 
-   ofs.open("./result/magnitude.dat");
-   ofs_score.open("./result/score.dat");
-   ofs_score2.open("./result/score2.dat");
+    ofs.open("./result/magnitude.dat");
+    ofs_score.open("./result/score.dat");
+    ofs_score2.open("./result/score2.dat");
     
     MPI::Init(argc, argv);
     const int rank = MPI::COMM_WORLD.Get_rank();
@@ -105,10 +107,10 @@ int main(int argc, char** argv){
     int child{ 0 };
     double judge{1.0e-2};
 
-    if(rank == 0) {
+    /*if(rank == 0) {
         std::chrono::system_clock::time_point start
         = std::chrono::system_clock::now();
-        }
+        }*/
 
     /* GA programming(本体) */
     for(int gen = 0; gen < Num_Generation; gen++){
@@ -230,17 +232,17 @@ int main(int argc, char** argv){
         }
     }
 
-    if(rank == 0){
+    /*if(rank == 0){
         std::chrono::system_clock::time_point end
             = std::chrono::system_clock::now();
-    }
+    }*/
 
     MPI::Finalize();
 
-    double total_time = std::chrono::duration_cast <std::chrono::milliseconds>
+    /*total_time = std::chrono::duration_cast <std::chrono::milliseconds>
         (end - start).count();
     
-    std::cout << "elapsed time : " << total_time*1.0e-3 << " [sec]" << std::endl;
+    std::cout << "elapsed time : " << total_time*1.0e-3 << " [sec]" << std::endl;*/
     ofs.close();
 
     return 0;
