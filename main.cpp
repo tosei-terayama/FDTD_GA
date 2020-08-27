@@ -130,6 +130,7 @@ int main(int argc, char** argv){
         // problem section //
         for(int i = start_idx[rank]; i < end_idx[rank]; i++){
                 fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i], rank);
+                std::cout << "Mag(0) : " << Magnitude[0] << " Mag(750) : " << Magnitude[750] << std::endl; 
                 Individual[PARENT][i].score = calc_score(Magnitude[i], Target_Magnitude, Num_obs);
                 score[i] = Individual[PARENT][i].score;
                 std::cout << "Individual.score : " << i << " " << Individual[PARENT][i].score <<

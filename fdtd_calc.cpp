@@ -50,6 +50,8 @@ const double Azim{61.0*M_PI/180.0};
 void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
             int Num_obs, geocoordinate* obs_p, double* Magnitude, int myrank)
 {
+  for(int i = 0: i < Num_obs; i++) Magnitude[i] = 0.0;
+
   int time_step = 2000;
   double t;
   double J;
@@ -234,28 +236,42 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
     Magnitude[k] = 20.0*std::log10(std::abs(E_famp[k]/E_famp[0]));
   }
 
-  delete [] Er;
-  delete [] Etheta;
-  delete [] Ephi;
-  delete [] Dr;
-  delete [] Dtheta;
-  delete [] Dphi;
-  delete [] Dr_theta1;
-  delete [] Dr_theta2;
-  delete [] Dr_phi;
-  delete [] Dtheta_r;
-  delete [] Dtheta_phi;
-  delete [] Dphi_r;
-  delete [] Dphi_theta;
-  delete [] Hr;
-  delete [] Htheta;
-  delete [] Hphi;
-  delete [] Hr_theta1;
-  delete [] Hr_theta2;
-  delete [] Htheta_r;
-  delete [] Htheta_phi;
-  delete [] Hphi_r;
-  delete [] Hphi_theta;
+  delete_5d(Cmat, ion_L + 1, Ntheta + 1, Nphi + 1, 3);
+  delete_5d(Fmat, ion_L + 1, Ntheta + 1, Nphi + 1, 3);
+  delete_4d(Er, 2, Nr, Ntheta + 1);
+  delete_4d(Etheta, 2, Nr + 1, Ntheta);
+  delete_4d(Ephi, 2, Nr + 1, Ntheta + 1);
+  delete_4d(Dr, 2, Nr, Ntheta + 1);
+  delete_4d(Dtheta, 2, Nr + 1, Ntheta);
+  delete_4d(Dphi, 2, Nr + 1, Ntheta + 1);
+  delete_3d(Hr, Nr + 1, Ntheta);
+  delete_3d(Htheta, Nr, Ntheta + 1);
+  delete_3d(Hphi, Nr, Ntheta);
+  delete_3d(noise_Nh, ion_L + 1, Nthetea + 1);
+
+  delete_PML(Dr_theta1, Dr_theta2, Dr_phi,
+            Dtheta_phi, Dtheta_r,
+            Dphi_r, Dphi_theta,
+            Hr_theta1, Hr_theta2, Hr_phi,
+            Htheta_phi, Htheta_r,
+            Hphi_r, Hphi_theta);
+
+  delete[] idx_Dr;
+  delete[] idx_Dth;
+  delete[] idx_Dphi;
+  delete[] idx_Hr;
+  delete[] idx_Hth;
+  delete[] idx_Hphi;
+  delete[] sigma_theta;
+  delete[] sigma_phi;
+  delete[] sigma_theta_h;
+  delete[] sigma_phi_h;
+  delete[] geo_B;
+  delete[] sph_B;
+  delete[] Nh;
+  delete[] ny;
+  delete[] Re;
+
   delete [] E_famp;
 
 }

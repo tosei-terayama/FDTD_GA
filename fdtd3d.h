@@ -84,6 +84,17 @@ double***** memory_allocate5d(int, int, int, int, int, double);
 std::complex <double>*** memory_allocate3cd(int, int, int, std::complex<double>);
 std::complex <double>** memory_allocate2cd(int, int, std::complex<double>);
 
+void delete_2d(double** , int);
+void delete_3d(double***, int, int);
+void delete_4d(double****, int, int, int);
+void delete_5d(double*****, int, int, int, int);
+void delete_2cd(std::complex <double>**, int);
+void delete_3cd(std::complex <double>***, int, int);
+void delete_PML(double**** Dr_theta1, double**** Dr_theta2, double**** Dr_phi,
+                double**** Dtheta_phi, double**** Dtheta_r, double**** Dphi_r, double**** Dphi_theta,
+                double**** Hr_theta1, double**** Hr_theta2, double**** Hr_phi,
+                double**** Htheta_phi, double**** Htheta_r, double**** Hphi_r, double**** Hphi_theta);
+
 void output_profile(
     perturbation perturbation_information, double* Nh, double*** Nh_with_noise);
 void output_model(void);
