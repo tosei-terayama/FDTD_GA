@@ -71,6 +71,18 @@ int main(void)
   Dtheta = memory_allocate4d(2, Nr + 1, Ntheta, Nphi + 1, 0.0);
   Dphi = memory_allocate4d(2, Nr + 1, Ntheta + 1, Nphi, 0.0);
 
+  delete_4d(Er, 2, Nr, Ntheta + 1);
+  delete_4d(Etheta, 2, Nr + 1, Ntheta);
+  delete_4d(Ephi, 2, Nr + 1, Ntheta + 1);
+  delete_4d(Dr, 2, Nr, Ntheta + 1);
+  delete_4d(Dtheta, 2, Nr + 1, Ntheta);
+  delete_4d(Dphi, 2, Nr + 1, Ntheta + 1);
+  delete_3d(Hr, Nr + 1, Ntheta);
+  delete_3d(Htheta, Nr, Ntheta + 1);
+  delete_3d(Hphi, Nr, Ntheta);
+
+  std::cout << "4d&3d OK" << std::endl;
+
   double**** Dr_theta1, **** Dr_theta2, **** Dr_phi;
   double**** Dtheta_phi, **** Dtheta_r;
   double**** Dphi_r, **** Dphi_theta;
