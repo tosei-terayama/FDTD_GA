@@ -77,9 +77,8 @@ int main(int argc, char** argv){
 
     }
     if(rank == 0){
-        for(int myrank = 0; myrank < size; myrank++){
-            std::cout << myrank << " start : " << start_idx[myrank]
-            << " " << end_idx[myrank] << std::endl;
+        for(int i = start_idx[rank]; i < end_idx[rank]; i++){
+            std::cout << i << std::endl;
         }
     }
     if(rank == 0) std::exit(0);
