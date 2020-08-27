@@ -95,7 +95,6 @@ int main(int argc, char** argv){
     geocoordinate* obs_p = new geocoordinate[Num_obs + 1];
     for(int k = 0; k <= Num_obs; k++){
         obs_p[k].set_obs(0, 50, k + k_s);
-        if(rank == 0) std::cout << obs_p[k].geo_i() << " " << obs_p[k].geo_j() << " " << obs_p[k].geo_k() << std::endl;
     }
 
     // Magnitude //
@@ -113,6 +112,12 @@ int main(int argc, char** argv){
     int child{ 0 };
     double judge{1.0e-2};
     bool flag = false;
+
+    if(rank == 0){
+        for(int i = 0; i <= Num_obs; i++){
+            std::cout << obs_p[i].i() << " " << obs_p[i].j() << " " << obs_p[i].k() << std::endl;
+        }
+    }
 
     /*if(rank == 0) {
         std::chrono::system_clock::time_point start
