@@ -120,11 +120,12 @@ int main(int argc, char** argv){
 
         /* Calculate FDTD & Score (PE n) */
         // problem section //
-        for(int i = start_idx[rank]; i < end_idx[rank]; i++){
-            fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i], rank);
-            Individual[PARENT][i].score = calc_score(Magnitude[i], Target_Magnitude, Num_obs + 1);
-            score[i] = Individual[PARENT][i].score;
-
+        if(rank == 0){
+            for(int i = start_idx[rank]; i < end_idx[rank]; i++){
+                fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i], rank);
+                Individual[PARENT][i].score = calc_score(Magnitude[i], Target_Magnitude, Num_obs + 1);
+                score[i] = Individual[PARENT][i].score;
+            }
         }
 
         /* Merging scores */
