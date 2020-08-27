@@ -29,8 +29,7 @@ void delete_PML(
         delete_3d(Hphi_r[i], Nr, L);
         delete_3d(Hphi_theta[i], Nr, L);
     }
-    std::cout << "i : 0 ~ 1 OK" << std::endl;
-
+    
     for(int i = 2; i <= 3; i++){
         delete_3d(Dr_theta1[i], Nr, Ntheta - 2*L - 1);
         delete_3d(Dr_theta2[i], Nr, Ntheta - 2*L - 1);
@@ -48,7 +47,6 @@ void delete_PML(
         delete_3d(Hphi_r[i], Nr, Ntheta - 2*L);
         delete_3d(Hphi_theta[i], Nr, Ntheta - 2*L);
     }
-    std::cout << "i : 2 ~ 3" << std::endl;
 
     delete[] Dr_theta1;
     delete[] Dr_theta2;
