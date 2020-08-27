@@ -181,6 +181,7 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
     NEW = n%2;
     OLD = (n+1)%2;
     
+    //t = (double(n) - 0.5)*Dt;
     t = n*Dt;
     
     //Forced current//
