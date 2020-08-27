@@ -9,9 +9,10 @@ double calc_score(double *Magnitude, double* Target_Magnitude, int size)
     double score{ 0.0 };
 
     for(int i = 0; i < size; i++){
-        score += std::pow(Magnitude[i] - Target_Magnitude[i], 2.0);
+        score += std::abs(Magnitude[i] - Target_Magnitude[i]);
     }
 
+    score = std::pow(score, 2.0);
     return score;
 
 }
