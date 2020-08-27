@@ -76,6 +76,13 @@ int main(int argc, char** argv){
         end_idx[myrank] = (myrank + 1) * assigned_num;
 
     }
+    if(rank == 0){
+        for(int myrank = 0; myrank < size; myrank++){
+            std::cout << myrank << " start : " << start_idx[myrank]
+            << " " << end_idx[myrank] << std::endl;
+        }
+    }
+    if(rank == 0) std::exit(0);
 
     // boolean -> parameter //
     perturbation P_info[Num_Individual];
