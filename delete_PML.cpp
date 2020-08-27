@@ -10,7 +10,6 @@ void delete_PML(
     double ****Htheta_phi, double ****Htheta_r,
     double ****Hphi_r, double ****Hphi_theta)
 {
-    std::cout << "PML delete start" << std::endl;
 
     for(int i = 0; i <= 1; i++){
         delete_3d(Dr_theta1[i], Nr, L);
