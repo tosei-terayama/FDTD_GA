@@ -12,7 +12,7 @@ void sort_Individual(int Num, double* score, bool* chromosome){
 
     for(int i = 0; i < Num - 1; i++){
         for(int j = i + 1; j < Num; j++){
-            if(score[i] < score[j]){
+            if(score[i] > score[j]){
                 // swap score //
                 score_tmp = score[i];
                 score[i] = score[j];
