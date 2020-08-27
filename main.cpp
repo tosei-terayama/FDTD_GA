@@ -79,7 +79,8 @@ int main(int argc, char** argv){
 
     for(int i = start_idx[rank]; i < end_idx[rank]; i++){
             std::cout << i << std::endl;
-            
+    }
+
     if(rank == 0) std::exit(0);
 
     // boolean -> parameter //
