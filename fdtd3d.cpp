@@ -149,23 +149,15 @@ int main(void)
   double *Nh = new double[ion_L+1];
   double *ny = new double[ion_L+1];
   double *Re = new double[ion_L+1];
-  
+
   //iri_profile(ymd, lla_info, Nh, Re);
   Ne_allocate(Nh, Re);
   ny_allocate(ymd, lla_info, ny, Re);
 
   double *****Cmat = memory_allocate5d(ion_L+1, Ntheta + 1, Nphi + 1, 3, 3, 0.0);
   double *****Fmat = memory_allocate5d(ion_L+1, Ntheta + 1, Nphi + 1, 3, 3, 0.0);
-
-  delete_5d(Cmat, ion_L + 1, Ntheta + 1, Nphi + 1, 3);
-  delete_5d(Fmat, ion_L + 1, Ntheta + 1, Nphi + 1, 3);
-  std::cout << "matrix delete OK" << std::endl;
   
   double*** noise_Nh = memory_allocate3d(ion_L + 1, Ntheta + 1, Nphi + 1, 0.0);
-
-  delete_3d(noise_Nh, ion_L + 1, Ntheta + 1);
-  std::cout << "noiseNh delete OK" << std::endl;
-  std::exit(0);
   
   perturbation P_info;
 
@@ -254,6 +246,11 @@ int main(void)
       E_famp3d[j][k] += Er[0][obs_p3d[j][k].i()][obs_p3d[j][k].j()][obs_p3d[j][k].k()]*std::exp(-zj*omega*t)*Dt;
     }
   }
+
+  delete[] geo_B;
+  delete[] sph_B;
+  std::cout << "geo delete OK" << std::endl;
+  std::exit(0);
   
   ////////計測開始////////
   std::chrono::system_clock::time_point start
