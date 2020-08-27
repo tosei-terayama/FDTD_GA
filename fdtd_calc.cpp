@@ -174,7 +174,7 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
   //FDTD_update//
   for(int n = 1; n < time_step + 1; n++){
     
-    if(myrank == 1){
+    if((myrank == 1) && (n % 100 == 0)){
       std::cout << n << " / " << time_step << std::endl;
     }
 
