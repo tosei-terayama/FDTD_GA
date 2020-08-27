@@ -43,7 +43,7 @@ void delete_PML(
         delete_3d(Hr_theta1[i], Nr + 1, Ntheta - 2*L);
         delete_3d(Hr_theta2[i], Nr + 1, Ntheta - 2*L);
         delete_3d(Hr_phi[i], Nr + 1, Ntheta - 2*L);
-        delete_3d(Htheta_phi[i], Nr, Ntheta - 2*L);
+        delete_3d(Htheta_phi[i], Nr, Ntheta - 2*L - 1);
         delete_3d(Htheta_r[i], Nr, Ntheta - 2*L - 1);
         delete_3d(Hphi_r[i], Nr, Ntheta - 2*L);
         delete_3d(Hphi_theta[i], Nr, Ntheta - 2*L);
