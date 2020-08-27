@@ -2,7 +2,7 @@
 #include "fdtd3d.h"
 
 
-delete_PML(
+void delete_PML(
     double ****Dr_theta1, double ****Dr_theta2, double ****Dr_phi,
     double ****Dtheta_phi, double ****Dtheta_r,
     double ****Dphi_r, double ****Dphi_theta,
