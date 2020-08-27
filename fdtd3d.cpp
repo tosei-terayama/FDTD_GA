@@ -71,18 +71,6 @@ int main(void)
   Dtheta = memory_allocate4d(2, Nr + 1, Ntheta, Nphi + 1, 0.0);
   Dphi = memory_allocate4d(2, Nr + 1, Ntheta + 1, Nphi, 0.0);
 
-  delete_4d(Er, 2, Nr, Ntheta + 1);
-  delete_4d(Etheta, 2, Nr + 1, Ntheta);
-  delete_4d(Ephi, 2, Nr + 1, Ntheta + 1);
-  delete_4d(Dr, 2, Nr, Ntheta + 1);
-  delete_4d(Dtheta, 2, Nr + 1, Ntheta);
-  delete_4d(Dphi, 2, Nr + 1, Ntheta + 1);
-  delete_3d(Hr, Nr + 1, Ntheta);
-  delete_3d(Htheta, Nr, Ntheta + 1);
-  delete_3d(Hphi, Nr, Ntheta);
-
-  std::cout << "4d&3d OK" << std::endl;
-
   double**** Dr_theta1, **** Dr_theta2, **** Dr_phi;
   double**** Dtheta_phi, **** Dtheta_r;
   double**** Dphi_r, **** Dphi_theta;
@@ -116,22 +104,21 @@ int main(void)
     Hphi_r, Hphi_theta
   );
 
-  delete_PML(Dr_theta1, Dr_theta2, Dr_phi,
-            Dtheta_phi, Dtheta_r,
-            Dphi_r, Dphi_theta,
-            Hr_theta1, Hr_theta2, Hr_phi,
-            Htheta_phi, Htheta_r,
-            Hphi_r, Hphi_theta);
-  
-  std::cout << "OK" << std::endl;
-  std::exit(0);
-
   pml* idx_Dr = new pml[4];
   pml* idx_Dth = new pml[4];
   pml* idx_Dphi = new pml[4];
   pml* idx_Hr = new pml[4];
   pml* idx_Hth = new pml[4];
   pml* idx_Hphi = new pml[4];
+
+  delete[] idx_Dr;
+  delete[] idx_Dth;
+  delete[] idx_Dphi;
+  delete[] idx_Hr;
+  delete[] idx_Hth;
+  delete[] idx_Hphi;
+
+  std::cout << "pml delete OK" << std::endl;
 
   PML_idx_initialize(
     idx_Dr, idx_Dth, idx_Dphi,
@@ -144,6 +131,13 @@ int main(void)
   sigma_theta_h = new double[Ntheta + 1];
   sigma_phi_h = new double[Nphi + 1];
 
+  delete[] sigma_theta;
+  delete[] sigma_phi;
+  delete[] sigma_theta_h;
+  delete[] sigma_phi_h;
+
+  std::cout << "sigma delete OK" << std::endl;
+
   sigma_calc(sigma_theta, sigma_phi, sigma_theta_h, sigma_phi_h);
 
   //Geomagnetic field//
@@ -155,6 +149,10 @@ int main(void)
 
   B_th = std::acos(-sph_B[1]/B_abs);
   B_phi = std::atan2(sph_B[2], sph_B[0]);
+
+  delete[] geo_B;
+  delete[] sph_B;
+  std::cout << "geo delete OK" << std::endl;
 
   std::cout << "B_theta = " << B_th << "\tB_phi = " << B_phi << std::endl;
 
@@ -172,14 +170,27 @@ int main(void)
   double *ny = new double[ion_L+1];
   double *Re = new double[ion_L+1];
 
+  delete[] Nh;
+  delete[] ny;
+  delete[] Re;
+  std::cout << "electron density delete OK" << std::endl;
+
   //iri_profile(ymd, lla_info, Nh, Re);
   Ne_allocate(Nh, Re);
   ny_allocate(ymd, lla_info, ny, Re);
 
   double *****Cmat = memory_allocate5d(ion_L+1, Ntheta + 1, Nphi + 1, 3, 3, 0.0);
   double *****Fmat = memory_allocate5d(ion_L+1, Ntheta + 1, Nphi + 1, 3, 3, 0.0);
+
+  delete_5d(Cmat, ion_L + 1, Ntheta + 1, Nphi + 1, 3);
+  delete_5d(Fmat, ion_L + 1, Ntheta + 1, Nphi + 1, 3);
+  std::cout << "matrix delete OK" << std::endl;
   
   double*** noise_Nh = memory_allocate3d(ion_L + 1, Ntheta + 1, Nphi + 1, 0.0);
+
+  delete_3d(noise_Nh, ion_L + 1, Ntheta + 1);
+  std::cout << "noiseNh delete OK" << std::endl;
+  std::exit(0);
   
   perturbation P_info;
 
