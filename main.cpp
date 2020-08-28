@@ -191,11 +191,9 @@ int main(int argc, char** argv){
                 /* Roulette selection */
                 for(int j = 0; j < 2; j++){
                     int k = 0;
-                    double sum = Roulette[k];
                     double rnd_num = engine() / rnd_max;
-                    while( sum < rnd_num){
+                    while( Roulette[k] < rnd_num){
                         k++;
-                        sum += Roulette[k]; 
                     }
                     ind_idx[j] = k;
                 }

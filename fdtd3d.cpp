@@ -48,7 +48,7 @@ const double Azim{61.0*M_PI/180.0};
 
 int main(void)
 {
-  int time_step = 2000;
+  int time_step = 1700;
   double t;
   double J;
   double total_time;
@@ -190,7 +190,7 @@ int main(void)
   std::ofstream ofs_Nphi;
   ofs_Nphi.open("./dat_file/obs_Nphi.dat");
   std::ofstream ofs_NphidB;
-  ofs_NphidB.open("./dat_file/obs_NphidB.dat");
+  ofs_NphidB.open("./dat_file/target.dat");
   std::ofstream ofs_servedNphi;
   ofs_servedNphi.open("./dat_file/obs_3dNphi.dat");
   std::ofstream ofs_servedNphidB;

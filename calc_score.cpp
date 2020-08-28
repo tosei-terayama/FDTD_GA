@@ -6,13 +6,14 @@
 
 double calc_score(double *Magnitude, double* Target_Magnitude, int Num)
 {
-    double score{ 0.0 };
+    double sum{ 0.0 };
 
     for(int i = 0; i < Num; i++){
-        score += std::abs(Magnitude[i] - Target_Magnitude[i]);
+        sum += std::pow(Magnitude[i] - Target_Magnitude[i], 2.0);
     }
 
-    score = std::pow(score, 2.0);
+    score = 1.0 / sum;
+    
     return score;
 
 }
