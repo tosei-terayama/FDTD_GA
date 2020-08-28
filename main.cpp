@@ -29,14 +29,20 @@ int main(int argc, char** argv){
     //double total_time;
     
     std::ofstream ofs;
-    std::ofstream ofs_score;
+    std::ofstream ofs_score0;
+    std::ofstream ofs_score1;
     std::ofstream ofs_score2;
     std::ofstream ofs_score3;
+    std::ofstream ofs_score4;
+    std::ofstream ofs_score5;
 
     ofs.open("./result/magnitude.dat");
-    ofs_score.open("./result/score.dat");
+    ofs_score0.open("./result/score0.dat");
+    ofs_score1.open("./result/score1.dat");
     ofs_score2.open("./result/score2.dat");
     ofs_score3.open("./result/score3.dat");
+    ofs_score4.open("./result/score4.dat");
+    ofs_score5.open("./result/score5.dat");
     
     MPI::Init(argc, argv);
     const int rank = MPI::COMM_WORLD.Get_rank();
@@ -203,9 +209,12 @@ int main(int argc, char** argv){
                 std::cout << i << " score :  " << score[i] << std::endl;
             }
 
-            ofs_score << gen << " " << score[0] << std::endl;
-            ofs_score2 << gen << " " << score[1] << std::endl;
-            ofs_score3 << gen << " " << score[2] << std::endl;
+            ofs_score0 << gen << " " << score[0] << std::endl;
+            ofs_score1 << gen << " " << score[1] << std::endl;
+            ofs_score2 << gen << " " << score[2] << std::endl;
+            ofs_score3 << gen << " " << score[3] << std::endl;
+            ofs_score4 << gen << " " << score[4] << std::endl;
+            ofs_score5 << gen << " " << score[5] << std::endl;
             std::cout << "GA complete" << std::endl;
         }
 
@@ -245,9 +254,7 @@ int main(int argc, char** argv){
             }
         }
 
-        for(int i = 0; i < Num_obs + 1; i++){
-            ofs << i << " " << Magnitude[best_ind][i] << std::endl;
-        }
+
     }
 
     /*if(rank == 0){
