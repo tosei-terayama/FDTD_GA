@@ -16,9 +16,10 @@ constexpr int Num_parameter { 7 };
 constexpr int Nbit_enhance { 4 };
 constexpr int Nbit_alt{ 3 };
 constexpr int Nbit_th{ 7 };
-constexpr int Nbit_phi{ 10 };
+constexpr int Nbit_phi{ 8 };
 constexpr int Nbit_sigr{ 3 };
 constexpr int Nbit_sigh{ 6 };
+
 
 constexpr int Nbit_total
 { Nbit_enhance + Nbit_alt + Nbit_th
@@ -34,8 +35,8 @@ constexpr double param2_max { 80.0 };
 constexpr double param3_min { 0.0 };
 constexpr double param3_max { 100.0 };
 
-constexpr double param4_min { k_s };
-constexpr double param4_max { k_r };
+constexpr double param4_min { 300 };
+constexpr double param4_max { 600 };
 
 constexpr double param5_min { 1.0e3 };
 constexpr double param5_max { 2.0e3 };
