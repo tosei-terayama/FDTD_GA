@@ -286,7 +286,7 @@ int main(int argc, char** argv){
     ofs.close();
     ofs_score0.close();
     ofs_score1.close();
-    ofs_close2.close();
+    ofs_score2.close();
     ofs_score3.close();
     ofs_score4.close();
     ofs_score5.close();
