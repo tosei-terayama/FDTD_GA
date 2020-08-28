@@ -12,7 +12,7 @@ void sort_Individual(int Num, double* score, bool* chromosome){
 
     for(int i = 0; i < Num - 1; i++){
         for(int j = i + 1; j < Num; j++){
-            if(score[i] > score[j]){
+            if(score[i] < score[j]){
                 // swap score //
                 score_tmp = score[i];
                 score[i] = score[j];
@@ -38,8 +38,9 @@ double* make_roulette(int Num, double* score){
         sum += score[i];
     }
 
-    for(int i = 0; i < Num; i++){
-        roulette[i] = score[i]/sum;
+    roulette[0] = score[0] / sum;
+    for(int i = 1; i < Num; i++){
+        roulette[i] = roulette[i-1] + score[i]/sum;
     }
 
     return roulette;
@@ -51,19 +52,19 @@ void Cross_over(int Head_idx, int *Ind_idx, bool* Parent_chrom, bool* Child_chro
     std::mt19937 engine( seed_gen() );
 
     for(int j = 0; j < Nbit_total; j++){
-        if( engine()/rnd_max > 0.5){
+        if( engine()/rnd_max < 0.5){
             /* Cross over */
             Child_chrom[Head_idx * Nbit_total + j]
-                = Parent_chrom[Ind_idx[1] * Nbit_total + j];
-            Child_chrom[(Head_idx+1) * Nbit_total + j]
                 = Parent_chrom[Ind_idx[0] * Nbit_total + j];
+            Child_chrom[(Head_idx+1) * Nbit_total + j]
+                = Parent_chrom[Ind_idx[1] * Nbit_total + j];
         }
 
         else {
             Child_chrom[Head_idx * Nbit_total + j]
-             = Parent_chrom[Ind_idx[0] * Nbit_total + j];
-            Child_chrom[(Head_idx+1) * Nbit_total + j]
              = Parent_chrom[Ind_idx[1] * Nbit_total + j];
+            Child_chrom[(Head_idx+1) * Nbit_total + j]
+             = Parent_chrom[Ind_idx[0] * Nbit_total + j];
         }
     }
     

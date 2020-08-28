@@ -51,7 +51,7 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
             int Num_obs, geocoordinate* obs_p, double* Magnitude, int myrank)
 {
   
-  int time_step = 2000;
+  int time_step = 1700;
   double t;
   double J;
   int NEW;
