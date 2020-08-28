@@ -198,6 +198,10 @@ int main(int argc, char** argv){
             /* 3% Mutation */
             Mutation(Num_Elete, Num_Individual, Mutation_rate, chromosome[CHILD]);
 
+            for(int i = 0; i < Num_Individual; i++){
+                std::cout << i << " score :  " << score[i] << std::endl;
+            }
+
             ofs_score << gen << " " << score[0] << std::endl;
             ofs_score2 << gen << " " << score[1] << std::endl;
             ofs_score3 << gen << " " << score[2] << std::endl;
