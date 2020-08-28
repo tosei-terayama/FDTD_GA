@@ -209,6 +209,12 @@ int main(int argc, char** argv){
                 std::cout << i << " score :  " << score[i] << std::endl;
             }
 
+            if(gen == Num_Generation - 1){
+                for(int i = 0; i < Num_obs; i++){
+                    ofs << i << " " << Magnitude[0][i] << std::endl;
+                }
+            }
+
             ofs_score0 << gen << " " << score[0] << std::endl;
             ofs_score1 << gen << " " << score[1] << std::endl;
             ofs_score2 << gen << " " << score[2] << std::endl;
@@ -244,7 +250,19 @@ int main(int argc, char** argv){
 
     }
 
-    if(rank == 0){
+    MPI::Finalize();
+
+    set_parameter(P_info, chromosome[child]);
+
+    for(int i = 0; i < Num_Individual; i++) {
+        std::cout << "///////////////////////////////////////////////" << std::endl; 
+        std::cout << i << "alpha : " << P_info[i].alpha() << " r0 : " << P_info[i].r0()
+                << " th0 : " << P_info[i].th0() << " phi0 : " << P_info[i].phi0() << std::endl
+                << " sig_r : " << P_info[i].sig_r() << " sig_h : " << P_info[i].sig_h() << std::endl;
+        std::cout << "///////////////////////////////////////////////" << std::endl;
+    }
+
+    /*if(rank == 0){
         double best_score = Individual[child][0].score;
         int best_ind = 0;
 
@@ -254,21 +272,25 @@ int main(int argc, char** argv){
             }
         }
 
-
-    }
+    }*/
 
     /*if(rank == 0){
         std::chrono::system_clock::time_point end
             = std::chrono::system_clock::now();
     }*/
 
-    MPI::Finalize();
-
     /*total_time = std::chrono::duration_cast <std::chrono::milliseconds>
         (end - start).count();
     
     std::cout << "elapsed time : " << total_time*1.0e-3 << " [sec]" << std::endl;*/
     ofs.close();
+    ofs_score0.close();
+    ofs_score1.close();
+    ofs_close2.close();
+    ofs_score3.close();
+    ofs_score4.close();
+    ofs_score5.close();
+    ofs_score6.close();
 
     return 0;
 }
