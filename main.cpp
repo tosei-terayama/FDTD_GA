@@ -18,7 +18,7 @@ target_Pinfo.set_sigma(2.0e3, 60.0e3);
 /////////////////////////////////////////////
 */
 
-constexpr int Num_Individual { 8 };  // Number of individuals
+constexpr int Num_Individual { 4 };  // Number of individuals
 constexpr int Num_Generation { 30 };  // Number of generations to repeat
 constexpr int Num_Elete { 2 };  //  Number of elete
 constexpr double rnd_max { std::pow(2, 32) };  //   Max of mersenne twister (32 bit)
@@ -220,10 +220,8 @@ int main(int argc, char** argv){
                     = chromosome[CHILD][i*Nbit_total + j];
             }
         }
-        
-        if( rank == 0){
-            set_parameter(P_info, chromosome[CHILD]);
-        }
+
+        set_parameter(P_info, chromosome[CHILD]);
 
         if(flag == true) break;
 
