@@ -290,7 +290,6 @@ int main(int argc, char** argv){
     ofs_score3.close();
     ofs_score4.close();
     ofs_score5.close();
-    ofs_score6.close();
 
     return 0;
 }
