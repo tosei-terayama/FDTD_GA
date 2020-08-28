@@ -18,7 +18,7 @@ target_Pinfo.set_sigma(2.0e3, 60.0e3);
 /////////////////////////////////////////////
 */
 
-constexpr int Num_Individual { 4 };  // Number of individuals
+constexpr int Num_Individual { 6 };  // Number of individuals
 constexpr int Num_Generation { 30 };  // Number of generations to repeat
 constexpr int Num_Elete { 2 };  //  Number of elete
 constexpr double rnd_max { std::pow(2, 32) };  //   Max of mersenne twister (32 bit)
@@ -98,7 +98,6 @@ int main(int argc, char** argv){
     }
 
     // Magnitude //
-    double **Magnitude = memory_allocate2d(Num_Individual, Num_obs + 1, 0.0); 
     double *Target_Magnitude = new double[Num_obs + 1];
 
     std::ifstream ifs;
@@ -120,6 +119,8 @@ int main(int argc, char** argv){
 
     /* GA programming(本体) */
     for(int gen = 0; gen < Num_Generation; gen++){
+
+        double **Magnitude = memory_allocate2d(Num_Individual, Num_obs + 1, 0.0); 
 
         if(rank == 0){
             std::cout << gen << " Generation " << std::endl;
@@ -227,6 +228,8 @@ int main(int argc, char** argv){
         }
 
         set_parameter(P_info, chromosome[CHILD]);
+
+        delete_2d(Magnitude, Num_Individual);
 
         if(flag == true) break;
 
