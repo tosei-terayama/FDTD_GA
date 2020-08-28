@@ -201,6 +201,7 @@ int main(int argc, char** argv){
             ofs_score << gen << " " << score[0] << std::endl;
             ofs_score2 << gen << " " << score[1] << std::endl;
             ofs_score3 << gen << " " << score[2] << std::endl;
+            std::cout << "GA complete" << std::endl;
         }
 
         /* Assign Chromosome to each agent */
