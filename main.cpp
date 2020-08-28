@@ -149,11 +149,13 @@ int main(int argc, char** argv){
 
         /* Merging scores */
         if( rank != 0){
-            for(int myrank = 1; myrank < size; myrank++){
-                MPI::COMM_WORLD.Send(score + start_idx[myrank], assigned_num,
-                                    MPI::DOUBLE, 0, 0);
-                MPI::COMM_WORLD.Recv(score + start_idx[myrank], assigned_num,
-                                    MPI::DOUBLE, myrank, 0);
+            MPI::COMM_WORLD.Send(score + start_idx[rank],
+                                assigned_num, MPI::DOUBLE, 0, 0);
+            }
+        }else{  /* rank0 : 計算結果の受信*/
+            for(int i = 1; i < size; i++){
+                MPI::COMM_WORLD.Recv(score + start_idx[i], assigned_num, 
+                                    MPI::DOUBLE, i, 0);
             }
         }
 
