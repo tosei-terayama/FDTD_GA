@@ -13,12 +13,12 @@ extern const int k_r;
 constexpr int Num_parameter { 7 };
 
 /* The num of bit (location, range, enhancement) */
-constexpr int Nbit_enhance { 4 };
-constexpr int Nbit_alt{ 3 };
-constexpr int Nbit_th{ 7 };
-constexpr int Nbit_phi{ 10 };
-constexpr int Nbit_sigr{ 3 };
-constexpr int Nbit_sigh{ 6 };
+constexpr int Nbit_enhance { 10 };
+constexpr int Nbit_alt{ 10 };
+constexpr int Nbit_th{ 25 };
+constexpr int Nbit_phi{ 100 };
+constexpr int Nbit_sigr{ 10 };
+constexpr int Nbit_sigh{ 25 };
 
 constexpr int Nbit_total
 { Nbit_enhance + Nbit_alt + Nbit_th
@@ -31,8 +31,8 @@ constexpr double param1_max { 15.0 };
 constexpr double param2_min { 70.0 };
 constexpr double param2_max { 80.0 };
 
-constexpr double param3_min { 0.0 };
-constexpr double param3_max { 100.0 };
+constexpr double param3_min { 25.0 };
+constexpr double param3_max { 75.0 };
 
 constexpr double param4_min { k_s };
 constexpr double param4_max { k_r };
