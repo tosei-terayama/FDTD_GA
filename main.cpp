@@ -152,7 +152,7 @@ int main(int argc, char** argv){
             MPI::COMM_WORLD.Send(score + start_idx[rank],
                                 assigned_num, MPI::DOUBLE, 0, 0);
             }
-        }else{  /* rank0 : 計算結果の受信*/
+        else{  /* rank0 : 計算結果の受信*/
             for(int i = 1; i < size; i++){
                 MPI::COMM_WORLD.Recv(score + start_idx[i], assigned_num, 
                                     MPI::DOUBLE, i, 0);
