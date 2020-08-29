@@ -114,6 +114,10 @@ int main(int argc, char** argv){
     }
     ifs.close();
 
+    if(rank == 0){
+        std::cout << i << " " << Target_Magnitude[i] << std::endl;
+    }
+
     int child{ 0 };
     //double judge{1.0e-2};
     bool flag = false;
