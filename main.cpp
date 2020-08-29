@@ -109,7 +109,10 @@ int main(int argc, char** argv){
     std::ifstream ifs;
     ifs.open("./target.dat");
 
+    int buff;
+
     for(int i = 0; i < Num_obs; i++){
+        ifs >> buff;
         ifs >> Target_Magnitude[i];
     }
     ifs.close();
