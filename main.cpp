@@ -115,7 +115,7 @@ int main(int argc, char** argv){
     ifs.close();
 
     if(rank == 0){
-        std::cout << i << " " << Target_Magnitude[i] << std::endl;
+        for(int i = 0; i < Num_Individual; i++) std::cout << i << " " << Target_Magnitude[i] << std::endl;
     }
 
     int child{ 0 };
