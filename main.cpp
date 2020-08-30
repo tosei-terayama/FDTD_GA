@@ -18,7 +18,7 @@ target_Pinfo.set_sigma(2.0e3, 60.0e3);
 /////////////////////////////////////////////
 */
 
-constexpr int Num_Individual { 6 };  // Number of individuals
+constexpr int Num_Individual { 8 };  // Number of individuals
 constexpr int Num_Generation { 40 };  // Number of generations to repeat
 constexpr int Num_Elete { 2 };  //  Number of elete
 constexpr double rnd_max { std::pow(2, 32) };  //   Max of mersenne twister (32 bit)
@@ -147,11 +147,17 @@ int main(int argc, char** argv){
         // problem section //
         for(int i = start_idx[rank]; i < end_idx[rank]; i++){
                 fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i], rank);
-                std::cout << "Mag(150) : " << Magnitude[i][150] << " Mag(300) : " << Magnitude[i][300] << std::endl;
                 score[i] = calc_score(Magnitude[i], Target_Magnitude, Num_obs);
                 Individual[PARENT][i].score = score[i];
+                
+                std::cout << "Mag(150) : " << Magnitude[i][150] << " Mag(300) : " << Magnitude[i][300] << std::endl;
                 std::cout << "Individual.score : " << i << " " << Individual[PARENT][i].score <<
                  "    score : " << score[i] << std::endl;
+
+        }
+
+        if(rank == 0){
+            std::cout << P_info[0].r0() << " " << P_info[0].th0() << " " << P_info[0].phi() << std::endl;
         }
 
         /* Merging scores */
