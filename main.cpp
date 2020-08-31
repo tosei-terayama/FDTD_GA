@@ -105,7 +105,7 @@ int main(int argc, char** argv){
 
     // Magnitude //
     double *Target_Magnitude = new double[Num_obs + 1];
-    double **Magnitude = memory_allocate2d(Num_Individual, Num_obs + 1);
+    double **Magnitude = memory_allocate2d(Num_Individual, Num_obs + 1, 0.0);
 
     std::ifstream ifs;
     ifs.open("./target.dat");
@@ -133,9 +133,7 @@ int main(int argc, char** argv){
 
     /* GA programming(本体) */
     for(int gen = 0; gen < Num_Generation; gen++){
-
-        double **Magnitude = memory_allocate2d(Num_Individual, Num_obs + 1, 0.0); 
-
+        
         if(rank == 0){
             std::cout << gen << " Generation " << std::endl;
         }
