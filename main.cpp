@@ -133,7 +133,7 @@ int main(int argc, char** argv){
 
     /* GA programming(本体) */
     for(int gen = 0; gen < Num_Generation; gen++){
-        
+
         if(rank == 0){
             std::cout << gen << " Generation " << std::endl;
         }
@@ -156,7 +156,7 @@ int main(int argc, char** argv){
         }
 
         if(rank == 0){
-            std::cout << P_info[0].r0() << " " << P_info[0].th0() << " " << P_info[0].phi() << std::endl;
+            std::cout << P_info[0].r0() << " " << P_info[0].th0() << " " << P_info[0].phi0() << std::endl;
         }
 
         /* Merging scores */
