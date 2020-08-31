@@ -105,6 +105,7 @@ int main(int argc, char** argv){
 
     // Magnitude //
     double *Target_Magnitude = new double[Num_obs + 1];
+    double **Magnitude = memory_allocate2d(Num_Individual, Num_obs + 1);
 
     std::ifstream ifs;
     ifs.open("./target.dat");
@@ -256,8 +257,6 @@ int main(int argc, char** argv){
         }
 
         set_parameter(P_info, chromosome[CHILD]);
-
-        delete_2d(Magnitude, Num_Individual);
 
         if(flag == true) break;
 

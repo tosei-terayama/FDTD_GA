@@ -8,7 +8,7 @@ int main(void)
     std::ifstream ifs1;
     std::ifstream ifs2;
     ifs1.open("./target.dat");
-    ifs2.open("./magnitude.dat");
+    ifs2.open("./result_mag.dat");
     double mag_1[880];
     double mag_2[880];
     double score{0.0};
