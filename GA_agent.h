@@ -36,10 +36,10 @@ constexpr double param3_min { 0.0 };
 constexpr double param3_max { 100.0 };
 
 constexpr double param4_min { 300 };
-constexpr double param4_max { 600 };
+constexpr double param4_max { 700 };
 
 constexpr double param5_min { 1.0e3 };
-constexpr double param5_max { 2.0e3 };
+constexpr double param5_max { 3.0e3 };
 
 constexpr double param6_min { 50.0e3 };
 constexpr double param6_max { 100.0e3 };

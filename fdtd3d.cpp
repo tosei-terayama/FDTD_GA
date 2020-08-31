@@ -168,7 +168,7 @@ int main(void)
 
   P_info.set_center(77, 12, 529);
   P_info.set_alpha(5.0);
-  P_info.set_sigma(1142.86, 100.0e3);
+  P_info.set_sigma(1142.86, 75.0e3);
 
   set_perturbation(P_info, noise_Nh, Nh);
   set_matrix(zj, Cmat, Fmat, noise_Nh, ny);
@@ -224,7 +224,7 @@ int main(void)
   std::cout << "Perturbation r0 : " << P_info.r0() << " th0 : " << P_info.th0() << " phi0 : " << P_info.phi0() << std::endl;
   std::cout << "enhance : " << P_info.alpha() << std::endl;
   std::cout << "_______________________________________" << std::endl;
-  
+
   ////主経路電波強度観測/////
   int Num_obs = (Nphi - 2*L) - k_s;
   double *Magnitude = new double[Num_obs + 1];
