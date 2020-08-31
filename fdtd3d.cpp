@@ -224,8 +224,7 @@ int main(void)
   std::cout << "Perturbation r0 : " << P_info.r0() << " th0 : " << P_info.th0() << " phi0 : " << P_info.phi0() << std::endl;
   std::cout << "enhance : " << P_info.alpha() << std::endl;
   std::cout << "_______________________________________" << std::endl;
-
-  std::exit(0);
+  
 
   ////主経路電波強度観測/////
   int Num_obs = (Nphi - 2*L) - k_s;
