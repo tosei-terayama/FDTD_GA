@@ -10,7 +10,7 @@ extern const int k_s;
 extern const int k_r;
 
 /* The num of parameters */
-constexpr int Num_parameter { 7 };
+constexpr int Num_parameter { 6 };
 
 /* The num of bit (location, range, enhancement) */
 constexpr int Nbit_enhance { 4 };
