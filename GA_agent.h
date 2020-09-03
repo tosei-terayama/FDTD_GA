@@ -27,7 +27,7 @@ constexpr int Nbit_total
 
 // range of enhance //
 constexpr double param1_min { 0.0 };
-constexpr double param1_max { 15.0 };
+constexpr double param1_max { 225.0 };
 
 constexpr double param2_min { 70.0 };
 constexpr double param2_max { 80.0 };
@@ -41,7 +41,7 @@ constexpr double param4_max { 700 };
 constexpr double param5_min { 1.0e3 };
 constexpr double param5_max { 3.0e3 };
 
-constexpr double param6_min { 50.0e3 };
+constexpr double param6_min { 30.0e3 };
 constexpr double param6_max { 100.0e3 };
 
 constexpr double param1_step

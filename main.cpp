@@ -35,6 +35,7 @@ int main(int argc, char** argv){
     std::ofstream ofs_score3;
     std::ofstream ofs_score4;
     std::ofstream ofs_score5;
+    std::ofstream ofs_ave;
 
     ofs.open("./result/magnitude.dat");
     ofs_score0.open("./result/score0.dat");
@@ -43,6 +44,7 @@ int main(int argc, char** argv){
     ofs_score3.open("./result/score3.dat");
     ofs_score4.open("./result/score4.dat");
     ofs_score5.open("./result/score5.dat");
+    ofs_ave.open("./result/score_average.dat");
     
     MPI::Init(argc, argv);
     const int rank = MPI::COMM_WORLD.Get_rank();
