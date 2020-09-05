@@ -29,6 +29,7 @@ int main(int argc, char** argv){
     //double total_time;
     
     std::ofstream ofs;
+    std::ofstream ofs_param;
     std::ofstream ofs_score0;
     std::ofstream ofs_score1;
     std::ofstream ofs_score2;
@@ -38,6 +39,7 @@ int main(int argc, char** argv){
     std::ofstream ofs_ave;
 
     ofs.open("./result/magnitude.dat");
+    ofs_param.open("./result/param.dat");
     ofs_score0.open("./result/score0.dat");
     ofs_score1.open("./result/score1.dat");
     ofs_score2.open("./result/score2.dat");
@@ -61,7 +63,6 @@ int main(int argc, char** argv){
     double* score = new double[Num_Individual];
 
     /* Initialize chromosomes */
-    // ここでP_infoの初期値(ランダム)を設定する？ //
     for(int i = 0; i < Num_Individual; i++){
         for(int j = 0; j < Nbit_total; j++){
             if( engine()/rnd_max < 0.5 ) {
@@ -120,6 +121,8 @@ int main(int argc, char** argv){
     }
     ifs.close();
 
+    if( rank == 0 ) ofs_param << " # Ind   alpha  r  the  phi  sigma_r   sigma_h   score #" << std::endl;
+
     if(rank == 0){
         for(int i = 0; i < Num_obs; i++) std::cout << i << " " << Target_Magnitude[i] << std::endl;
     }
@@ -138,6 +141,7 @@ int main(int argc, char** argv){
 
         if(rank == 0){
             std::cout << gen << " Generation " << std::endl;
+            ofs_param << " #   " << gen << " generation   #" << std::endl;
         }
 
         const int PARENT { gen % 2 };
@@ -150,6 +154,8 @@ int main(int argc, char** argv){
                 fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i], rank);
                 score[i] = calc_score(Magnitude[i], Target_Magnitude, Num_obs);
                 Individual[PARENT][i].score = score[i];
+                ofs_param << i << "   " << P_info[i].alpha() << "   " << P_info[i].r0() << "   " << P_info[i].th0() << "   "
+                            << P_info[i].sig_r() << "   " << P_info[i].sig_h() << "   " << score[i] << std::endl;
                 
                 std::cout << "Mag(150) : " << Magnitude[i][150] << " Mag(300) : " << Magnitude[i][300] << std::endl;
                 std::cout << "Individual.score : " << i << " " << Individual[PARENT][i].score <<
@@ -296,6 +302,7 @@ int main(int argc, char** argv){
     
     std::cout << "elapsed time : " << total_time*1.0e-3 << " [sec]" << std::endl;*/
     ofs.close();
+    ofs_param.close()
     ofs_score0.close();
     ofs_score1.close();
     ofs_score2.close();
