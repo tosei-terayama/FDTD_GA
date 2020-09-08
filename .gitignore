@@ -1,9 +1,7 @@
 E*.dat
 *.o
-main
 *.gif
 *.emf
-*.exe
 *.gif
 .vscode/
 IRI-2016_for_cpp/*.txt
