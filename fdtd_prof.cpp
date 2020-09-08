@@ -185,8 +185,7 @@ int main(void)
   std::complex <double>* E_famp = new std::complex <double> [Num_obs + 1];
 
   geocoordinate *obs_p = new geocoordinate[Num_obs + 1];
-  geocoordinate **obs_p3d = new geocoordinate*[Ntheta + 1];
-
+  
   for(int k = 0; k <= Num_obs; k++) obs_p[k].set_obs(0, 50, k + k_s);
 
   for(int k = 0; k < Num_obs; k++){
