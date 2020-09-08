@@ -1,0 +1,389 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 57.29      7.59     7.59                             E_update(double****, double****, double****, double****, double****, double****, int, int, double*****, double*****)
+  9.81      8.89     1.30                             D_update(double****, double****, double****, double***, double***, double***, int, int)
+  9.21     10.11     1.22                             H_update_pml(double***, double***, double***, double***, double***, double***, double****, double****, double****, double****, double****, double****, double****, double*, double*, pml*, pml*, pml*)
+  8.53     11.24     1.13                             H_update(double***, double***, double***, double***, double***, double***)
+  8.15     12.32     1.08                             D_update_pml(double***, double***, double***, double***, double***, double***, double****, double****, double****, double****, double****, double****, double****, double*, double*, pml*, pml*, pml*)
+  2.19     12.61     0.29                             memory_allocate5d(int, int, int, int, int, double)
+  1.36     12.79     0.18                             set_matrix(std::complex<double>, double*****, double*****, double***, double*)
+  1.06     12.93     0.14                             memory_allocate4d(int, int, int, int, double)
+  1.06     13.07     0.14                             set_perturbation(perturbation, double***, double*)
+  0.68     13.16     0.09       56     1.61     1.61  memory_allocate3d(int, int, int, double)
+  0.60     13.24     0.08                             delete_5d(double*****, int, int, int, int)
+  0.08     13.25     0.01                             surface_H_update(double**, double**, double**, double**, double**, double, double)
+  0.00     13.25     0.00      969     0.00     0.00  splint(double*, double*, double*, int, double, double*)
+  0.00     13.25     0.00      943     0.00     0.00  densu(double, double, double, double, double, double, double*, double, double, int, double*, double*, double*) [clone .constprop.1]
+  0.00     13.25     0.00      902     0.00     0.00  splini(double*, double*, double*, int, double, double*)
+  0.00     13.25     0.00      397     0.00     0.00  globe7(double*, nrlmsise_input*, nrlmsise_flags*)
+  0.00     13.25     0.00      257     0.00     0.00  glob7s(double*, nrlmsise_input*, nrlmsise_flags*)
+  0.00     13.25     0.00       56     0.00     0.00  delete_3d(double***, int, int)
+  0.00     13.25     0.00       41     0.00     0.00  gtd7(nrlmsise_input*, nrlmsise_flags*, nrlmsise_output*)
+  0.00     13.25     0.00       41     0.00     0.00  gts7(nrlmsise_input*, nrlmsise_flags*, nrlmsise_output*)
+  0.00     13.25     0.00       23     0.00     0.00  pml::set_point(int, int, int, int)
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I_R_r
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z10delete_2cdPPSt7complexIdEi
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z10delete_3cdPPPSt7complexIdEii
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z10delete_PMLPPPPdS2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z10set_matrixSt7complexIdEPPPPPdS5_S3_S1_
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z10sigma_calcPdS_S_S_
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z11Ne_allocatePdS_
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z11ny_allocate4date13geocoordinatePdS1_
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z12D_update_pmlPPPdS1_S1_S1_S1_S1_PS1_S2_S2_S2_S2_S2_S2_S_S_P3pmlS4_S4_
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z12H_update_pmlPPPdS1_S1_S1_S1_S1_PS1_S2_S2_S2_S2_S2_S2_S_S_P3pmlS4_S4_
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z12output_modelv
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z12surface_impeSt7complexIdE
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z14output_profile12perturbationPdPPS0_
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z16set_perturbation12perturbationPPPdS0_
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z16surface_H_updatePPdS0_S0_S0_S0_dd
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z17memory_allocate2diid
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z17memory_allocate3diiid
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z17memory_allocate4diiiid
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z17memory_allocate5diiiiid
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z18memory_allocate2cdiiSt7complexIdE
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z18memory_allocate3cdiiiSt7complexIdE
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z20PML_field_initializePPPPdS2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z7geo_magPdS_
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z8D_updatePPPPdS2_S2_S1_S1_S1_ii
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z8E_updatePPPPdS2_S2_S2_S2_S2_iiPS2_S3_
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z8H_updatePPPdS1_S1_S1_S1_S1_
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z9delete_2dPPdi
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z9delete_3dPPPdii
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z9delete_4dPPPPdiii
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z9delete_5dPPPPPdiiii
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN12perturbation9set_alphaEd
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN13geocoordinate8set_latiEd
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN3pml11set_point_1Eii
+  0.00     13.25     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN4date5set_yEi
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 0.08% of 13.25 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     57.3    7.59    0.00                 E_update(double****, double****, double****, double****, double****, double****, int, int, double*****, double*****) [1]
+-----------------------------------------------
+                                                 <spontaneous>
+[2]      9.8    1.30    0.00                 D_update(double****, double****, double****, double***, double***, double***, int, int) [2]
+-----------------------------------------------
+                                                 <spontaneous>
+[3]      9.2    1.22    0.00                 H_update_pml(double***, double***, double***, double***, double***, double***, double****, double****, double****, double****, double****, double****, double****, double*, double*, pml*, pml*, pml*) [3]
+-----------------------------------------------
+                                                 <spontaneous>
+[4]      8.5    1.13    0.00                 H_update(double***, double***, double***, double***, double***, double***) [4]
+-----------------------------------------------
+                                                 <spontaneous>
+[5]      8.2    1.08    0.00                 D_update_pml(double***, double***, double***, double***, double***, double***, double****, double****, double****, double****, double****, double****, double****, double*, double*, pml*, pml*, pml*) [5]
+-----------------------------------------------
+                                                 <spontaneous>
+[6]      2.2    0.29    0.00                 memory_allocate5d(int, int, int, int, int, double) [6]
+-----------------------------------------------
+                                                 <spontaneous>
+[7]      1.4    0.18    0.00                 set_matrix(std::complex<double>, double*****, double*****, double***, double*) [7]
+-----------------------------------------------
+                                                 <spontaneous>
+[8]      1.1    0.14    0.00                 memory_allocate4d(int, int, int, int, double) [8]
+-----------------------------------------------
+                                                 <spontaneous>
+[9]      1.1    0.14    0.00                 set_perturbation(perturbation, double***, double*) [9]
+-----------------------------------------------
+                0.09    0.00      56/56          PML_field_initialize(double****, double****, double****, double****, double****, double****, double****, double****, double****, double****, double****, double****, double****, double****) [11]
+[10]     0.7    0.09    0.00      56         memory_allocate3d(int, int, int, double) [10]
+-----------------------------------------------
+                                                 <spontaneous>
+[11]     0.7    0.00    0.09                 PML_field_initialize(double****, double****, double****, double****, double****, double****, double****, double****, double****, double****, double****, double****, double****, double****) [11]
+                0.09    0.00      56/56          memory_allocate3d(int, int, int, double) [10]
+-----------------------------------------------
+                                                 <spontaneous>
+[12]     0.6    0.08    0.00                 delete_5d(double*****, int, int, int, int) [12]
+-----------------------------------------------
+                                                 <spontaneous>
+[13]     0.1    0.01    0.00                 surface_H_update(double**, double**, double**, double**, double**, double, double) [13]
+-----------------------------------------------
+                0.00    0.00      26/969         gtd7(nrlmsise_input*, nrlmsise_flags*, nrlmsise_output*) [27]
+                0.00    0.00     943/969         densu(double, double, double, double, double, double, double*, double, double, int, double*, double*, double*) [clone .constprop.1] [22]
+[21]     0.0    0.00    0.00     969         splint(double*, double*, double*, int, double, double*) [21]
+-----------------------------------------------
+                0.00    0.00     943/943         gts7(nrlmsise_input*, nrlmsise_flags*, nrlmsise_output*) [28]
+[22]     0.0    0.00    0.00     943         densu(double, double, double, double, double, double, double*, double, double, int, double*, double*, double*) [clone .constprop.1] [22]
+                0.00    0.00     943/969         splint(double*, double*, double*, int, double, double*) [21]
+                0.00    0.00     902/902         splini(double*, double*, double*, int, double, double*) [23]
+-----------------------------------------------
+                0.00    0.00     902/902         densu(double, double, double, double, double, double, double*, double, double, int, double*, double*, double*) [clone .constprop.1] [22]
+[23]     0.0    0.00    0.00     902         splini(double*, double*, double*, int, double, double*) [23]
+-----------------------------------------------
+                0.00    0.00     397/397         gts7(nrlmsise_input*, nrlmsise_flags*, nrlmsise_output*) [28]
+[24]     0.0    0.00    0.00     397         globe7(double*, nrlmsise_input*, nrlmsise_flags*) [24]
+-----------------------------------------------
+                0.00    0.00      52/257         gtd7(nrlmsise_input*, nrlmsise_flags*, nrlmsise_output*) [27]
+                0.00    0.00     205/257         gts7(nrlmsise_input*, nrlmsise_flags*, nrlmsise_output*) [28]
+[25]     0.0    0.00    0.00     257         glob7s(double*, nrlmsise_input*, nrlmsise_flags*) [25]
+-----------------------------------------------
+                0.00    0.00      56/56          delete_PML(double****, double****, double****, double****, double****, double****, double****, double****, double****, double****, double****, double****, double****, double****) [66]
+[26]     0.0    0.00    0.00      56         delete_3d(double***, int, int) [26]
+-----------------------------------------------
+                0.00    0.00      41/41          ny_allocate(date, geocoordinate, double*, double*) [69]
+[27]     0.0    0.00    0.00      41         gtd7(nrlmsise_input*, nrlmsise_flags*, nrlmsise_output*) [27]
+                0.00    0.00      52/257         glob7s(double*, nrlmsise_input*, nrlmsise_flags*) [25]
+                0.00    0.00      41/41          gts7(nrlmsise_input*, nrlmsise_flags*, nrlmsise_output*) [28]
+                0.00    0.00      26/969         splint(double*, double*, double*, int, double, double*) [21]
+-----------------------------------------------
+                0.00    0.00      41/41          gtd7(nrlmsise_input*, nrlmsise_flags*, nrlmsise_output*) [27]
+[28]     0.0    0.00    0.00      41         gts7(nrlmsise_input*, nrlmsise_flags*, nrlmsise_output*) [28]
+                0.00    0.00     943/943         densu(double, double, double, double, double, double, double*, double, double, int, double*, double*, double*) [clone .constprop.1] [22]
+                0.00    0.00     397/397         globe7(double*, nrlmsise_input*, nrlmsise_flags*) [24]
+                0.00    0.00     205/257         glob7s(double*, nrlmsise_input*, nrlmsise_flags*) [25]
+-----------------------------------------------
+                0.00    0.00      23/23          PML_idx_initialize(pml*, pml*, pml*, pml*, pml*, pml*) [74]
+[29]     0.0    0.00    0.00      23         pml::set_point(int, int, int, int) [29]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[30]     0.0    0.00    0.00       1         _GLOBAL__sub_I_R_r [30]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[31]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z10delete_2cdPPSt7complexIdEi [31]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[32]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z10delete_3cdPPPSt7complexIdEii [32]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[33]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z10delete_PMLPPPPdS2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_ [33]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[34]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z10set_matrixSt7complexIdEPPPPPdS5_S3_S1_ [34]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[35]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z10sigma_calcPdS_S_S_ [35]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[36]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z11Ne_allocatePdS_ [36]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[37]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z11ny_allocate4date13geocoordinatePdS1_ [37]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[38]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z12D_update_pmlPPPdS1_S1_S1_S1_S1_PS1_S2_S2_S2_S2_S2_S2_S_S_P3pmlS4_S4_ [38]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[39]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z12H_update_pmlPPPdS1_S1_S1_S1_S1_PS1_S2_S2_S2_S2_S2_S2_S_S_P3pmlS4_S4_ [39]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[40]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z12output_modelv [40]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[41]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z12surface_impeSt7complexIdE [41]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[42]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z14output_profile12perturbationPdPPS0_ [42]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[43]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z16set_perturbation12perturbationPPPdS0_ [43]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[44]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z16surface_H_updatePPdS0_S0_S0_S0_dd [44]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[45]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z17memory_allocate2diid [45]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[46]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z17memory_allocate3diiid [46]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[47]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z17memory_allocate4diiiid [47]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[48]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z17memory_allocate5diiiiid [48]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[49]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z18memory_allocate2cdiiSt7complexIdE [49]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[50]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z18memory_allocate3cdiiiSt7complexIdE [50]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[51]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z20PML_field_initializePPPPdS2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_ [51]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[52]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z7geo_magPdS_ [52]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[53]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z8D_updatePPPPdS2_S2_S1_S1_S1_ii [53]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[54]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z8E_updatePPPPdS2_S2_S2_S2_S2_iiPS2_S3_ [54]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[55]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z8H_updatePPPdS1_S1_S1_S1_S1_ [55]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[56]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z9delete_2dPPdi [56]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[57]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z9delete_3dPPPdii [57]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[58]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z9delete_4dPPPPdiii [58]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[59]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z9delete_5dPPPPPdiiii [59]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[60]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN12perturbation9set_alphaEd [60]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[61]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN13geocoordinate8set_latiEd [61]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[62]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN3pml11set_point_1Eii [62]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [120]
+[63]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN4date5set_yEi [63]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [30] _GLOBAL__sub_I_R_r     [49] _GLOBAL__sub_I__Z18memory_allocate2cdiiSt7complexIdE [13] surface_H_update(double**, double**, double**, double**, double**, double, double)
+  [31] _GLOBAL__sub_I__Z10delete_2cdPPSt7complexIdEi [50] _GLOBAL__sub_I__Z18memory_allocate3cdiiiSt7complexIdE [10] memory_allocate3d(int, int, int, double)
+  [32] _GLOBAL__sub_I__Z10delete_3cdPPPSt7complexIdEii [51] _GLOBAL__sub_I__Z20PML_field_initializePPPPdS2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_ [8] memory_allocate4d(int, int, int, int, double)
+  [33] _GLOBAL__sub_I__Z10delete_PMLPPPPdS2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_ [52] _GLOBAL__sub_I__Z7geo_magPdS_ [6] memory_allocate5d(int, int, int, int, int, double)
+  [34] _GLOBAL__sub_I__Z10set_matrixSt7complexIdEPPPPPdS5_S3_S1_ [53] _GLOBAL__sub_I__Z8D_updatePPPPdS2_S2_S1_S1_S1_ii [27] gtd7(nrlmsise_input*, nrlmsise_flags*, nrlmsise_output*)
+  [35] _GLOBAL__sub_I__Z10sigma_calcPdS_S_S_ [54] _GLOBAL__sub_I__Z8E_updatePPPPdS2_S2_S2_S2_S2_iiPS2_S3_ [28] gts7(nrlmsise_input*, nrlmsise_flags*, nrlmsise_output*)
+  [36] _GLOBAL__sub_I__Z11Ne_allocatePdS_ [55] _GLOBAL__sub_I__Z8H_updatePPPdS1_S1_S1_S1_S1_ [22] densu(double, double, double, double, double, double, double*, double, double, int, double*, double*, double*) [clone .constprop.1]
+  [37] _GLOBAL__sub_I__Z11ny_allocate4date13geocoordinatePdS1_ [56] _GLOBAL__sub_I__Z9delete_2dPPdi [25] glob7s(double*, nrlmsise_input*, nrlmsise_flags*)
+  [38] _GLOBAL__sub_I__Z12D_update_pmlPPPdS1_S1_S1_S1_S1_PS1_S2_S2_S2_S2_S2_S2_S_S_P3pmlS4_S4_ [57] _GLOBAL__sub_I__Z9delete_3dPPPdii [24] globe7(double*, nrlmsise_input*, nrlmsise_flags*)
+  [39] _GLOBAL__sub_I__Z12H_update_pmlPPPdS1_S1_S1_S1_S1_PS1_S2_S2_S2_S2_S2_S2_S_S_P3pmlS4_S4_ [58] _GLOBAL__sub_I__Z9delete_4dPPPPdiii [23] splini(double*, double*, double*, int, double, double*)
+  [40] _GLOBAL__sub_I__Z12output_modelv [59] _GLOBAL__sub_I__Z9delete_5dPPPPPdiiii [21] splint(double*, double*, double*, int, double, double*)
+  [41] _GLOBAL__sub_I__Z12surface_impeSt7complexIdE [60] _GLOBAL__sub_I__ZN12perturbation9set_alphaEd [2] D_update(double****, double****, double****, double***, double***, double***, int, int)
+  [42] _GLOBAL__sub_I__Z14output_profile12perturbationPdPPS0_ [61] _GLOBAL__sub_I__ZN13geocoordinate8set_latiEd [1] E_update(double****, double****, double****, double****, double****, double****, int, int, double*****, double*****)
+  [43] _GLOBAL__sub_I__Z16set_perturbation12perturbationPPPdS0_ [62] _GLOBAL__sub_I__ZN3pml11set_point_1Eii [4] H_update(double***, double***, double***, double***, double***, double***)
+  [44] _GLOBAL__sub_I__Z16surface_H_updatePPdS0_S0_S0_S0_dd [63] _GLOBAL__sub_I__ZN4date5set_yEi [26] delete_3d(double***, int, int)
+  [45] _GLOBAL__sub_I__Z17memory_allocate2diid [7] set_matrix(std::complex<double>, double*****, double*****, double***, double*) [12] delete_5d(double*****, int, int, int, int)
+  [46] _GLOBAL__sub_I__Z17memory_allocate3diiid [5] D_update_pml(double***, double***, double***, double***, double***, double***, double****, double****, double****, double****, double****, double****, double****, double*, double*, pml*, pml*, pml*) [29] pml::set_point(int, int, int, int)
+  [47] _GLOBAL__sub_I__Z17memory_allocate4diiiid [3] H_update_pml(double***, double***, double***, double***, double***, double***, double****, double****, double****, double****, double****, double****, double****, double*, double*, pml*, pml*, pml*)
+  [48] _GLOBAL__sub_I__Z17memory_allocate5diiiiid [9] set_perturbation(perturbation, double***, double*)
