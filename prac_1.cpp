@@ -11,9 +11,9 @@ void make_random(bool* A, int size){
 
     for(int i = 0; i < size; i++){
         if( engine()/rnd_max > 0.5 ){
-            std::cout << "yaju" << std::endl;
+            std::cout << "1 " << std::endl;
         }
-        else std::cout << "senpai" << std::endl;
+        else std::cout << "2 " << std::endl;
     }
 
 }
