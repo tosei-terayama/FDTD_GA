@@ -63,8 +63,8 @@ int main(int argc, char** argv){
     double* score = new double[Num_Individual];
 
     /* Initialize chromosomes */
-    for(int i = 0; i < Num_Individual; i++){
-        for(int j = 0; j < Nbit_total; j++){
+    for( int i = 0; i < Num_Individual; i++ ){
+        for( int j = 0; j < Nbit_total; j++ ){
             if( engine()/rnd_max < 0.5 ) {
                 Individual[0][i].chrom[j] = true;
             }
@@ -102,7 +102,7 @@ int main(int argc, char** argv){
     // Observation points on propagation path //
     int Num_obs = (Nphi - 2*L) - k_s;
     geocoordinate* obs_p = new geocoordinate[Num_obs + 1];
-    for(int k = 0; k <= Num_obs; k++){
+    for( int k = 0; k <= Num_obs; k++ ){
         obs_p[k].set_obs(0, 50, k + k_s);
     }
 
@@ -115,7 +115,7 @@ int main(int argc, char** argv){
 
     int buff;
 
-    for(int i = 0; i < Num_obs; i++){
+    for( int i = 0; i < Num_obs; i++ ){
         ifs >> buff;
         ifs >> Target_Magnitude[i];
     }
@@ -123,7 +123,7 @@ int main(int argc, char** argv){
 
     if( rank == 0 ) ofs_param << " # Ind   alpha  r  the  phi  sigma_r   sigma_h   score #" << std::endl;
 
-    if(rank == 0){
+    if( rank == 0 ){
         for(int i = 0; i < Num_obs; i++) std::cout << i << " " << Target_Magnitude[i] << std::endl;
     }
 
@@ -156,7 +156,6 @@ int main(int argc, char** argv){
                 Individual[PARENT][i].score = score[i];
                 ofs_param << i << "   " << P_info[i].alpha() << "   " << P_info[i].r0() << "   " << P_info[i].th0() << "   "
                             << P_info[i].sig_r() << "   " << P_info[i].sig_h() << "   " << score[i] << std::endl;
-                
                 std::cout << "Mag(150) : " << Magnitude[i][150] << " Mag(300) : " << Magnitude[i][300] << std::endl;
                 std::cout << "Individual.score : " << i << " " << Individual[PARENT][i].score <<
                  "    score : " << score[i] << std::endl;
@@ -165,6 +164,12 @@ int main(int argc, char** argv){
 
         if(rank == 0){
             std::cout << P_info[0].r0() << " " << P_info[0].th0() << " " << P_info[0].phi0() << std::endl;
+            double score_ave{ 0.0 };
+
+            for(int i = 0; i < Num_Individual; i++) score_ave += score[i];
+
+            score_ave = score_ave/Num_Individual;
+            ofs_ave << gen << " " << score_ave << std::endl; 
         }
 
         /* Merging scores */
@@ -178,15 +183,6 @@ int main(int argc, char** argv){
                                     MPI::DOUBLE, i, 0);
             }
         }
-
-        /*if(rank == 0){
-            for(int i = 0; i < Num_Individual; i++){
-                if(judge > score[i]){
-                    std::cout << "best score : " << i << " " << score[i] << std::endl;
-                    flag = true;
-                }
-            }
-        }*/
 
         /* Genetic Algorithm */
         if(rank == 0){

@@ -24,7 +24,7 @@ void set_perturbation(perturbation P_info, double*** noise_Nh, double* Nh){
     double sig_th{ 3.0e3 };
     double rho{ 0.0 };
 
-    /*for(int i = 0; i <= ion_L; i++){
+    for(int i = 0; i <= ion_L; i++){
         double z{ dist(i + lower_r) };
 
         for(int j = 0; j <= Ntheta; j++){
@@ -33,11 +33,12 @@ void set_perturbation(perturbation P_info, double*** noise_Nh, double* Nh){
                 R(1) = z*std::sin(th(j))*std::sin(ph(k));
                 R(2) = z*std::cos(th(j));
 
-                R_d = (R/R.norm()) * R_c.norm();
-                R_theta = std::acos( (R_c.dot(R_d))/(R_c.norm()*R_d.norm()) );
+                //R_d = (R/R.norm()) * R_c.norm();
+                R_theta = std::acos( R_c.dot(R)/R_c.norm()/R.norm() );
+                //R_theta = std::acos( (R_c.dot(R_d))/(R_c.norm()*R_d.norm()) );
 
                 // 情報落ち対策 //
-                if( std::abs(((R_c.dot(R_d)/(R_c.norm()*R_d.norm())))) > 1.0 ) R_theta = std::acos(1.0);
+                if( std::abs(((R_c.dot(R)/R_c.norm()/R_d.norm()))) > 1.0 ) R_theta = std::acos(1.0);
 
                 d_h = z_0*R_theta;
 
@@ -48,9 +49,9 @@ void set_perturbation(perturbation P_info, double*** noise_Nh, double* Nh){
 
             }
         }
-    }*/
+    }
 
-    for(int i = 0; i <= ion_L; i++){
+    /*for(int i = 0; i <= ion_L; i++){
         double z{dist(i + lower_r)};
 
         for(int j = 0; j <= Ntheta; j++){
@@ -77,6 +78,6 @@ void set_perturbation(perturbation P_info, double*** noise_Nh, double* Nh){
                 noise_Nh[i][j][k] = Nh[i] + Nh[i] * enhance;
             }
         }
-    }
+    }*/
 
 }
