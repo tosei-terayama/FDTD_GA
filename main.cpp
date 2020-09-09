@@ -40,7 +40,6 @@ int main(int argc, char** argv){
     std::ofstream ofs_ave;
 
     ofs.open("./result/magnitude.dat");
-    ofs_proc("./result/process.dat");
     ofs_param.open("./result/param.dat");
     ofs_score0.open("./result/score0.dat");
     ofs_score1.open("./result/score1.dat");
