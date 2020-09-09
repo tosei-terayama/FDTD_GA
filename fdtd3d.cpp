@@ -48,7 +48,7 @@ const double Azim{61.0*M_PI/180.0};
 
 int main(void)
 {
-  int time_step = 30;
+  int time_step = 1700;
   double t;
   double J;
   double total_time;
