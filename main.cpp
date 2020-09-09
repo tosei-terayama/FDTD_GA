@@ -18,7 +18,7 @@ target_Pinfo.set_sigma(2.0e3, 60.0e3);
 /////////////////////////////////////////////
 */
 
-constexpr int Num_Individual { 8 };  // Number of individuals
+constexpr int Num_Individual { 16 };  // Number of individuals
 constexpr int Num_Generation { 40 };  // Number of generations to repeat
 constexpr int Num_Elete { 2 };  //  Number of elete
 constexpr double rnd_max { std::pow(2, 32) };  //   Max of mersenne twister (32 bit)
@@ -89,7 +89,28 @@ int main(int argc, char** argv){
     // boolean -> parameter //
     perturbation P_info[Num_Individual];
 
-    set_parameter(P_info, chromosome[0]);
+    if( rank == 0 ){
+        for(int i = 0; i < Num_Individual; i++){
+            P_info[i].set_th(Ntheta/2);
+        }
+    }
+
+    if(rank == 0){
+        for(int i = 0; i < Num_Individual; i++){
+            for(int j = 0; j < Nbit_total; j++){
+                std::cout << chromosome[i * Nbit_total + j] << " ";
+            }
+            std::cout << std::endl;
+        }
+        set_parameter(P_info, chromosome[0]);
+
+        for(int i = 0; i < Num_Individual; i++){
+            std::cout << i << " " << P_info[i].alpha() << " " << P_info[i].r0() << " " << P_info[i].th0() << " " << P_info[i].phi0()
+                    << " " << P_info[i].sig_r() << " " << P_info[i].sig_h() << std::endl;
+        }
+    }
+
+    if(rank == 0) std::exit(0);
 
     /* Initialize parameter ( date/perturbation/geocoordinate ) */
     date ymd;
@@ -128,7 +149,7 @@ int main(int argc, char** argv){
     }
 
     int child{ 0 };
-    //double judge{1.0e-2};
+    double judge{1.0e3};
     bool flag = false;
 
     /*if(rank == 0) {
