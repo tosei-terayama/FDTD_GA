@@ -81,7 +81,7 @@ void E_update(
           E_theta[New][i][j][k] = E_theta[Old][i][j][k] + 
             (newD_th[i][j][k] - oldD_th[i][j][k])/EPS0;
 
-          E_theta[New][i][j][k] = newD_th[i][j][k]/EPS0;
+          //E_theta[New][i][j][k] = newD_th[i][j][k]/EPS0;
 
           /*if(maxE < std::abs(E_theta[New][i][j][k])){
             maxE = std::abs(E_theta[New][i][j][k]);
@@ -138,7 +138,7 @@ void E_update(
         E_phi[New][i][j][k] = E_phi[Old][i][j][k] + 
               (newD_ph[i][j][k] - oldD_ph[i][j][k])/EPS0;
 
-        E_phi[New][i][j][k] = newD_ph[i][j][k]/EPS0;
+        //E_phi[New][i][j][k] = newD_ph[i][j][k]/EPS0;
 
         /*if(maxE < std::abs(E_phi[New][i][j][k])){
           maxE = std::abs(E_phi[New][i][j][k]);
