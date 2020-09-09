@@ -1,4 +1,4 @@
-#define _USE_MATH_DEFINES
+B#define _USE_MATH_DEFINES
 #include <iostream>
 #include <cmath>
 #include <complex>
@@ -51,7 +51,7 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
             int Num_obs, geocoordinate* obs_p, double* Magnitude, int myrank)
 {
   for(int i = 0; i < Num_obs; i++) Magnitude[i] = 0.0;
-  int time_step = 100;
+  int time_step = 1700;
   double t;
   double J;
   int NEW;

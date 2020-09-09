@@ -18,7 +18,7 @@ target_Pinfo.set_sigma(2.0e3, 60.0e3);
 /////////////////////////////////////////////
 */
 
-constexpr int Num_Individual { 8 };  // Number of individuals
+constexpr int Num_Individual { 32 };  // Number of individuals
 constexpr int Num_Generation { 40 };  // Number of generations to repeat
 constexpr int Num_Elete { 2 };  //  Number of elete
 constexpr double rnd_max { std::pow(2, 32) };  //   Max of mersenne twister (32 bit)
@@ -29,7 +29,6 @@ int main(int argc, char** argv){
     //double total_time;
     
     std::ofstream ofs;
-    std::ofstream ofs_proc;
     std::ofstream ofs_param;
     std::ofstream ofs_score0;
     std::ofstream ofs_score1;
@@ -180,9 +179,6 @@ int main(int argc, char** argv){
         }
 
         if(rank == 0){
-            std::string fn = "./result/process" + std::to_string(gen) + ".dat";
-            ofs_proc.open(fn);
-            std::ofstream ofs_proc(fn.c_str());
             std::cout << P_info[0].r0() << " " << P_info[0].th0() << " " << P_info[0].phi0() << std::endl;
             double score_ave{ 0.0 };
 
