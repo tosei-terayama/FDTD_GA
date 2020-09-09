@@ -18,8 +18,11 @@ target_Pinfo.set_sigma(2.0e3, 60.0e3);
 /////////////////////////////////////////////
 */
 
-constexpr int Num_Individual { 32 };  // Number of individuals
-constexpr int Num_Generation { 40 };  // Number of generations to repeat
+//constexpr int Num_Individual { 32 };  // Number of individuals
+//constexpr int Num_Generation { 40 };  // Number of generations to repeat
+
+constexpr int Num_Individual { 4 };
+constexpr int Num_Generation { 5 };
 constexpr int Num_Elete { 2 };  //  Number of elete
 constexpr double rnd_max { std::pow(2, 32) };  //   Max of mersenne twister (32 bit)
 constexpr double Mutation_rate { 0.03 };  // Mutation incidence
@@ -29,6 +32,7 @@ int main(int argc, char** argv){
     //double total_time;
     
     std::ofstream ofs;
+    std::ofstream ofs_gen;
     std::ofstream ofs_param;
     std::ofstream ofs_score0;
     std::ofstream ofs_score1;
@@ -179,6 +183,13 @@ int main(int argc, char** argv){
         }
 
         if(rank == 0){
+            std::string fn = "./result/gen" + std::to_string(gen) + ".dat";
+            ofs_gen.open(fn);
+            std::ofstream ofs_gen(fn.c_str());
+
+            ofs_gen << gen << " generation. " << std::endl;
+            ofs_gen.close();
+            
             std::cout << P_info[0].r0() << " " << P_info[0].th0() << " " << P_info[0].phi0() << std::endl;
             double score_ave{ 0.0 };
 
@@ -193,7 +204,7 @@ int main(int argc, char** argv){
             MPI::COMM_WORLD.Send(score + start_idx[rank],
                                 assigned_num, MPI::DOUBLE, 0, 0);
             }
-        else{  /* rank0 : 計算結果の受信*/
+        else{  /* rank0 : 計算結果の受信 */
             for(int i = 1; i < size; i++){
                 MPI::COMM_WORLD.Recv(score + start_idx[i], assigned_num, 
                                     MPI::DOUBLE, i, 0);
