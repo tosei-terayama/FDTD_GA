@@ -11,7 +11,7 @@ void E_update(
   double ***newD_r = D_r[New], ***oldD_r = D_r[Old];
   double ***newD_th = D_theta[New], ***oldD_th = D_theta[Old];
   double ***newD_ph = D_phi[New], ***oldD_ph = D_phi[Old];
-  //double maxE(0.0);
+  double maxE(0.0);
   double interpol_Er(0.0), interpol_Eth(0.0), interpol_Eph(0.0);
   double interpol_nDr(0.0), interpol_nDth(0.0), interpol_nDph(0.0),
   interpol_oDr(0.0), interpol_oDth(0.0), interpol_oDph(0.0);
@@ -26,9 +26,9 @@ void E_update(
 
         //E_r[New][i][j][k] = oldD_r[i][j][k]/EPS0;
 
-        /*if(maxE < std::abs(E_r[New][i][j][k])){
+        if(maxE < std::abs(E_r[New][i][j][k])){
           maxE = std::abs(E_r[New][i][j][k]);
-        }*/
+        }
 
       }
     }
@@ -67,9 +67,9 @@ void E_update(
               Fmat[m][j][k][Ir][Ith] * (interpol_nDth - interpol_oDth) + 
               Fmat[m][j][k][Ir][Iph] * (interpol_nDph - interpol_oDph);
 
-          /*if(maxE < std::abs(E_r[New][i][j][k])){
+          if(maxE < std::abs(E_r[New][i][j][k])){
             maxE = std::abs(E_r[New][i][j][k]);
-          }*/
+          }
 
       }
     }
@@ -84,9 +84,9 @@ void E_update(
 
           //E_theta[New][i][j][k] = oldD_th[i][j][k]/EPS0;
 
-          /*if(maxE < std::abs(E_theta[New][i][j][k])){
+          if(maxE < std::abs(E_theta[New][i][j][k])){
             maxE = std::abs(E_theta[New][i][j][k]);
-          }*/
+          }
       }
     }
   }
@@ -124,9 +124,9 @@ void E_update(
               Fmat[m][j][k][Ith][Ith] * (newD_th[i][j][k] - oldD_th[i][j][k]) +
               Fmat[m][j][k][Ith][Iph] * (interpol_nDph - interpol_oDph);
           
-          /*if(maxE < std::abs(E_theta[New][i][j][k])){
+          if(maxE < std::abs(E_theta[New][i][j][k])){
             maxE = std::abs(E_theta[New][i][j][k]);
-          }*/
+          }
 
       }
     } 
@@ -141,9 +141,9 @@ void E_update(
 
         //E_phi[New][i][j][k] = oldD_ph[i][j][k]/EPS0;
 
-        /*if(maxE < std::abs(E_phi[New][i][j][k])){
+        if(maxE < std::abs(E_phi[New][i][j][k])){
           maxE = std::abs(E_phi[New][i][j][k]);
-          }*/
+          }
 
       }
     }
@@ -182,14 +182,14 @@ void E_update(
                 Fmat[m][j][k][Iph][Ith] * (interpol_nDth - interpol_oDth) +
                 Fmat[m][j][k][Iph][Iph] * (newD_ph[i][j][k] - oldD_ph[i][j][k]);
 
-          /*if(maxE < std::abs(E_phi[New][i][j][k])){
+          if(maxE < std::abs(E_phi[New][i][j][k])){
             maxE = std::abs(E_phi[New][i][j][k]);
-          }*/
+          }
 
       }
     }
   }
   
-  //if(maxE > 1.0e12) exit(0);
+  if(maxE > 1.0e12) exit(0);
   
 }
