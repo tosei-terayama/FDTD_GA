@@ -57,7 +57,7 @@ constexpr double param4_step
 constexpr double param5_step
 { (param5_max - param5_min)/(std::pow(2.0, Nbit_sigh) - 1) };
 
-constrxpr double GA_min[Num_parameter]
+constexpr double GA_min[Num_parameter]
 = { param1_min, param2_min, param3_min, param4_min, 
     param5_min};
 
