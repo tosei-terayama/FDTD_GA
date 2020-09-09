@@ -279,9 +279,11 @@ int main(int argc, char** argv){
             }
         }
 
-        set_parameter(P_info, chromosome[CHILD]);
+        if(rank == 0 && score[0] >= judge) flag = true;
 
         if(flag == true) break;
+
+        set_parameter(P_info, chromosome[CHILD]);
 
     }
 
@@ -319,7 +321,7 @@ int main(int argc, char** argv){
     
     std::cout << "elapsed time : " << total_time*1.0e-3 << " [sec]" << std::endl;*/
     ofs.close();
-    ofs_param.close()
+    ofs_param.close();
     ofs_score0.close();
     ofs_score1.close();
     ofs_score2.close();

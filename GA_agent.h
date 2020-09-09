@@ -61,7 +61,7 @@ constrxpr double GA_min[Num_parameter]
 = { param1_min, param2_min, param3_min, param4_min, 
     param5_min};
 
-connstexpr double GA_max[Num_parameter]
+constexpr double GA_max[Num_parameter]
 = { param1_max, param2_max, param3_max, param4_max,
     param5_max };
 /*constexpr double GA_min[Num_parameter]
