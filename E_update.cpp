@@ -139,9 +139,9 @@ void E_update(
 
         E_phi[New][i][j][k] = newD_ph[i][j][k]/EPS0;
 
-        if(maxE < std::abs(E_phi[New][i][j][k])){
+        /*if(maxE < std::abs(E_phi[New][i][j][k])){
           maxE = std::abs(E_phi[New][i][j][k]);
-        }
+          }*/
 
       }
     }
