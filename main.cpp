@@ -111,8 +111,6 @@ int main(int argc, char** argv){
         }
     }
 
-    if(rank == 0) std::exit(0);
-
     /* Initialize parameter ( date/perturbation/geocoordinate ) */
     date ymd;
     ymd.set_ymd(2016, 3, 1);

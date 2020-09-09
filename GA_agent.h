@@ -16,7 +16,7 @@ constexpr int Num_parameter { 5 };
 constexpr int Nbit_enhance { 4 };
 constexpr int Nbit_alt{ 3 };
 //constexpr int Nbit_th{ 7 };
-constexpr int Nbit_phi{ 8 };
+constexpr int Nbit_phi{ 5 };
 constexpr int Nbit_sigr{ 3 };
 constexpr int Nbit_sigh{ 3 };
 
