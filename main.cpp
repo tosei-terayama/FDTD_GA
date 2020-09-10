@@ -255,7 +255,7 @@ int main(int argc, char** argv){
             }
 
             if( rank == 0 && gen == Num_Generation ){
-                for( int i == 0; i < Num_obs; i++ ){
+                for( int i = 0; i < Num_obs; i++ ){
                     ofs << i << " " << Magnitude[0][i] << std::endl;
                 }
             }
