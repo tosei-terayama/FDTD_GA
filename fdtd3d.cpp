@@ -162,13 +162,13 @@ int main(void)
   perturbation P_info;
 
   // Set Perturbation Information //
-  P_info.set_center(74, Ntheta/2, Nphi/2);
+  /*P_info.set_center(74, Ntheta/2, Nphi/2);
   P_info.set_alpha(10.0);
-  P_info.set_sigma(2.0e3, 60.0e3);
+  P_info.set_sigma(2.0e3, 60.0e3);*/
 
-  /*P_info.set_center(77, 12, 529);
-  P_info.set_alpha(5.0);
-  P_info.set_sigma(1142.86, 75.0e3);*/
+  P_info.set_center(72, 50, 377);
+  P_info.set_alpha(80);
+  P_info.set_sigma(1285.71, 90.0e3);
 
   set_perturbation(P_info, noise_Nh, Nh);
   set_matrix(zj, Cmat, Fmat, noise_Nh, ny);
