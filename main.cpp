@@ -18,11 +18,10 @@ target_Pinfo.set_sigma(2.0e3, 60.0e3);
 /////////////////////////////////////////////
 */
 
-//constexpr int Num_Individual { 32 };  // Number of individuals
+//constexpr int Num_Individual { 24 };  // Number of individuals
 //constexpr int Num_Generation { 40 };  // Number of generations to repeat
-
 constexpr int Num_Individual { 8 };
-constexpr int Num_Generation { 2 };
+constexpr int Num_Generation { 4 };
 constexpr int Num_Elete { 2 };  //  Number of elete
 constexpr double rnd_max { std::pow(2, 32) };  //   Max of mersenne twister (32 bit)
 constexpr double Mutation_rate { 0.03 };  // Mutation incidence
@@ -174,29 +173,10 @@ int main(int argc, char** argv){
                 fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i], rank);
                 score[i] = calc_score(Magnitude[i], Target_Magnitude, Num_obs);
                 Individual[PARENT][i].score = score[i];
-                ofs_param << i << "   " << P_info[i].alpha() << "   " << P_info[i].r0() << "   " << P_info[i].th0() << "   "
-                            << P_info[i].sig_r() << "   " << P_info[i].sig_h() << "   " << score[i] << std::endl;
                 std::cout << "Mag(150) : " << Magnitude[i][150] << " Mag(300) : " << Magnitude[i][300] << std::endl;
                 std::cout << "Individual.score : " << i << " " << Individual[PARENT][i].score <<
                  "    score : " << score[i] << std::endl;
 
-        }
-
-        if(rank == 0){
-            std::string fn = "./result/gen" + std::to_string(gen) + ".dat";
-            ofs_gen.open(fn);
-            std::ofstream ofs_gen(fn.c_str());
-
-            ofs_gen << gen << " generation. " << std::endl;
-            ofs_gen.close();
-            
-            std::cout << P_info[0].r0() << " " << P_info[0].th0() << " " << P_info[0].phi0() << std::endl;
-            double score_ave{ 0.0 };
-
-            for(int i = 0; i < Num_Individual; i++) score_ave += score[i];
-
-            score_ave = score_ave/Num_Individual;
-            ofs_ave << gen << " " << score_ave << std::endl; 
         }
 
         /* Merging scores */
@@ -209,6 +189,28 @@ int main(int argc, char** argv){
                 MPI::COMM_WORLD.Recv(score + start_idx[i], assigned_num, 
                                     MPI::DOUBLE, i, 0);
             }
+        }
+
+        if(rank == 0){
+            std::string fn = "./result/gen" + std::to_string(gen) + ".dat";
+            ofs_gen.open(fn);
+            std::ofstream ofs_gen(fn.c_str());
+
+            ofs_gen << gen << " generation. " << std::endl;
+            ofs_gen.close();
+
+            for( int i = 0; i < Num_Individual; i++ ){
+                ofs_param << i << "  " << P_info[i].alpha() << "   " << P_info[i].r0() << "   " << P_info[i].th0() << "   "
+                            << P_info[i].phi0() << "   " << P_info[i].sig_r() << "   " << P_info[i].sig_h() << std::endl;
+            }
+            ofs_param << std::endl;
+            
+            double score_ave{ 0.0 };
+
+            for(int i = 0; i < Num_Individual; i++) score_ave += score[i];
+
+            score_ave = score_ave/Num_Individual;
+            ofs_ave << gen << " " << score_ave << std::endl; 
         }
 
         /* Genetic Algorithm */
