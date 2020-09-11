@@ -150,11 +150,6 @@ int main(int argc, char** argv){
     double judge{1.0e3};
     bool flag = false;
 
-    /*if(rank == 0) {
-        std::chrono::system_clock::time_point start
-        = std::chrono::system_clock::now();
-        }*/
-
     /* GA programming(本体) */
     for(int gen = 0; gen <= Num_Generation; gen++){
 
@@ -306,28 +301,7 @@ int main(int argc, char** argv){
                 << " sig_r : " << P_info[i].sig_r() << " sig_h : " << P_info[i].sig_h() << std::endl;
         std::cout << "///////////////////////////////////////////////" << std::endl;
     }
-
-    /*if(rank == 0){
-        double best_score = Individual[child][0].score;
-        int best_ind = 0;
-
-        for(int i = 0; i < Num_Individual; i++){
-            if(best_score < Individual[child][i].score){
-                best_ind = i;
-            }
-        }
-
-    }*/
-
-    /*if(rank == 0){
-        std::chrono::system_clock::time_point end
-            = std::chrono::system_clock::now();
-    }*/
-
-    /*total_time = std::chrono::duration_cast <std::chrono::milliseconds>
-        (end - start).count();
     
-    std::cout << "elapsed time : " << total_time*1.0e-3 << " [sec]" << std::endl;*/
     ofs.close();
     ofs_param.close();
     ofs_score0.close();
