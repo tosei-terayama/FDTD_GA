@@ -48,7 +48,7 @@ const double Azim{61.0*M_PI/180.0};
 
 int main(void)
 {
-  int time_step = 30;
+  int time_step = 1700;
   double t;
   double J;
   double total_time;
@@ -166,9 +166,9 @@ int main(void)
   P_info.set_alpha(10.0);
   P_info.set_sigma(2.0e3, 60.0e3);*/
 
-  P_info.set_center(72, 50, 377);
-  P_info.set_alpha(80);
-  P_info.set_sigma(1285.71, 90.0e3);
+  P_info.set_center(71, 50, 532);
+  P_info.set_alpha(10);
+  P_info.set_sigma(2142.86, 70.0e3);
 
   set_perturbation(P_info, noise_Nh, Nh);
   set_matrix(zj, Cmat, Fmat, noise_Nh, ny);

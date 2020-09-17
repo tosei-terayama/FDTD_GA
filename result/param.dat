@@ -1,4 +1,5 @@
- # Ind   alpha  r  the  phi  sigma_r   sigma_h   score #
+Id   alpha  r  the  phi  sigma_r   sigma_h 
+
  #   0 generation   #
 0  140   74   50   480   1000   80000
 1  30   77   50   390   1285.71   40000
