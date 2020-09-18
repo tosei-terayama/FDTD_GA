@@ -3,5 +3,6 @@ E*.dat
 *.gif
 *.emf
 *.gif
+anime*
 .vscode/
 IRI-2016_for_cpp/*.txt
