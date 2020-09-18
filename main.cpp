@@ -90,12 +90,6 @@ int main(int argc, char** argv){
     // boolean -> parameter //
     perturbation P_info[Num_Individual];
 
-    if( rank == 0 ){
-        for(int i = 0; i < Num_Individual; i++){
-            P_info[i].set_th(Ntheta/2);
-        }
-    }
-
     if(rank == 0){
         for(int i = 0; i < Num_Individual; i++){
             std::cout << i << " :   ";

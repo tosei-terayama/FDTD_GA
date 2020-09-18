@@ -1,0 +1,7 @@
+         max    min     num of bit
+alpha    0      150     4
+r0       70     80      3
+th0      -      -       -
+phi0     300    700     5
+sigr     1000   3000    3
+sigh     30000  100000  3
