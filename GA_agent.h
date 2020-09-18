@@ -10,19 +10,19 @@ extern const int k_s;
 extern const int k_r;
 
 /* The num of parameters */
-constexpr int Num_parameter { 5 };
+constexpr int Num_parameter { 6 };
 
 /* The num of bit (location, range, enhancement) */
 constexpr int Nbit_enhance { 4 };
 constexpr int Nbit_alt{ 3 };
-//constexpr int Nbit_th{ 7 };
+constexpr int Nbit_th{ 3 };
 constexpr int Nbit_phi{ 5 };
 constexpr int Nbit_sigr{ 3 };
 constexpr int Nbit_sigh{ 3 };
 
 
 constexpr int Nbit_total
-{ Nbit_enhance + Nbit_alt
+{ Nbit_enhance + Nbit_alt + Nbit_th
 + Nbit_phi + Nbit_sigr +  Nbit_sigh };
 
 // range of enhance //
@@ -32,45 +32,38 @@ constexpr double param1_max { 150.0 };
 constexpr double param2_min { 70.0 };
 constexpr double param2_max { 80.0 };
 
-/*constexpr double param3_min { 0.0 };
-constexpr double param3_max { 100.0 };*/
+constexpr double param3_min { 0.0 };
+constexpr double param3_max { 100.0 };
 
-constexpr double param3_min { 300 };
-constexpr double param3_max { 700 };
+constexpr double param4_min { 300 };
+constexpr double param4_max { 700 };
 
-constexpr double param4_min { 1.0e3 };
-constexpr double param4_max { 3.0e3 };
+constexpr double param5_min { 1.0e3 };
+constexpr double param5_max { 3.0e3 };
 
-constexpr double param5_min { 30.0e3 };
-constexpr double param5_max { 100.0e3 };
+constexpr double param6_min { 30.0e3 };
+constexpr double param6_max { 100.0e3 };
 
 constexpr double param1_step
 { (param1_max - param1_min)/(std::pow(2.0, Nbit_enhance) - 1) };
 constexpr double param2_step
 { (param2_max - param2_min)/(std::pow(2.0, Nbit_alt) - 1) };
-/*constexpr double param3_step
-{ (param3_max - param3_min)/(std::pow(2.0, Nbit_th) - 1) };*/
 constexpr double param3_step
-{ (param3_max - param3_min)/(std::pow(2.0, Nbit_phi) - 1) };
+{ (param3_max - param3_min)/(std::pow(2.0, Nbit_th) - 1) };
 constexpr double param4_step
-{ (param4_max - param4_min)/(std::pow(2.0, Nbit_sigr) - 1) };
+{ (param4_max - param4_min)/(std::pow(2.0, Nbit_phi) - 1) };
 constexpr double param5_step
-{ (param5_max - param5_min)/(std::pow(2.0, Nbit_sigh) - 1) };
+{ (param5_max - param5_min)/(std::pow(2.0, Nbit_sigr) - 1) };
+constexpr double param6_step
+{ (param6_max - param6_min)/(std::pow(2.0, Nbit_sigh) - 1) };
 
 constexpr double GA_min[Num_parameter]
-= { param1_min, param2_min, param3_min, param4_min, 
-    param5_min};
-
-constexpr double GA_max[Num_parameter]
-= { param1_max, param2_max, param3_max, param4_max,
-    param5_max };
-/*constexpr double GA_min[Num_parameter]
 = { param1_min, param2_min, param3_min, param4_min,
     param5_min, param6_min };
 
 constexpr double GA_max[Num_parameter]
 = { param1_max, param2_max, param3_max, param4_max,
-    param5_max, param6_max };*/
+    param5_max, param6_max };
 
 void fdtd_calc(perturbation Perturbation_info, date Date_info, geocoordinate lla_info, 
                 int Number_of_observation, geocoordinate* Position_of_observation,
