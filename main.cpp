@@ -162,9 +162,9 @@ int main(int argc, char** argv){
                 fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i], rank);
                 score[i] = calc_score(Magnitude[i], Target_Magnitude, Num_obs);
                 Individual[PARENT][i].score = score[i];
-                std::cout << "Mag(150) : " << Magnitude[i][150] << " Mag(300) : " << Magnitude[i][300] << std::endl;
+                /*std::cout << "Mag(150) : " << Magnitude[i][150] << " Mag(300) : " << Magnitude[i][300] << std::endl;
                 std::cout << "Individual.score : " << i << " " << Individual[PARENT][i].score <<
-                 "    score : " << score[i] << std::endl;
+                 "    score : " << score[i] << std::endl;*/
 
         }
 
