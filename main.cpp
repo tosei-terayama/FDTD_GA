@@ -136,7 +136,10 @@ int main(int argc, char** argv){
     }
     ifs.close();
 
-    if( rank == 0 ) ofs_param << " # Ind   alpha  r  the  phi  sigma_r   sigma_h   score #" << std::endl;
+    if( rank == 0 ) {
+        ofs_param << " # Ind   alpha  r  the  phi  sigma_r   sigma_h   score #" << std::endl;
+        ofs_param << " Target : 10   74   50   500   2000   60000 " << std::endl;
+    }
 
     int child{ 0 };
     double judge{1.0e3};
