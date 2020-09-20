@@ -6,3 +6,4 @@ E*.dat
 anime*
 .vscode/
 IRI-2016_for_cpp/*.txt
+fdtd3d.cpp
