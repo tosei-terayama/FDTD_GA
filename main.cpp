@@ -138,7 +138,6 @@ int main(int argc, char** argv){
 
     if( rank == 0 ) {
         ofs_param << " # Ind   alpha  r  the  phi  sigma_r   sigma_h   score #" << std::endl;
-        ofs_param << " Target : 10   74   50   500   2000   60000 " << std::endl;
     }
 
     int child{ 0 };
@@ -163,9 +162,9 @@ int main(int argc, char** argv){
                 fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i], rank);
                 score[i] = calc_score(Magnitude[i], Target_Magnitude, Num_obs);
                 Individual[PARENT][i].score = score[i];
-                std::cout << "Mag(150) : " << Magnitude[i][150] << " Mag(300) : " << Magnitude[i][300] << std::endl;
+                /*std::cout << "Mag(150) : " << Magnitude[i][150] << " Mag(300) : " << Magnitude[i][300] << std::endl;
                 std::cout << "Individual.score : " << i << " " << Individual[PARENT][i].score <<
-                 "    score : " << score[i] << std::endl;
+                 "    score : " << score[i] << std::endl;*/
 
         }
 
