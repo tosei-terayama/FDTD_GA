@@ -47,7 +47,8 @@
         "random": "cpp",
         "ratio": "cpp",
         "tuple": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "thread": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
