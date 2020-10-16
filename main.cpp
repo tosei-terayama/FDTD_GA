@@ -12,9 +12,9 @@
 /*Target Information
 /////////////////////////////////////////////
 perturbation target_Pinfo;
-target_Pinfo.set_alpha(10.0);
-target_Pinfo.set_center(74, Ntheta/2, Nphi/2);
-target_Pinfo.set_sigma(2.0e3, 60.0e3);
+Target_param.set_alpha(10.0);
+Target_param.set_center(74, Ntheta/2, Nphi/2);
+Target_param.set_sigma(2.0e3, 30.0e3);
 /////////////////////////////////////////////
 */
 
@@ -112,7 +112,7 @@ int main(int argc, char** argv){
     ymd.set_h(9.0);
 
     geocoordinate lla_info;
-    lla_info.set_point(32.0, 135.0, 60.0);
+    lla_info.set_point(32.0, 135.0, 30.0);
 
     // Observation points on propagation path //
     int Num_obs = (Nphi - 2*L) - k_s;
