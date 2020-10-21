@@ -12,8 +12,8 @@
 /*Target Information
 /////////////////////////////////////////////
 perturbation target_Pinfo;
-Target_param.set_alpha(10.0);
-Target_param.set_center(74, Ntheta/2, Nphi/2);
+Target_param.set_alpha( 10.0 );
+Target_param.set_center(74, 25, Nphi/2);
 Target_param.set_sigma(2.0e3, 30.0e3);
 /////////////////////////////////////////////
 */
@@ -141,7 +141,7 @@ int main(int argc, char** argv){
     }
 
     int child{ 0 };
-    double judge{1.0e3};
+    double judge{ 1.0e3 };
     bool flag = false;
 
     /* GA programming(本体) */
