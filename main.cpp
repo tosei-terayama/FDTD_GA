@@ -12,8 +12,8 @@
 /*Target Information
 /////////////////////////////////////////////
 perturbation target_Pinfo;
-Target_param.set_alpha(10.0);
-Target_param.set_center(74, Ntheta/2, Nphi/2);
+Target_param.set_alpha( 10.0 );
+Target_param.set_center(74, 25, Nphi/2);
 Target_param.set_sigma(2.0e3, 30.0e3);
 /////////////////////////////////////////////
 */
@@ -112,7 +112,7 @@ int main(int argc, char** argv){
     ymd.set_h(9.0);
 
     geocoordinate lla_info;
-    lla_info.set_point(32.0, 135.0, 30.0);
+    lla_info.set_point(32.0, 135.0, (Alt_lower_ionosphere/1.0e3) );
 
     // Observation points on propagation path //
     int Num_obs = (Nphi - 2*L) - k_s;
@@ -141,7 +141,7 @@ int main(int argc, char** argv){
     }
 
     int child{ 0 };
-    double judge{1.0e3};
+    double judge{ 1.0e3 };
     bool flag = false;
 
     /* GA programming(本体) */

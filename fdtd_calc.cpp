@@ -159,7 +159,7 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
 
   Z = surface_impe(zj);
 
-  //get realpart imaginaly part//
+  // Z = (Z_real) + j * omega * (z_imag) //
   Z_real = Z.real();
   Z_imag = Z.imag()/omega;
   
@@ -180,7 +180,7 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
     NEW = n%2;
     OLD = (n + 1)%2;
     
-    if(myrank == 1 && n % 100 == 0){
+    if(myrank == 0 && n % 100 == 0){
       std::cout << n << " / " << time_step << "  Er(50, 50, 500)" << Er[NEW][50][50][500] << std::endl;
     }
     
