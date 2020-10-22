@@ -160,7 +160,7 @@ int main(int argc, char** argv){
         // problem section //
         for(int i = start_idx[rank]; i < end_idx[rank]; i++){
                 fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i], rank);
-                score[i] = calc_score(Magnitude[i], Target_Magnitude, Num_obs);
+                score[i] = calc_score(Magnitude[i], Target_Magnitude, Num_obs, i);
                 Individual[PARENT][i].score = score[i];
                 /*std::cout << "Mag(150) : " << Magnitude[i][150] << " Mag(300) : " << Magnitude[i][300] << std::endl;
                 std::cout << "Individual.score : " << i << " " << Individual[PARENT][i].score <<
@@ -179,6 +179,9 @@ int main(int argc, char** argv){
                                     MPI::DOUBLE, i, 0);
             }
         }
+
+        // Sync All Process //
+        MPI_Barrier(MPI_COMM_WORLD);
 
         if(rank == 0){
             std::string fn = "./result/gen" + std::to_string(gen) + ".dat";
@@ -268,6 +271,9 @@ int main(int argc, char** argv){
             MPI::COMM_WORLD.Recv(chromosome[CHILD],
                 Num_Individual*Nbit_total, MPI::BOOL, 0, 1);
         }
+
+        // Sync All Process //
+        MPI_Barrier(MPI_COMM_WORLD);
 
         for(int i = start_idx[rank]; i < end_idx[rank]; i++){
             for(int j = 0; j < Nbit_total; j++){
