@@ -86,7 +86,7 @@ double b2d(bool* Binary_Array, int Length_of_Array,
 
 void set_parameter(perturbation* Perturbation_info, bool* chromosome);
 
-double calc_score(double* Magnitude, double* Target_Magnitude, int Num_obs);
+double calc_score(double* Magnitude, double* Target_Magnitude, int Num_obs, int rank);
 
 class GA_agent{
 public:
@@ -96,3 +96,12 @@ public:
 };
 
 #endif
+
+
+
+
+
+
+
+
+

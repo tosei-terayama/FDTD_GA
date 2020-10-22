@@ -53,7 +53,7 @@ int main(int argc, char** argv){
     const int rank = MPI::COMM_WORLD.Get_rank();
     const int size = MPI::COMM_WORLD.Get_size();
     const int assigned_num = Num_Individual / size; // Assignement to processor
-
+    
     std::random_device seed;
     std::mt19937 engine( seed() );    //mersenne twister engine
 
