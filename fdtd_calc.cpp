@@ -50,7 +50,7 @@ const double Azim{61.0*M_PI/180.0};
 void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
             int Num_obs, geocoordinate* obs_p, double* Magnitude, int myrank)
 {
-  for(int i = 0; i < Num_obs; i++) Magnitude[i] = 0.0;
+  for(int i = 0; i < Num_obs; i++) Magnitude[i] = 0.0;  // これがもしかしてダメ...? //
   int time_step = 1700;
   double t;
   double J;
@@ -146,12 +146,12 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
   Ne_allocate(Nh, Re);
   ny_allocate(ymd, lla_info, ny, Re);
 
-  double *****Cmat = memory_allocate5d(ion_L+1, Ntheta, Nphi, 3, 3, 0.0);
-  double *****Fmat = memory_allocate5d(ion_L+1, Ntheta, Nphi, 3, 3, 0.0);
+  double *****Cmat = memory_allocate5d(ion_L+1, Ntheta+1, Nphi+1, 3, 3, 0.0);
+  double *****Fmat = memory_allocate5d(ion_L+1, Ntheta+1, Nphi+1, 3, 3, 0.0);
 
-  set_perturbation(P_info, noise_Nh, Nh);
+  set_perturbation( P_info, noise_Nh, Nh );
 
-  set_matrix(zj, Cmat, Fmat, noise_Nh, ny);
+  set_matrix( zj, Cmat, Fmat, noise_Nh, ny );
 
   //calculate surface impedance//
   std::complex <double> Z(0.0, 0.0);
@@ -181,7 +181,7 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
     OLD = (n + 1)%2;
     
     if(myrank == 0 && n % 100 == 0){
-      std::cout << n << " / " << time_step << "  Er(50, 50, 500)" << Er[NEW][50][50][500] << std::endl;
+      std::cout << n << " / " << time_step << "  Er(50, 50, 500) : " << Er[NEW][50][50][500] << std::endl;
     }
     
       //t = (double(n) - 0.5)*Dt;
