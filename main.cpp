@@ -53,7 +53,7 @@ int main(int argc, char** argv){
     const int rank = MPI::COMM_WORLD.Get_rank();
     const int size = MPI::COMM_WORLD.Get_size();
     const int assigned_num = Num_Individual / size; // Assignement to processor
-
+    
     std::random_device seed;
     std::mt19937 engine( seed() );    //mersenne twister engine
 
@@ -159,10 +159,12 @@ int main(int argc, char** argv){
         /* Calculate FDTD & Score (PE n) */
         // problem section //
         for(int i = start_idx[rank]; i < end_idx[rank]; i++){
-            
-            fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i], rank);
-            score[i] = calc_score(Magnitude[i], Target_Magnitude, Num_obs);
-            Individual[PARENT][i].score = score[i];
+                fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i], rank);
+                score[i] = calc_score(Magnitude[i], Target_Magnitude, Num_obs, i);
+                Individual[PARENT][i].score = score[i];
+                /*std::cout << "Mag(150) : " << Magnitude[i][150] << " Mag(300) : " << Magnitude[i][300] << std::endl;
+                std::cout << "Individual.score : " << i << " " << Individual[PARENT][i].score <<
+                 "    score : " << score[i] << std::endl;*/
 
         }
 
@@ -178,7 +180,7 @@ int main(int argc, char** argv){
             }
         }
 
-        // Sync All process. //
+        // Sync All Process //
         MPI_Barrier(MPI_COMM_WORLD);
 
         if(rank == 0){
