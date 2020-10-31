@@ -18,7 +18,7 @@ Target_param.set_sigma(2.0e3, 30.0e3);
 /////////////////////////////////////////////
 */
 
-constexpr int Num_Individual { 24 };  // Number of individuals
+constexpr int Num_Individual { 8 };  // Number of individuals
 constexpr int Num_Generation { 80 };  // Number of generations to repeat
 constexpr int Num_Elete { 2 };  //  Number of elete
 constexpr double rnd_max { std::pow(2, 32) };  //   Max of mersenne twister (32 bit)
@@ -69,11 +69,9 @@ int main(int argc, char** argv){
             if( engine()/rnd_max < 0.5 ) {
                 Individual[0][i].chrom[j] = true;
             }
-
             else {
                 Individual[0][i].chrom[j] = false;
             }
-
             chromosome[0][i*Nbit_total + j] = Individual[0][i].chrom[j];
         }
     }
@@ -84,7 +82,6 @@ int main(int argc, char** argv){
     for(int myrank = 0; myrank < size; myrank++){
         start_idx[myrank] = myrank * assigned_num;
         end_idx[myrank] = (myrank + 1) * assigned_num;
-
     }
 
     // boolean -> parameter //
@@ -137,7 +134,7 @@ int main(int argc, char** argv){
     ifs.close();
 
     if( rank == 0 ) {
-        ofs_param << " # Ind   alpha  r  the  phi  sigma_r   sigma_h   score #" << std::endl;
+        ofs_param << " # Id   alpha  r  the  phi  sigma_r   sigma_h   score #" << std::endl;
     }
 
     int child{ 0 };
@@ -149,7 +146,7 @@ int main(int argc, char** argv){
 
         if(rank == 0){
             std::cout << gen << " Generation " << std::endl;
-            ofs_param << " #   " << gen << " generation   #" << std::endl;
+            ofs_param << " #   " << gen << " generation. #" << std::endl;
         }
 
         const int PARENT { gen % 2 };
@@ -162,9 +159,6 @@ int main(int argc, char** argv){
                 fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i], rank);
                 score[i] = calc_score(Magnitude[i], Target_Magnitude, Num_obs, i);
                 Individual[PARENT][i].score = score[i];
-                /*std::cout << "Mag(150) : " << Magnitude[i][150] << " Mag(300) : " << Magnitude[i][300] << std::endl;
-                std::cout << "Individual.score : " << i << " " << Individual[PARENT][i].score <<
-                 "    score : " << score[i] << std::endl;*/
 
         }
 
@@ -181,7 +175,7 @@ int main(int argc, char** argv){
         }
 
         // Sync All Process //
-        MPI_Barrier(MPI_COMM_WORLD);
+        MPI::COMM_WORLD.Barrier();
 
         if(rank == 0){
             std::string fn = "./result/gen" + std::to_string(gen) + ".dat";
@@ -273,7 +267,7 @@ int main(int argc, char** argv){
         }
 
         // Sync All Process //
-        MPI_Barrier(MPI_COMM_WORLD);
+        MPI::COMM_WORLD.Barrier();
 
         for(int i = start_idx[rank]; i < end_idx[rank]; i++){
             for(int j = 0; j < Nbit_total; j++){

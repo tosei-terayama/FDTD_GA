@@ -15,7 +15,7 @@ double calc_score(double *Magnitude, double* Target_Magnitude, int Num, int rank
     for(int i = 0; i < Num; i++){
       diff = Magnitude[i] - Target_Magnitude[i];
 
-      if( std::isnan(diff) ){
+      if( std::isnan( diff ) ){
         ofs_check << "rank : " << rank << " obs : " << i << " Mag " << Magnitude[i]
                   << " diff : " << diff << std::endl;
       }
