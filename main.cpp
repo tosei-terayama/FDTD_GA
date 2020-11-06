@@ -18,13 +18,8 @@ Target_param.set_sigma(2.0e3, 30.0e3);
 /////////////////////////////////////////////
 */
 
-<<<<<<< HEAD
-constexpr int Num_Individual { 8 };  // Number of individuals
-constexpr int Num_Generation { 80 };  // Number of generations to repeat
-=======
 constexpr int Num_Individual { 16 };  // Number of individuals
 constexpr int Num_Generation { 1 };  // Number of generations to repeat
->>>>>>> origin/master
 constexpr int Num_Elete { 2 };  //  Number of elete
 constexpr double rnd_max { std::pow(2, 32) };  //   Max of mersenne twister (32 bit)
 constexpr double Mutation_rate { 0.03 };  // Mutation incidence
