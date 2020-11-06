@@ -18,8 +18,13 @@ Target_param.set_sigma(2.0e3, 30.0e3);
 /////////////////////////////////////////////
 */
 
+<<<<<<< HEAD
 constexpr int Num_Individual { 8 };  // Number of individuals
 constexpr int Num_Generation { 80 };  // Number of generations to repeat
+=======
+constexpr int Num_Individual { 16 };  // Number of individuals
+constexpr int Num_Generation { 1 };  // Number of generations to repeat
+>>>>>>> origin/master
 constexpr int Num_Elete { 2 };  //  Number of elete
 constexpr double rnd_max { std::pow(2, 32) };  //   Max of mersenne twister (32 bit)
 constexpr double Mutation_rate { 0.03 };  // Mutation incidence
@@ -53,6 +58,9 @@ int main(int argc, char** argv){
     const int rank = MPI::COMM_WORLD.Get_rank();
     const int size = MPI::COMM_WORLD.Get_size();
     const int assigned_num = Num_Individual / size; // Assignement to processor
+    int name_length = 256;
+    char* name = new char[name_length];
+    MPI::Get_processor_name(name, name_length);
     
     std::random_device seed;
     std::mt19937 engine( seed() );    //mersenne twister engine
@@ -137,7 +145,6 @@ int main(int argc, char** argv){
         ofs_param << " # Id   alpha  r  the  phi  sigma_r   sigma_h   score #" << std::endl;
     }
 
-    int child{ 0 };
     double judge{ 1.0e3 };
     bool flag = false;
 
@@ -151,7 +158,6 @@ int main(int argc, char** argv){
 
         const int PARENT { gen % 2 };
         const int CHILD { (gen + 1) % 2 };
-        child = CHILD;
 
         /* Calculate FDTD & Score (PE n) */
         // problem section //
@@ -286,7 +292,7 @@ int main(int argc, char** argv){
 
     MPI::Finalize();
 
-    set_parameter(P_info, chromosome[child]);
+    /*set_parameter(P_info, chromosome[child]);
 
     for(int i = 0; i < Num_Individual; i++) {
         std::cout << "///////////////////////////////////////////////" << std::endl; 
@@ -294,7 +300,7 @@ int main(int argc, char** argv){
                 << " th0 : " << P_info[i].th0() << " phi0 : " << P_info[i].phi0() << std::endl
                 << " sig_r : " << P_info[i].sig_r() << " sig_h : " << P_info[i].sig_h() << std::endl;
         std::cout << "///////////////////////////////////////////////" << std::endl;
-    }
+        }*/
 
     ofs.close();
     ofs_param.close();
@@ -307,3 +313,8 @@ int main(int argc, char** argv){
 
     return 0;
 }
+
+
+
+
+
