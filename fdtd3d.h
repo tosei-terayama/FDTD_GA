@@ -100,8 +100,8 @@ void output_profile(
 void output_model(void);
 
 void fdtd_calc(
-    perturbation* Perturbation_info, date ymd, geocoordinate lla_info,
-    int Num_obs, geocoordinate* obs_p, double* Magnitude);
+    perturbation Perturbation_info, date ymd, geocoordinate lla_info,
+    int Num_obs, geocoordinate* obs_p, double* Magnitude, int Myrank, int Generation);
 
 void sigma_calc(
     double* sigma_theta, double* sigma_phi, 
