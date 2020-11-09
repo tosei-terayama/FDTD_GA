@@ -65,10 +65,6 @@ constexpr double GA_max[Num_parameter]
 = { param1_max, param2_max, param3_max, param4_max,
     param5_max, param6_max };
 
-void fdtd_calc(perturbation Perturbation_info, date Date_info, geocoordinate lla_info, 
-                int Number_of_observation, geocoordinate* Position_of_observation,
-                double* Magnitude, int myrank);
-
 void sort_Individual(int Num_Individual, double* score, bool* chromosome);
 
 double* make_roulette(int Num_Individual, double* score);
