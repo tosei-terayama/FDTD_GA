@@ -122,15 +122,15 @@ int main(int argc, char** argv){
     lla_info.set_point(32.0, 135.0, (Alt_lower_ionosphere/1.0e3) );
 
     // Observation points on propagation path //
-    int Num_obs = (Nphi - 2*L) - k_s;
-    geocoordinate* obs_p = new geocoordinate[Num_obs + 1];
-    for( int k = 0; k <= Num_obs; k++ ){
+    int Num_obs = (Nphi - 2*L) - k_s + 1;
+    geocoordinate* obs_p = new geocoordinate[Num_obs];
+    for( int k = 0; k < Num_obs; k++ ){
         obs_p[k].set_obs(0, 50, k + k_s);
     }
 
     // Magnitude //
-    double *Target_Magnitude = new double[Num_obs + 1];
-    double **Magnitude = memory_allocate2d(Num_Individual, Num_obs + 1, 0.0);
+    double *Target_Magnitude = new double[Num_obs];
+    double **Magnitude = memory_allocate2d(Num_Individual, Num_obs, 0.0);
 
     std::ifstream ifs;
     ifs.open("./target.dat");
@@ -189,11 +189,7 @@ int main(int argc, char** argv){
         }
 
         /* Sync All Process */
-<<<<<<< HEAD
-        MPI::COMM_WORLD.Barrier();
-=======
         //MPI::COMM_WORLD.Barrier();
->>>>>>> origin/master
 
         if(rank == 0){
             std::string fn = "./result/gen" + std::to_string(gen) + ".dat";
@@ -215,11 +211,7 @@ int main(int argc, char** argv){
             ofs_ave << gen << " " << score_ave << std::endl; 
         }
 
-<<<<<<< HEAD
-        MPI::COMM_WORLD.Barrier();
-=======
         //MPI::COMM_WORLD.Barrier();
->>>>>>> origin/master
 
         /* Genetic Algorithm */
         if(rank == 0){
