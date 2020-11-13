@@ -32,6 +32,7 @@ void set_parameter(perturbation* P_info, bool* chrom){
             bit3[j] = chrom[i*Nbit_total + j + count];
         }
         P_info[i].set_th( b2d(bit3, Nbit_th, param3_min, param3_step) );
+        count += Nbit_th;
 
         for(int j = 0; j < Nbit_phi; j++){
             bit4[j] = chrom[i*Nbit_total + j + count];

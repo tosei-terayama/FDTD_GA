@@ -48,7 +48,7 @@ const double Inc{49.0*M_PI/180.0};
 const double Azim{61.0*M_PI/180.0};
 
 void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
-            int Num_obs, geocoordinate* obs_p, double* Magnitude, int myrank)
+               int Num_obs, geocoordinate* obs_p, double* Magnitude, int myrank, int gen)
 {
   for(int i = 0; i < Num_obs; i++) Magnitude[i] = 0.0;  // これがもしかしてダメ...? //
   int time_step = 1700;
@@ -180,9 +180,9 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
     NEW = n%2;
     OLD = (n + 1)%2;
     
-    if(myrank == 0 && n % 100 == 0){
-      std::cout << n << " / " << time_step << "  Er(50, 50, 500) : " << Er[NEW][50][50][500] << std::endl;
-    }
+    // if(myrank == 0 && n % 100 == 0){
+    //  std::cout << "\r" << gen << "generation." << n << " / " << time_step << "  Er(50, 50, 500) : " << Er[NEW][50][50][500] << std::endl;
+    //  }
     
       //t = (double(n) - 0.5)*Dt;
     t = n*Dt;
@@ -274,3 +274,5 @@ void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
   delete [] E_famp;
 
 }
+
+

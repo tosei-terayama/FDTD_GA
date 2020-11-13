@@ -9,7 +9,7 @@ OBJS = main.o fdtd_calc.o memory_allocate2d.o memory_allocate2cd.o memory_alloca
 	output_profile.o output_model.o obs_initial.o \
 	GA.o GA_agent.o set_parameter.o calc_score.o
 
-HEADERS = fdtd3d.h pml.h geocoordinate.h perturbation.h date.h \
+HEADERS = GA_agent.h date.h fdtd3d.h geocoordinate_class.h  perturbation.h pml.h\
 	nrlmsise-00.h
 
 OPTS = -I/opt/include/eigen3 -std=c++1z -O3 -Wall

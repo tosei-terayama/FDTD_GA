@@ -18,8 +18,8 @@ Target_param.set_sigma(2.0e3, 30.0e3);
 /////////////////////////////////////////////
 */
 
-constexpr int Num_Individual { 24 };  // Number of individuals
-constexpr int Num_Generation { 80 };  // Number of generations to repeat
+constexpr int Num_Individual { 36 };  // Number of individuals
+constexpr int Num_Generation { 3 };  // Number of generations to repeat
 constexpr int Num_Elete { 2 };  //  Number of elete
 constexpr double rnd_max { std::pow(2, 32) };  //   Max of mersenne twister (32 bit)
 constexpr double Mutation_rate { 0.03 };  // Mutation incidence
@@ -27,32 +27,39 @@ constexpr double Mutation_rate { 0.03 };  // Mutation incidence
 int main(int argc, char** argv){
 
     //double total_time;
-    
-    std::ofstream ofs;
-    std::ofstream ofs_gen;
-    std::ofstream ofs_param;
-    std::ofstream ofs_score0;
-    std::ofstream ofs_score1;
-    std::ofstream ofs_score2;
-    std::ofstream ofs_score3;
-    std::ofstream ofs_score4;
-    std::ofstream ofs_score5;
-    std::ofstream ofs_ave;
 
-    ofs.open("./result/magnitude.dat");
-    ofs_param.open("./result/param.dat");
-    ofs_score0.open("./result/score0.dat");
-    ofs_score1.open("./result/score1.dat");
-    ofs_score2.open("./result/score2.dat");
-    ofs_score3.open("./result/score3.dat");
-    ofs_score4.open("./result/score4.dat");
-    ofs_score5.open("./result/score5.dat");
-    ofs_ave.open("./result/score_average.dat");
-    
     MPI::Init(argc, argv);
     const int rank = MPI::COMM_WORLD.Get_rank();
     const int size = MPI::COMM_WORLD.Get_size();
     const int assigned_num = Num_Individual / size; // Assignement to processor
+    int name_length = 256;
+    char* name = new char[name_length];
+    MPI::Get_processor_name(name, name_length);
+
+      std::ofstream ofs;
+      std::ofstream ofs_gen;
+      std::ofstream ofs_param;
+      std::ofstream ofs_score0;
+      std::ofstream ofs_score1;
+      std::ofstream ofs_score2;
+      std::ofstream ofs_score3;
+      std::ofstream ofs_score4;
+      std::ofstream ofs_score5;
+      std::ofstream ofs_ave;
+      std::ofstream ofs_test;
+
+    if( rank == 0 ){
+      ofs.open("./result/magnitude.dat");
+      ofs_param.open("./result/param.dat");
+      ofs_score0.open("./result/score0.dat");
+      ofs_score1.open("./result/score1.dat");
+      ofs_score2.open("./result/score2.dat");
+      ofs_score3.open("./result/score3.dat");
+      ofs_score4.open("./result/score4.dat");
+      ofs_score5.open("./result/score5.dat");
+      ofs_ave.open("./result/score_average.dat");
+      ofs_test.open("./result/test.dat");
+    }
     
     std::random_device seed;
     std::mt19937 engine( seed() );    //mersenne twister engine
@@ -140,9 +147,13 @@ int main(int argc, char** argv){
         ofs_param << " # Ind   alpha  r  the  phi  sigma_r   sigma_h   score #" << std::endl;
     }
 
-    int child{ 0 };
     double judge{ 1.0e3 };
     bool flag = false;
+
+     std::cout << name << "  rank : " << rank << std::endl;
+     ofs_test << name << " " << rank << std::endl;
+
+     ofs_test.close();
 
     /* GA programming(本体) */
     for(int gen = 0; gen <= Num_Generation; gen++){
@@ -154,17 +165,14 @@ int main(int argc, char** argv){
 
         const int PARENT { gen % 2 };
         const int CHILD { (gen + 1) % 2 };
-        child = CHILD;
 
         /* Calculate FDTD & Score (PE n) */
         // problem section //
         for(int i = start_idx[rank]; i < end_idx[rank]; i++){
-                fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i], rank);
+
+          fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i], rank, gen);
                 score[i] = calc_score(Magnitude[i], Target_Magnitude, Num_obs, i);
                 Individual[PARENT][i].score = score[i];
-                /*std::cout << "Mag(150) : " << Magnitude[i][150] << " Mag(300) : " << Magnitude[i][300] << std::endl;
-                std::cout << "Individual.score : " << i << " " << Individual[PARENT][i].score <<
-                 "    score : " << score[i] << std::endl;*/
 
         }
 
@@ -180,8 +188,8 @@ int main(int argc, char** argv){
             }
         }
 
-        // Sync All Process //
-        MPI_Barrier(MPI_COMM_WORLD);
+        /* Sync All Process */
+        MPI::COMM_WORLD.Barrier();
 
         if(rank == 0){
             std::string fn = "./result/gen" + std::to_string(gen) + ".dat";
@@ -198,12 +206,12 @@ int main(int argc, char** argv){
             ofs_param << std::endl;
 
             double score_ave{ 0.0 };
-
             for(int i = 0; i < Num_Individual; i++) score_ave += score[i];
-
             score_ave = score_ave/Num_Individual;
             ofs_ave << gen << " " << score_ave << std::endl; 
         }
+
+        MPI::COMM_WORLD.Barrier();
 
         /* Genetic Algorithm */
         if(rank == 0){
@@ -272,8 +280,8 @@ int main(int argc, char** argv){
                 Num_Individual*Nbit_total, MPI::BOOL, 0, 1);
         }
 
-        // Sync All Process //
-        MPI_Barrier(MPI_COMM_WORLD);
+        /* Sync All Process */
+        //MPI_Barrier(MPI_COMM_WORLD);
 
         for(int i = start_idx[rank]; i < end_idx[rank]; i++){
             for(int j = 0; j < Nbit_total; j++){
@@ -292,7 +300,7 @@ int main(int argc, char** argv){
 
     MPI::Finalize();
 
-    set_parameter(P_info, chromosome[child]);
+    /*set_parameter(P_info, chromosome[child]);
 
     for(int i = 0; i < Num_Individual; i++) {
         std::cout << "///////////////////////////////////////////////" << std::endl; 
@@ -300,7 +308,7 @@ int main(int argc, char** argv){
                 << " th0 : " << P_info[i].th0() << " phi0 : " << P_info[i].phi0() << std::endl
                 << " sig_r : " << P_info[i].sig_r() << " sig_h : " << P_info[i].sig_h() << std::endl;
         std::cout << "///////////////////////////////////////////////" << std::endl;
-    }
+        }*/
 
     ofs.close();
     ofs_param.close();
@@ -313,3 +321,8 @@ int main(int argc, char** argv){
 
     return 0;
 }
+
+
+
+
+
