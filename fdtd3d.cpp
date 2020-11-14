@@ -226,17 +226,17 @@ int main(void)
   std::cout << "_______________________________________" << std::endl;
   
   ////主経路電波強度観測/////
-  int Num_obs = (Nphi - 2*L) - k_s;
-  double *Magnitude = new double[Num_obs + 1];
+  int Num_obs = (Nphi - 2*L) - k_s + 1;
+  double *Magnitude = new double[Num_obs];
 
   //fourie//
-  std::complex <double>* E_famp = new std::complex <double> [Num_obs + 1];
-  std::complex <double>** E_famp3d = memory_allocate2cd(Ntheta + 1, Nphi + 1, std::complex <double> (0.0, 0.0));
+  std::complex <double>* E_famp = new std::complex <double> [Num_obs];
+  std::complex <double>** E_famp3d = memory_allocate2cd(Ntheta + 1, Num_obs, std::complex <double> (0.0, 0.0));
 
-  geocoordinate *obs_p = new geocoordinate[Num_obs + 1];
+  geocoordinate *obs_p = new geocoordinate[Num_obs];
   geocoordinate **obs_p3d = new geocoordinate*[Ntheta + 1];
   for(int j = 0; j <= Ntheta; j++){
-    obs_p3d[j] = new geocoordinate[Num_obs + 1];
+    obs_p3d[j] = new geocoordinate[Num_obs];
   }
 
   obs_ini(obs_p, obs_p3d, Num_obs);  // Initialize observation point //

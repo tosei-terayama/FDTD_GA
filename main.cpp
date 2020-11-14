@@ -18,8 +18,8 @@ Target_param.set_sigma(2.0e3, 30.0e3);
 /////////////////////////////////////////////
 */
 
-constexpr int Num_Individual { 36 };  // Number of individuals
-constexpr int Num_Generation { 3 };  // Number of generations to repeat
+constexpr int Num_Individual { 24 };  // Number of individuals
+constexpr int Num_Generation { 2 };  // Number of generations to repeat
 constexpr int Num_Elete { 2 };  //  Number of elete
 constexpr double rnd_max { std::pow(2, 32) };  //   Max of mersenne twister (32 bit)
 constexpr double Mutation_rate { 0.03 };  // Mutation incidence
@@ -119,15 +119,15 @@ int main(int argc, char** argv){
     lla_info.set_point(32.0, 135.0, (Alt_lower_ionosphere/1.0e3) );
 
     // Observation points on propagation path //
-    int Num_obs = (Nphi - 2*L) - k_s;
-    geocoordinate* obs_p = new geocoordinate[Num_obs + 1];
-    for( int k = 0; k <= Num_obs; k++ ){
+    int Num_obs = (Nphi - 2*L) - k_s + 1;
+    geocoordinate* obs_p = new geocoordinate[Num_obs];
+    for( int k = 0; k < Num_obs; k++ ){
         obs_p[k].set_obs(0, 50, k + k_s);
     }
 
     // Magnitude //
-    double *Target_Magnitude = new double[Num_obs + 1];
-    double **Magnitude = memory_allocate2d(Num_Individual, Num_obs + 1, 0.0);
+    double *Target_Magnitude = new double[Num_obs];
+    double **Magnitude = memory_allocate2d(Num_Individual, Num_obs, 0.0);
 
     std::ifstream ifs;
     ifs.open("./target.dat");
@@ -186,7 +186,7 @@ int main(int argc, char** argv){
         }
 
         /* Sync All Process */
-        MPI::COMM_WORLD.Barrier();
+        //MPI::COMM_WORLD.Barrier();
 
         if(rank == 0){
             std::string fn = "./result/gen" + std::to_string(gen) + ".dat";
@@ -208,7 +208,7 @@ int main(int argc, char** argv){
             ofs_ave << gen << " " << score_ave << std::endl; 
         }
 
-        MPI::COMM_WORLD.Barrier();
+        //MPI::COMM_WORLD.Barrier();
 
         /* Genetic Algorithm */
         if(rank == 0){
