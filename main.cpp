@@ -170,7 +170,7 @@ int main(int argc, char** argv){
         // problem section //
         for(int i = start_idx[rank]; i < end_idx[rank]; i++){
 
-          fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i], rank, gen);
+          fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i]);
           score[i] = calc_score(Magnitude[i], Target_Magnitude, Num_obs, i);
           Individual[PARENT][i].score = score[i];
 
