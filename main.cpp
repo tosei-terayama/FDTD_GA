@@ -177,7 +177,7 @@ int main(int argc, char** argv){
 
         /* Merging scores */
         if( rank != 0){
-            MPI::COMM_WORLD.Send(score + start_idx[rank], end_idx[i] - start_idx[i],
+            MPI::COMM_WORLD.Send(score + start_idx[rank], end_idx[rank] - start_idx[rank],
                                 MPI::DOUBLE, 0, 0);
             } else{  /* rank0 : 計算結果の受信 */
             for(int i = 1; i < size; i++){
