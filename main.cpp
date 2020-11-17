@@ -187,8 +187,8 @@ int main(int argc, char** argv){
             }
         }
 
-        if( rank == 0 ){
-            for( int i = 0; i < Num_Individual; i++ ) std::cout << i << "  " << score[i] << " " << Individual[PARENT][i].score << std::endl;
+        for( int i = 0; i < Num_Individual; i++ ){
+            std::cout << "rank " << rank << " : " << "score[" << i << "]  " << score[i] << std::endl;
         }
 
         MPI::Finalize();
