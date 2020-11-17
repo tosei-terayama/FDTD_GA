@@ -150,10 +150,7 @@ int main(int argc, char** argv){
     double judge{ 1.0e3 };
     bool flag = false;
 
-     std::cout << name << "  rank : " << rank << std::endl;
-     ofs_test << name << " " << rank << std::endl;
-
-     ofs_test.close();
+    std::cout << name << "  rank : " << rank << std::endl;
 
     /* GA programming(本体) */
     for(int gen = 0; gen <= Num_Generation; gen++){
@@ -192,9 +189,10 @@ int main(int argc, char** argv){
 
         if( rank == 0 ){
             for( int i = 0; i < Num_Individual; i++ ) std::cout << i << "  " << score[i] << " " << Individual[PARENT][i].score << std::endl;
-            MPI::Finalize();
-            std::exit(0);
         }
+
+        MPI::Finalize();
+        std::exit(0);
 
         /* Sync All Process */
         //MPI::COMM_WORLD.Barrier();
