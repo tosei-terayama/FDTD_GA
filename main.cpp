@@ -171,21 +171,25 @@ int main(int argc, char** argv){
         for(int i = start_idx[rank]; i < end_idx[rank]; i++){
 
           fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i], rank, gen);
-                score[i] = calc_score(Magnitude[i], Target_Magnitude, Num_obs, i);
-                Individual[PARENT][i].score = score[i];
+          score[i] = calc_score(Magnitude[i], Target_Magnitude, Num_obs, i);
+          Individual[PARENT][i].score = score[i];
 
         }
 
         /* Merging scores */
         if( rank != 0){
-            MPI::COMM_WORLD.Send(score + start_idx[rank],
-                                assigned_num, MPI::DOUBLE, 0, 0);
+            MPI::COMM_WORLD.Send(score + start_idx[rank], assigned_num,
+                                MPI::DOUBLE, 0, 0);
             }
         else{  /* rank0 : 計算結果の受信 */
             for(int i = 1; i < size; i++){
                 MPI::COMM_WORLD.Recv(score + start_idx[i], assigned_num, 
                                     MPI::DOUBLE, i, 0);
             }
+        }
+
+        if( rank == 0 ){
+            for( int i = 0; i < Num_Individual; i++ ) std::cout << i << "  " << score[i] << " " << Individual[PARENT][i].score << std::endl;
         }
 
         /* Sync All Process */
@@ -293,6 +297,8 @@ int main(int argc, char** argv){
         if(rank == 0 && score[0] >= judge) flag = true;
 
         if(flag == true) break;
+
+        MPI::COMM.Barrier();
 
         set_parameter(P_info, chromosome[CHILD]);
 

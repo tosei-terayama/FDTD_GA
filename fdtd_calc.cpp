@@ -50,8 +50,7 @@ const double Azim{61.0*M_PI/180.0};
 void fdtd_calc(perturbation P_info, date ymd, geocoordinate lla_info,
                int Num_obs, geocoordinate* obs_p, double* Magnitude)
 {
-  for(int i = 0; i < Num_obs; i++) Magnitude[i] = 0.0;  // これがもしかしてダメ...? //
-  int time_step = 1700;
+  int time_step = 200;
   double t;
   double J;
   int NEW;
