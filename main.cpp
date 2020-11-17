@@ -176,6 +176,8 @@ int main(int argc, char** argv){
 
         }
 
+        std::cout << rank << " is completed. " << std::endl;
+
         /* Merging scores */
         if( rank != 0){
             MPI::COMM_WORLD.Send(score + start_idx[rank], assigned_num,
@@ -297,8 +299,6 @@ int main(int argc, char** argv){
         if(rank == 0 && score[0] >= judge) flag = true;
 
         if(flag == true) break;
-
-        MPI::COMM.Barrier();
 
         set_parameter(P_info, chromosome[CHILD]);
 
