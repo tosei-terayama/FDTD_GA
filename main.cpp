@@ -147,10 +147,7 @@ int main(int argc, char** argv){
     double judge{ 1.0e3 };
     bool flag = false;
 
-     std::cout << name << "  rank : " << rank << std::endl;
-     ofs_test << name << " " << rank << std::endl;
-
-     ofs_test.close();
+    std::cout << name << "  rank : " << rank << std::endl;
 
     /* GA programming(本体) */
     for(int gen = 0; gen <= Num_Generation; gen++){
@@ -167,23 +164,31 @@ int main(int argc, char** argv){
         // problem section //
         for(int i = start_idx[rank]; i < end_idx[rank]; i++){
 
-          fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i], rank, gen);
-                score[i] = calc_score(Magnitude[i], Target_Magnitude, Num_obs, i);
-                Individual[PARENT][i].score = score[i];
+          fdtd_calc(P_info[i], ymd, lla_info, Num_obs, obs_p, Magnitude[i]);
+          score[i] = calc_score(Magnitude[i], Target_Magnitude, Num_obs, i);
+          Individual[PARENT][i].score = score[i];
 
         }
 
+        std::cout << rank << " is completed. " << std::endl;
+
         /* Merging scores */
         if( rank != 0){
-            MPI::COMM_WORLD.Send(score + start_idx[rank],
-                                assigned_num, MPI::DOUBLE, 0, 0);
-            }
-        else{  /* rank0 : 計算結果の受信 */
+            MPI::COMM_WORLD.Send(score + start_idx[rank], assigned_num,
+                                MPI::DOUBLE, 0, 0);
+            } else{  /* rank0 : 計算結果の受信 */
             for(int i = 1; i < size; i++){
                 MPI::COMM_WORLD.Recv(score + start_idx[i], assigned_num, 
                                     MPI::DOUBLE, i, 0);
             }
         }
+
+        for( int i = 0; i < Num_Individual; i++ ){
+            std::cout << "rank " << rank << " : " << "score[" << i << "]  " << score[i] << std::endl;
+        }
+
+        MPI::Finalize();
+        std::exit(0);
 
         /* Sync All Process */
         //MPI::COMM_WORLD.Barrier();
