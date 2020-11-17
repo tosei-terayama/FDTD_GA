@@ -192,6 +192,8 @@ int main(int argc, char** argv){
 
         if( rank == 0 ){
             for( int i = 0; i < Num_Individual; i++ ) std::cout << i << "  " << score[i] << " " << Individual[PARENT][i].score << std::endl;
+            MPI::Finalize();
+            std::exit(0);
         }
 
         /* Sync All Process */
