@@ -268,7 +268,7 @@ int main(void)
     J = -((t - t0)/sigma_t/sigma_t/delta_r/(dist(i_s + 0.5)*delta_theta)/(dist(i_s + 0.5)*delta_phi))
       *std::exp(-std::pow(t - t0, 2.0)/2.0/std::pow(sigma_t, 2.0));
 
-    std::cout << " J = " << J << std::endl;
+    // std::cout << " J = " << J << std::endl;
     
     ofs_j << t << " " << J << std::endl;
 
@@ -308,7 +308,7 @@ int main(void)
       Hr_theta1, Hr_theta2, Hr_phi, Htheta_phi, Htheta_r, Hphi_r, Hphi_theta, 
       sigma_theta_h, sigma_phi_h, idx_Hr, idx_Hth, idx_Hphi);
 
-    std::string fn = "./dat_file/E" + std::to_string(n) + ".dat";
+    /*std::string fn = "./dat_file/E" + std::to_string(n) + ".dat";
     ofs_1.open(fn);
     std::ofstream ofs_1(fn.c_str());
 
@@ -324,7 +324,7 @@ int main(void)
     ofs_1.close();
 
     ofs_receive << t << " " << Etheta[NEW][i_r][j_r][k_r] << std::endl;
-    ofs_serve << t << " " << Etheta[NEW][i_s][j_s][k_s] << std::endl;
+    ofs_serve << t << " " << Etheta[NEW][i_s][j_s][k_s] << std::endl;*/
 
     for(int k = 0; k < Num_obs; k++){
       E_famp[k] += Er[NEW][obs_p[k].i()][obs_p[k].j()][obs_p[k].k()]*std::exp(-zj*omega*t)*Dt;
@@ -342,12 +342,17 @@ int main(void)
   
   std::chrono::system_clock::time_point end
     = std::chrono::system_clock::now();
-  ///////計測終了///////
+  ///////計測終了//////
+
+  std::ofstream ofs_time;
+  ofs_time.open("./time.dat");
   
   total_time = std::chrono::duration_cast <std::chrono::milliseconds>
     (end - start).count();
   
   std::cout << "elapsed_time = " << total_time*1.0e-3 << " [sec]"<< std::endl;
+
+  ofs_time << "elapsed time is " << total_time*1.0e-3 << " sec . " << std::endl;
 
   for(int k = 0; k < Num_obs; k++){
     Magnitude[k] = 20.0*std::log10(std::abs(E_famp[k]/E_famp[0]));
@@ -355,14 +360,14 @@ int main(void)
     ofs_NphidB << k << " " << Magnitude[k] << std::endl;
   }
 
-  for(int k = 0; k < Num_obs; k++){
+  /*for(int k = 0; k < Num_obs; k++){
     for(int j = L; j <= Ntheta - L; j++){
       ofs_servedNphi << k << " " << j - L << " " << std::abs(E_famp3d[j][k]) << std::endl;
       ofs_servedNphidB << k << " " << j - L << " " << 20.0*std::log10(std::abs(E_famp3d[j][k]/E_famp3d[j_s][0])) << std::endl;
     }
     ofs_servedNphi << std::endl;
     ofs_servedNphidB << std::endl;
-  }
+    }*/
 
   ofs_1.close();
   ofs_receive.close();
@@ -370,8 +375,9 @@ int main(void)
   ofs_j.close();
   ofs_Nphi.close();
   ofs_NphidB.close();
-  ofs_servedNphi.close();
-  ofs_servedNphidB.close();
+  //ofs_servedNphi.close();
+  //ofs_servedNphidB.close();
+  ofs_time.close();
 
   delete_5d(Cmat, ion_L + 1, Ntheta + 1, Nphi + 1, 3);
   delete_5d(Fmat, ion_L + 1, Ntheta + 1, Nphi + 1, 3);
