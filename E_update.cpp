@@ -112,7 +112,7 @@ void E_update(
           interpol_nDph = (
             newD_ph[i][j  ][k] + newD_ph[i][j  ][k-1] +
             newD_ph[i][j+1][k] + newD_ph[i][j+1][k-1])/4.0;
-          interpol_oDth = (
+          interpol_oDph = (
             oldD_ph[i][j  ][k] + oldD_ph[i][j  ][k-1] + 
             oldD_ph[i][j+1][k] + oldD_ph[i][j+1][k-1])/4.0;
 
