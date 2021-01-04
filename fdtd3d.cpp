@@ -138,7 +138,7 @@ int main(void)
 
   // Geo class //
   geocoordinate lla_info;
-  lla_info.set_point(32.0, 135.0, 60.0);
+  lla_info.set_point(32.0, 135.0, (Alt_lower_ionosphere/1.0e3) );
 
   // Date class (UT)//
   date ymd;
@@ -146,18 +146,18 @@ int main(void)
   ymd.set_h(9.0);
 
   //Ne, nyu//
-  double *Nh = new double[ion_L+1];
-  double *ny = new double[ion_L+1];
-  double *Re = new double[ion_L+1];
+  double *Nh = new double[ion_L];
+  double *ny = new double[ion_L];
+  double *Re = new double[ion_L];
 
   //iri_profile(ymd, lla_info, Nh, Re);
   Ne_allocate(Nh, Re);
   ny_allocate(ymd, lla_info, ny, Re);
 
-  double *****Cmat = memory_allocate5d(ion_L+1, Ntheta + 1, Nphi + 1, 3, 3, 0.0);
-  double *****Fmat = memory_allocate5d(ion_L+1, Ntheta + 1, Nphi + 1, 3, 3, 0.0);
+  double *****Cmat = memory_allocate5d(ion_L, Ntheta, Nphi, 3, 3, 0.0);
+  double *****Fmat = memory_allocate5d(ion_L, Ntheta, Nphi, 3, 3, 0.0);
   
-  double*** noise_Nh = memory_allocate3d(ion_L + 1, Ntheta + 1, Nphi + 1, 0.0);
+  double*** noise_Nh = memory_allocate3d(ion_L, Ntheta, Nphi, 0.0);
   
   perturbation P_info;
 
