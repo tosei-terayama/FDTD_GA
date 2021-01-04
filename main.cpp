@@ -234,7 +234,7 @@ int main(int argc, char** argv){
             /* Make roulette */
             double* Roulette = make_roulette(Num_Individual, score);
 
-            /* Selection & Cross over ( 28×2 - 2 ) */
+            /* Selection & Cross over */
             for(int i = Num_Elete; i < Num_Individual; i += 2){
                 int ind_idx[2];
 

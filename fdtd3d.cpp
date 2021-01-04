@@ -162,8 +162,8 @@ int main(void)
   perturbation P_info;
 
   // Set Perturbation Information //
-  P_info.set_alpha( 10.0 );
-  P_info.set_center(74, Ntheta/2, Nphi/2);
+  P_info.set_alpha( 15.0 );
+  P_info.set_center(82, Ntheta/2, Nphi/2);
   P_info.set_sigma(2.0e3, 60.0e3);
 
   /*P_info.set_alpha( 10.0 );
@@ -203,7 +203,7 @@ int main(void)
   // output analyze model //
   output_model();
   output_profile(P_info, Nh, noise_Nh);
-
+  std::exit(0);
   t = Dt*0.0;
 
   for(int k = 0; k < Nphi; k++){
