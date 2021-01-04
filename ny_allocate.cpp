@@ -2,7 +2,7 @@
 #include <iostream>
 #include <cmath>
 #include <fstream>
-#include <nrlmsise-00>
+#include <nrlmsise-00.h>
 
 #include "fdtd3d.h"
 

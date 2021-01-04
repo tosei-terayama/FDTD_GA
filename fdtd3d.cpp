@@ -134,8 +134,7 @@ int main(void)
   B_th = std::acos(-sph_B[1]/B_abs);
   B_phi = std::atan2(sph_B[2], sph_B[0]);
 
-  std::cout << "B_theta = " << B_th << "\tB_phi = " << B_phi << std::endl;
-
+  std::cout << "B theta : " << B_th << "  B phi : " << B_phi << std::endl;
   // Geo class //
   geocoordinate lla_info;
   lla_info.set_point(32.0, 135.0, (Alt_lower_ionosphere/1.0e3) );
@@ -166,10 +165,6 @@ int main(void)
   P_info.set_center(74, Ntheta/2, Nphi/2);
   P_info.set_sigma(2.0e3, 60.0e3);
 
-  /*P_info.set_alpha( 10.0 );
-  P_info.set_center( 74, 25, Nphi/2 );
-  P_info.set_sigma( 2.0e3, 30.0e3 );*/
-
   set_perturbation( P_info, noise_Nh, Nh );
   set_matrix( zj, Cmat, Fmat, noise_Nh, ny );
 
@@ -185,8 +180,6 @@ int main(void)
 
   std::ofstream ofs_1;
   ofs_1.open("./dat_file/E0.dat");
-  std::ofstream ofs_receive;
-  ofs_receive.open("./dat_file/receive.dat");
   std::ofstream ofs_serve;
   ofs_serve.open("./dat_file/serve.dat");
   std::ofstream ofs_j;
@@ -216,8 +209,6 @@ int main(void)
   }
 
   ofs_1.close();
-  ofs_receive << 0 << " " << Etheta[0][i_r][j_r][k_r] << std::endl;
-  ofs_serve << 0 << " " << Etheta[0][i_s][j_s][k_s] << std::endl;
 
   std::cout << "R : " << dist(Nr) << " θ : " << R0*delta_theta*Ntheta << " φ : " << R0*ph(Nphi) << std::endl;
   std::cout << "time_step : " << time_step << " Dt : " << Dt << std::endl << std::endl;
@@ -330,11 +321,11 @@ int main(void)
       E_famp[k] += Er[NEW][obs_p[k].i()][obs_p[k].j()][obs_p[k].k()]*std::exp(-zj*omega*t)*Dt;
     }
 
-    for(int j = L; j <= Ntheta - L; j++){
+    /*for(int j = L; j <= Ntheta - L; j++){
       for(int k = 0; k < Num_obs; k++){
         E_famp3d[j][k] += Er[NEW][obs_p3d[j][k].i()][obs_p3d[j][k].j()][obs_p3d[j][k].k()]*std::exp(-zj*omega*t)*Dt;
       }
-    }
+      }*/
     
     std::cout << n << " / " << time_step << std::endl << std::endl;
     
@@ -370,8 +361,6 @@ int main(void)
     }*/
 
   ofs_1.close();
-  ofs_receive.close();
-  ofs_serve.close();
   ofs_j.close();
   ofs_Nphi.close();
   ofs_NphidB.close();
