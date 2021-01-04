@@ -9,31 +9,11 @@ OBJS = main.o fdtd_calc.o memory_allocate2d.o memory_allocate2cd.o memory_alloca
 	output_profile.o output_model.o obs_initial.o \
 	GA.o GA_agent.o set_parameter.o calc_score.o
 
-HEADERS = fdtd3d.h GA_agent.h pml.h geocoordinate.h perturbation.h date.h \
-	nrlmsise-00.h
+HEADERS = fdtd3d.h GA_agent.h pml.h geocoordinate.h perturbation.h date.h
 
-OPTS = -I/opt/include/eigen3 -std=c++1z -O3 -Wall
-LIBS = -L. -lnrlmsise
+OPTS = -I/opt/include/eigen3 -I/opt/include -L/opt/lib -lnrlmsise -std=c++1z -O3 -Wall
 
-all: main libnrlmsise.a
-.PHONY: all clean
-
-main: $(OBJS) libnrlmsise.a
-	mpic++ -o $@ $(OBJS) $(OPTS) $(LIBS)
-
+main: $(OBJS)
+	mpic++ -o $@ $(OBJS) $(OPTS)
 %.o: %.cpp $(HEADERS)
 	mpic++ -c $< $(OPTS)
-
-%.o: %.c
-	g++ -c $< $(OPTS)
-
-#%.o: %.for
-#	gfortran -c $< -Wall -O3
-
-LIBOBJS = nrlmsise-00.o nrlmsise-00_data.o
-libnrlmsise.a: $(LIBOBJS)
-	ar rcs $@ $(LIBOBJS)
-
-clean:
-	rm -rf *.o main *.dat
-	

@@ -8,33 +8,20 @@ OBJS = fdtd3d.o memory_allocate2d.o memory_allocate2cd.o memory_allocate3d.o \
 	set_perturbation.o geocoordinate_class.o perturbation_class.o date_class.o \
 	output_profile.o output_model.o obs_initial.o\
 
-HEADERS = fdtd3d.h pml.h geocoordinate.h perturbation.h date.h \
-	nrlmsise-00.h
+HEADERS = fdtd3d.h pml.h geocoordinate.h perturbation.h date.h
 
 #OPTS = -I/Users/include/Eigen -std=c++1z -lgfortran -O3 -Wall
 #OPTS = -I/Users/include/Eigen -std=c++1z -O3 -Wall
+<<<<<<< HEAD
 #OPTS = -I/opt/include/eigen3 -std=c++1z -O3 -Wall
 OPTS = -I/usr/include/eigen3 -std=c++1z -O3 -Wall
 LIBS = -L. -lnrlmsise
+=======
+OPTS = -I/opt/include/eigen3 -I/opt/include -L/opt/lib -lnrlmsise -std=c++1z -O3 -Wall
+>>>>>>> origin/master
 
-all: main libnrlmsise.a
-.PHONY: all clean
-
-main: $(OBJS) libnrlmsise.a
-	g++ -o $@ $(OBJS) $(OPTS) $(LIBS)
+main: $(OBJS)
+	g++ -o $@ $(OBJS) $(OPTS)
 
 %.o: %.cpp $(HEADERS)
 	g++ -c $< $(OPTS)
-
-%.o: %.c
-	g++ -c $< $(OPTS)
-
-#%.o: %.for
-#	gfortran -c $< -Wall -O3
-
-LIBOBJS = nrlmsise-00.o nrlmsise-00_data.o
-libnrlmsise.a: $(LIBOBJS)
-	ar rcs $@ $(LIBOBJS)
-
-clean:
-	rm -rf *.o main *.dat

@@ -3,7 +3,7 @@
 
 #define _USE_MATH_DEFINES
 #include <cmath>
-#include "fdtd3d.h"
+#include "perturbation.h"
 
 extern const int Num_Individual;
 extern const int k_s;

@@ -76,11 +76,9 @@ int main(int argc, char** argv){
             if( engine()/rnd_max < 0.5 ) {
                 Individual[0][i].chrom[j] = true;
             }
-
             else {
                 Individual[0][i].chrom[j] = false;
             }
-
             chromosome[0][i*Nbit_total + j] = Individual[0][i].chrom[j];
         }
     }
@@ -91,7 +89,6 @@ int main(int argc, char** argv){
     for(int myrank = 0; myrank < size; myrank++){
         start_idx[myrank] = myrank * assigned_num;
         end_idx[myrank] = (myrank + 1) * assigned_num;
-
     }
 
     // boolean -> parameter //
@@ -144,7 +141,7 @@ int main(int argc, char** argv){
     ifs.close();
 
     if( rank == 0 ) {
-        ofs_param << " # Ind   alpha  r  the  phi  sigma_r   sigma_h   score #" << std::endl;
+        ofs_param << " # Id   alpha  r  the  phi  sigma_r   sigma_h   score #" << std::endl;
     }
 
     double judge{ 1.0e3 };
@@ -157,7 +154,7 @@ int main(int argc, char** argv){
 
         if(rank == 0){
             std::cout << gen << " Generation " << std::endl;
-            ofs_param << " #   " << gen << " generation   #" << std::endl;
+            ofs_param << " #   " << gen << " generation. #" << std::endl;
         }
 
         const int PARENT { gen % 2 };
