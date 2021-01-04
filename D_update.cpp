@@ -12,7 +12,7 @@ void D_update(
   double ri_1, ri_2, ri_3;
   double sin_th1, sin_th2, sin_th3;
   
-  //D update (outside PML)//
+  //Dr update (outside PML)//
   for(int i = 0; i < Nr; i++){
     ri_2 = dist(i + 0.5);
     for(int j = L + 1; j < Ntheta - L; j++){
